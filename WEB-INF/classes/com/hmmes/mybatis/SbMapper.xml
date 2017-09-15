@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.SbMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.SbBean" >
+	<result column="id" property="id"/>
+	<result column="sbmc" property="sbmc"/>
+	<result column="deksbmc" property="deksbmc"/>
+	<result column="sbsl" property="sbsl"/>
+	<result column="bc" property="bc"/>
+	<result column="cqgs" property="cqgs"/>
+	<result column="yyfh" property="yyfh"/>
+	<result column="bpjhfh" property="bpjhfh"/>
+	<result column="tzxs" property="tzxs"/>
+	<result column="jt" property="jt"/>
+	<result column="state" property="state"/>
+</resultMap>
+
+<!--  table all fields -->
+<sql id="Base_Column_List" >
+	 id,sbmc,deksbmc,sbsl,bc,cqgs,yyfh,bpjhfh,tzxs,jt,state
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1 
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+    <if test="sbmc != null and sbmc != ''" >
+	 	and sbmc like CONCAT('%', #{sbmc}, '%')
+	</if>
+
+  	<if test="deksbmc != null and deksbmc != ''" >
+	    and deksbmc like CONCAT('%',#{deksbmc}, '%')
+	</if>
+
+	<if test="sbsl != null " >
+	    and sbsl =  #{sbsl}
+	</if>
+	<if test="bc != null " >
+	    and bc =  #{bc}
+	</if>
+	<if test="cqgs != null " >
+	    and cqgs =  #{cqgs}
+	</if>
+	<if test="yyfh != null " >
+	    and yyfh =  #{yyfh}
+	</if>
+	<if test="bpjhfh != null " >
+	    and bpjhfh =  #{bpjhfh}
+	</if>
+	<if test="tzxs != null " >
+	    and tzxs =  #{tzxs}
+	</if>
+  	<if test="jt != null and jt != ''" >
+	    and jt like CONCAT('%',#{jt}, '%')
+	</if>	
+	<if test="state != null " >
+	    and state =  #{state}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into Sb(id,sbmc,deksbmc,sbsl,bc,cqgs,yyfh,bpjhfh,tzxs,jt,state)
+ values(#{id},#{sbmc},#{deksbmc},#{sbsl},#{bc},#{cqgs},#{yyfh},#{bpjhfh},#{tzxs},#{jt},0)
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update Sb set sbmc=#{sbmc},deksbmc=#{deksbmc},sbsl=#{sbsl},bc=#{bc},cqgs=#{cqgs},yyfh=#{yyfh},bpjhfh=#{bpjhfh} 
+  ,tzxs=#{tzxs},jt=#{jt},state=#{state} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update Sb set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="sbmc != null  and sbmc != ''">
+		sbmc=#{sbmc},
+	</if>
+
+	<if test="deksbmc != null  and deksbmc != '' ">
+		deksbmc=#{deksbmc},
+	</if>
+	<if test="sbsl != null ">
+		sbsl=#{sbsl},
+	</if>
+	<if test="bc != null ">
+		bc=#{bc},
+	</if>
+	<if test="cqgs != null ">
+		cqgs=#{cqgs},
+	</if>
+	<if test="yyfh != null ">
+		yyfh=#{yyfh},
+	</if>
+	<if test="bpjhfh != null  ">
+		bpjhfh=#{bpjhfh},
+	</if>
+	<if test="tzxs!= null  ">
+		tzxs=#{tzxs},
+	</if>
+	<if test="jt != null  and jtc != ''">
+		jt=#{jt},
+	</if>	
+	<if test="state!= null  ">
+		state=#{state},
+	</if>
+
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update Sb set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from Sb where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from Sb where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from Sb 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from Sb m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by sbmc
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryAllList" resultMap="BaseResultMap"  parameterType="Object">
+	select  id,sbmc,deksbmc,sbsl,bc,cqgs,yyfh,bpjhfh,tzxs,jt,state  
+	from Sb where state=0  order by sbmc
+</select>
+
+<!-- 查询所有有效的列表@para id -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from Sb where id = #{id} and state=0  order by sbmc
+</select>
+
+<!-- 查询所有有效的列表@para deksbmc -->
+<select id="queryListByDeksbmc" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from sb where deksbmc = #{deksbmc} and state=0
+</select>
+
+<!-- 查询机台班组@para sbmc -->
+<select id="queryBySbmc" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from sb where sbmc = #{sbmc}  and state=0 
+</select>
+
+</mapper>   

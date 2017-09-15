@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.JtjhWghbMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.JtjhWghbBean" >
+	<result column="id" property="id"/>
+	<result column="jhid" property="jhid"/>
+	<result column="jhbh" property="jhbh"/>
+	<result column="sbmc" property="sbmc"/>
+	<result column="sbmcdek" property="sbmcdek"/>	
+	<result column="gxxh_o" property="gxxh_o"/>
+	<result column="gxgg_o" property="gxgg_o"/>
+	<result column="gxdy_o" property="gxdy_o"/>
+	<result column="gxlb" property="gxlb"/>
+
+	<result column="wgrq" property="wgrq"/>
+	<result column="bc" property="bc"/>
+	<result column="wgsl" property="wgsl"/>
+	<result column="wgsm" property="wgsm"/>
+	<result column="wg" property="wg"/>	
+	<result column="lrBy" property="lrBy"/>
+	<result column="lrTime" property="lrTime"/>
+	<result column="gd" property="gd"/>	
+	<result column="yhs" property="yhs"/>	
+	<result column="yfp" property="yfp"/>	
+	<result column="gs" property="gs"/>	
+	<result column="gsbc" property="gsbc"/>	
+	<result column="gsl" property="gsl"/>	
+	<result column="gsgz" property="gsgz"/>	
+	<result column="hsBy" property="hsBy"/>
+	<result column="hsTime" property="hsTime"/>
+
+</resultMap>
+
+
+
+<!-- xsdd table all fields -->
+<sql id="Base_Column_List" >
+	 id,jhid,jhbh,sbmc,sbmcdek,gxxh_o,gxgg_o,gxdy_o,gxlb,wgrq,wgsl,bc,wgsm,wg,lrBy,lrTime,gd,yhs,yfp,gs,gsbc,gsl,gsgz,hsBy,hsTime
+</sql>
+  
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1 
+    <choose>
+	    <when test="(fromwgrq != null and fromwgrq != '') and (towgrq != null and towgrq != '')" >
+             and (wgrq BETWEEN  #{fromwgrq} and  #{towgrq})
+        </when>
+		<otherwise>
+		      and wgrq>=DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		</otherwise>
+	</choose>
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="jhid != null" >
+	    and jhid =  #{jhid}
+	</if>
+	<if test="jhbh != null and jhbh != ''" >
+	 	and jhbh like CONCAT('%', #{jhbh}, '%')
+	</if>
+	<if test="sbmc != null and sbmc != ''" >
+	 	and sbmc like CONCAT('%', #{sbmc}, '%')
+	</if>	
+	<if test="sbmcdek != null and sbmcdek != ''" >
+	 	and sbmcdek like CONCAT('%', #{sbmcdek}, '%')
+	</if>	
+	<if test="gxxh_o != null and gxxh_o != ''" >
+	 	and gxxh_o like CONCAT('%', #{gxxh_o}, '%')
+	</if>	
+	<if test="gxgg_o != null and gxgg_o != ''" >
+	 	and gxgg_o like CONCAT('%', #{gxgg_o}, '%')
+	</if>
+	<if test="gxdy_o != null and gxdy_o != ''" >
+	 	and gxdy_o like CONCAT('%', #{gxdy_o}, '%')
+	</if>	
+	<if test="gxlb != null and gxlb != ''" >
+	 	and gxlb like CONCAT('%', #{gxlb}, '%')
+	</if>	
+	<if test="wgrq != null" >
+	    and wgrq =  #{wgrq}
+	</if>
+	<if test="bc != null" >
+	    and bc =  #{bc}
+	</if>
+	<if test="wgsl != null" >
+	    and wgsl =  #{wgsl}
+	</if>
+	 <if test="wgsm != null and wgsm != ''" >
+	 	and wgsm like CONCAT('%', #{wgsm}, '%')
+	</if>
+
+	<if test="wg != null" >
+	    and wg =  #{wg}
+	</if>
+
+	<if test="lrBy != null and lrBy != ''" >
+	    and lrBy  like CONCAT('%',#{lrBy},'%')
+	</if>
+	<if test="lrTime != null" >
+	    and lrTime =  #{lrTime}
+	</if>
+	 <if test="gd != null and gd != ''" >
+	 	and gd like CONCAT('%', #{gd}, '%')
+	</if>
+	<if test="yhs != null" >
+	    and yhs =  #{yhs}
+	</if>
+	<if test="yfp != null" >
+	    and yfp =  #{yfp}
+	</if>
+	<if test="gs != null" >
+	    and gs =  #{gs}
+	</if>
+	<if test="gsbc != null" >
+	    and gsbc =  #{gsbc}
+	</if>
+	<if test="gsl != null" >
+	    and gsl =  #{gsl}
+	</if>
+	<if test="gsgz != null" >
+	    and gsgz =  #{gsgz}
+	</if>
+	<if test="hsBy != null and hsBy != ''" >
+	    and hsBy  like CONCAT('%',#{hsBy},'%')
+	</if>
+	<if test="hsTime != null" >
+	    and hsTime =  #{hsTime}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into jtjh_wghb(id,jhid,jhbh,sbmc,sbmcdek,gxxh_o,gxgg_o,gxdy_o,gxlb,wgrq,bc,wgsl,wgsm,wg,lrBy,lrTime,gd,yhs,yfp,gs,gsbc,gsl,gsgz)
+ values(#{id},#{jhid},#{jhbh},#{sbmc},#{sbmcdek},#{gxxh_o},#{gxgg_o},#{gxdy_o},#{gxlb},#{wgrq},#{bc},#{wgsl},#{wgsm},#{wg}, #{lrBy},now(),#{gd},2,2,#{gs},#{gsbc},#{gsl},#{gsgz})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update jtjh_wghb set jhid=#{jhid},jhbh=#{jhbh},sbmc=#{sbmc},sbmcdek=#{sbmcdek},gxxh_o=#{gxxh_o},gxgg_o=#{gxgg_o},gxdy_o=#{gxdy_o},gxlb=#{gxlb},wgrq=#{wgrq},bc=#{bc},wgsl=#{wgsl},wgsm=#{wgsm},wg=#{wg},lrBy=#{lrBy},lrTime = #{lrTime},gd=#{gd},yhs=#{yhs},yfp=#{yfp},gs=#{gs},gsbc=#{gsbc},gsl=#{gsl},gsgz=#{gsgz},hsBy=#{hsBy},hsTime = #{hsTime} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update jtjh_wghb set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="jhid != null  ">
+		jhid=#{jhid},
+	</if>
+	<if test="jhbh != null  ">
+		jhbh=#{jhbh},
+	</if>
+	<if test="sbmc != null  ">
+		sbmc=#{sbmc},
+	</if>
+	<if test="sbmcdek != null  ">
+		sbmcdek=#{sbmcdek},
+	</if>
+
+	<if test="gxxh_o != null  ">
+		gxxh_o=#{gxxh_o},
+	</if>
+	<if test="gxgg_o != null  ">
+		gxgg_o=#{gxgg_o},
+	</if>
+	<if test="gxdy_o != null  ">
+		gxdy_o=#{gxdy_o},
+	</if>
+	<if test="gxlb != null  ">
+		gxlb=#{gxlb},
+	</if>
+
+	<if test="wgrq != null  ">
+		wgrq=#{wgrq},
+	</if>
+	<if test="bc != null  ">
+		bc=#{bc},
+	</if>
+	<if test="wgsl != null  ">
+		wgsl=#{wgsl},
+	</if>	
+	<if test="wgsm != null  and wgsm != '' ">
+		wgsm=#{wgsm},
+	</if>
+	<if test="wg != null">
+		wg=#{wg},
+	</if>
+	<if test="lrBy != null  and lrBy != '' ">
+		lrBy=#{lrBy},
+	</if>
+	<if test="lrTime != null  ">
+		lrTime=#{lrTime},
+	</if>
+	<if test="gd != null  and gd != '' ">
+		gd=#{gd},
+	</if>
+	<if test="yhs != null">
+		yhs=#{yhs},
+	</if>
+	<if test="yfp != null">
+		yfp=#{yfp},
+	</if>
+	<if test="gs != null">
+		gs=#{gs},
+	</if>
+	<if test="gsbc != null">
+		gsbc=#{gsbc},
+	</if>
+	<if test="gsl != null">
+		gsl=#{gsl},
+	</if>
+	<if test="gsgz != null">
+		gsgz=#{gsgz},
+	</if>
+	<if test="hsBy != null  and hsBy != '' ">
+		hsBy=#{hsBy},
+	</if>
+	<if test="hsTime != null  ">
+		hsTime=#{hsTime},
+	</if>
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update xsdd set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from jtjh_wghb where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from jtjh_wghb where id = #{id}
+</select>
+
+<!--列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from jtjh_wghb 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	<!-- ,(SELECT COUNT(*) FROM xsdds c WHERE c.btid = m.id) AS subCount-->
+	from jtjh_wghb m  
+	<include refid="Example_Where_Clause"/>
+ 	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+<!-- 核算工时用，按照gd,sbmc,jhbh排序 -->
+<select id="queryByListHs" resultMap="BaseResultMap" parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from jtjh_wghb m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by gd,sbmc,wgrq,jhbh
+		</otherwise>
+	</choose>    
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select  <include refid="Base_Column_List"/>
+	from jtjh_wghb order by wgrq desc 
+</select>
+
+<!-- 通过机台计划的ID查询所有有效的列表 -->
+<select id="queryListByJhId" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from jtjh_wghb where jhid = #{jhid} order by wgrq  desc
+</select>
+
+
+</mapper>   

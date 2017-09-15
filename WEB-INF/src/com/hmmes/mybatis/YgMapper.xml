@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.YgMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.YgBean" >
+	<result column="id" property="id"/>
+	<result column="xm" property="xm"/>
+	<result column="jtid" property="jtid"/>
+	<result column="jtmc" property="jtmc"/>
+	<result column="state" property="state"/>
+
+</resultMap>
+       
+<!-- sys_role table all fields -->
+<sql id="Base_Column_List" >
+	 id,xm,jtid,jtmc,state
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+    <if test="xm != null and xm != ''" >
+	    and xm like CONCAT('%', #{xm}, '%')
+	</if>
+	<if test="jtid != null" >
+	    and jtid =  #{jtid}
+	</if>
+	<if test="jtmc != null and jtmc != ''" >
+	    and jtmc like CONCAT('%', #{jtmc}, '%')
+	</if>
+	<if test="state != null ">
+		and state = #{state}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into yg(id,xm,jtid,jtmc,state)
+  values(#{id},#{xm},#{jtid},#{jtmc},#{state})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update yg set xm=#{xm},jtid=#{jtid},jtmc=#{jtmc},state=#{state} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update yg set 
+	<trim  suffixOverrides="," >
+	<if test="xm != null  and xm != '' ">
+		xm=#{xm},
+	</if>
+    <if test="jtid != null  ">
+		jtid=#{jtid},
+	</if>
+    <if test="jtmc != null and jtmc != ''  ">
+		jtmc=#{jtmc},
+	</if>
+
+    <if test="state != null  ">
+		state=#{state},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete  from yg where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from yg where id = #{id}
+</select>
+
+
+<!--  列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from yg 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询所有的列表,按照页数 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from yg 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+	
+<!-- 查询所有列表 -->
+<select id="queryAllList" resultMap="BaseResultMap"  parameterType="Object">
+	select  <include refid="Base_Column_List"/>
+	from yg where state = 0  order by jtmc 
+</select>
+
+<!-- 根据机台Id，查询包含员工 @param id-->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from yg where jtid = #{id} 
+</select>
+
+</mapper>   

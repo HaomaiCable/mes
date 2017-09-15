@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.ZbggMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.ZbggBean" >
+	<result column="id" property="id"/>
+	<result column="fbrq" property="fbrq"/>
+	<result column="ggbh" property="ggbh"/>
+	<result column="row" property="row"/>
+	<result column="state" property="state"/>
+	<result column="yxrq" property="yxrq"/>
+	<result column="wlfl" property="wlfl"/>
+	<result column="wlmc" property="wlmc"/>
+	<result column="wlgg" property="wlgg"/>
+	<result column="wldw" property="wldw"/>
+	<result column="wlsl" property="wlsl"/>
+	<result column="jsyq" property="jsyq"/>
+	<result column="jhrq_xq" property="jhrq_xq"/>
+	<result column="kb" property="kb"/>
+	<result column="createBy" property="createBy"/>
+	<result column="createTime" property="createTime"/>
+	<result column="updateBy" property="updateBy"/>
+	<result column="updateTime" property="updateTime"/>
+	<result column="qd" property="qd"/>
+	<result column="qdBy" property="qdBy"/>
+	<result column="qdTime" property="qdTime"/>
+	<result column="sp" property="sp"/>
+	<result column="spBy" property="spBy"/>
+	<result column="spTime" property="spTime"/>
+	<result column="deleted" property="deleted"/>
+
+</resultMap>
+
+<!-- 扩展字段 -->
+<resultMap id="ExtResultMap" extends="BaseResultMap" type="com.hmmes.bean.ZbggBean" >
+	<result column="subCountTb" property="subCountTb"/>
+	<result column="subCountMx" property="subCountMx"/>
+	<result column="distGgbh" property="distGgbh"/>
+</resultMap>
+
+
+<!-- zbgg table all fields -->
+<sql id="Base_Column_List" >
+	 id,fbrq,ggbh,row,state,yxrq,wlfl,wlmc,wlgg,wldw,wlsl,jsyq,jhrq_xq,kb,createBy,createTime,updateBy,updateTime,qd,qdBy,qdTime,sp,spBy,spTime,deleted
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+    where 1=1   
+    <choose>
+	    <when test="(fromfbrq != null and fromfbrq != '') and (tofbrq != null and tofbrq != '')" >
+             and (fbrq BETWEEN  #{fromfbrq} and  #{tofbrq})
+        </when>
+		<otherwise>
+		      and fbrq>=DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		</otherwise>
+	</choose>
+
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="fbrq != null" >
+	    and fbrq =  #{fbrq}
+	</if>
+	 <if test="ggbh != null and ggbh != ''" >
+	 	and ggbh like CONCAT('%', #{ggbh}, '%')
+	</if>
+	<if test="row != null" >
+	    and row =  #{row}
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+	<if test="yxrq != null " >
+	    and  yxrq = #{yxrq}
+	</if>
+	<if test="wlfl != null and wlfl != ''" >
+	    and  wlfl  like CONCAT('%', trim(#{wlfl}), '%')
+	</if>
+	<if test="wlmc != null and wlmc != ''" >
+	    and wlmc like CONCAT('%',trim(#{wlmc}), '%')
+	</if>
+	 <if test="wlgg != null and wlgg != ''" >
+	    and wlgg like CONCAT('%',trim(#{wlgg}), '%')  
+	</if>
+	<if test="wldw != null and wldw != ''" >
+	    and wldw =  #{wldw}
+	</if>
+	<if test="wlsl != null " >
+	    and wlsl =  #{wlsl}
+	</if>
+	<if test="jsyq != null and jsyq != ''" >
+	    and jsyq =  #{jsyq}
+	</if>
+	<if test="jhrq_xq != null " >
+	    and jhrq_xq =  #{jhrq_xq}
+	</if>
+	<if test="kb != null " >
+	    and kb =  #{kb}
+	</if>
+	<if test="createBy != null and createBy != ''" >
+	    and createBy  like CONCAT('%',trim(#{createBy}),'%')
+	</if>
+	<if test="createTime != null" >
+	    and createTime =  #{createTime}
+	</if>
+	<if test="updateBy != null and updateBy != ''" >
+	    and updateBy =  #{updateBy}
+	</if>
+	<if test="updateTime != null" >
+	    and updateTime =  #{updateTime}
+	</if>
+	<if test="qd != null " >
+	    and qd =  #{qd}
+	</if>
+	<if test="qdBy != null and qdBy != ''" >
+	    and qdBy  like CONCAT('%',trim(#{qdBy}),'%')
+	</if>
+	<if test="qdTime != null" >
+	    and qdTime =  #{qdTime}
+	</if>
+	<if test="sp != null " >
+	    and sp =  #{sp}
+	</if>
+	<if test="spBy != null and spBy != ''" >
+	    and spBy  like CONCAT('%',trim(#{spBy}),'%')
+	</if>
+	<if test="spTime != null" >
+	    and spTime =  #{spTime}
+	</if>
+	<if test="(fromfbrq != null and fromfbrq != '') and (tofbrq != null and tofbrq != '')" >
+         and (fbrq BETWEEN  #{fromfbrq} and  #{tofbrq})
+    </if>
+	<if test="(fromyxrq != null and fromyxrq != '') and (toyxrq != null and toyxrq != '')" >
+         and (yxrq BETWEEN  #{fromyxrq} and  #{toyxrq})
+    </if>
+
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zbgg(id,fbrq,ggbh,row,state,yxrq,wlfl,wlmc,wlgg,wldw,wlsl,jsyq,jhrq_xq,kb,createBy,createTime,deleted,qd,sp)
+ values(#{id},#{fbrq},#{ggbh},#{row},#{state},#{yxrq},#{wlfl},#{wlmc},#{wlgg},#{wldw},#{wlsl},#{jsyq},#{jhrq_xq},#{kb},#{createBy},now(),#{deleted},0,0)
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update zbgg set fbrq=#{fbrq},ggbh=#{ggbh},row=#{row},state=#{state},yxrq=#{yxrq},wlfl=#{wlfl},wlmc=#{wlmc},wlgg=#{wlgg},wldw=#{wldw},wlsl=#{wlsl},jsyq=#{jsyq},jhrq_xq=#{jhrq_xq},kb=#{kb},deleted=#{deleted},updateBy=#{updateBy},updateTime = now(),qd=#{qd},qdBy=#{qdBy},qdTime = #{qdTime},sp=#{sp},spBy=#{spBy},spTime = #{spTime}  where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update zbgg set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="fbrq != null  ">
+		fbrq=#{fbrq},
+	</if>
+	<if test="ggbh != null  and ggbh != '' ">
+		ggbh=#{ggbh},
+	</if>
+	<if test="row != null  ">
+		row=#{row},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>
+	<if test="yxrq != null  and yxrq != '' ">
+		yxrq=#{yxrq},
+	</if>
+	<if test="wlfl != null  and wlfl != '' ">
+		wlfl=#{wlfl},
+	</if>
+	<if test="wlmc != null  and wlmc != '' ">
+		wlmc=#{wlmc},
+	</if>
+	<if test="wlgg != null  and wlgg != '' ">
+		wlgg=#{wlgg},
+	</if>
+	<if test="wldw != null  and wldw != '' ">
+		wldw=#{wldw},
+	</if>
+	<if test="wlsl != null ">
+		wlsl=#{wlsl},
+	</if>
+	<if test="jsyq != null  and jsyq != '' ">
+		jsyq=#{jsyq},
+	</if>
+	<if test="jhrq_xq != null and  jhrq_xq != '' ">
+		jhrq_xq=#{jhrq_xq},
+	</if>
+	<if test="kb != null ">
+		kb=#{kb},
+	</if>
+	<if test="createBy != null  and createBy != '' ">
+		createBy=#{createBy},
+	</if>
+	<if test="createTime != null  ">
+		createTime=#{createTime},
+	</if>
+	<if test="updateBy != null  and updateBy != '' ">
+		updateBy=#{updateBy},
+	</if>
+	<if test="updateTime != null  ">
+		updateTime=#{updateTime},
+	</if>
+	<if test="qd != null ">
+		qd=#{qd},
+	</if>
+	<if test="qdBy != null  and qdBy != '' ">
+		qdBy=#{qdBy},
+	</if>
+	<if test="qdTime != null  ">
+		qdTime=#{qdTime},
+	</if>
+	<if test="sp != null ">
+		sp=#{sp},
+	</if>
+	<if test="spBy != null  and spBy != '' ">
+		spBy=#{spBy},
+	</if>
+	<if test="spTime != null  ">
+		spTime=#{spTime},
+	</if>
+	<if test="deleted != null  ">
+		deleted=#{deleted},
+	</if>
+
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update zbgg set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from zbgg where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from zbgg where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from zbgg 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+<!-- 列表总数，ggbh不重复的-->
+<select id="queryByCountDist" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from (select *,count(distinct ggbh) as distGgbh  from zbgg a group by ggbh) m
+	<include refid="Example_Where_Clause"/>
+
+</select>
+
+<!--明细列表 -->
+<select id="queryByList" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM zbgg a WHERE a.ggbh = m.ggbh) AS subCountMx
+	,(SELECT COUNT(*) FROM tbxx b WHERE b.ggbh = m.ggbh) AS subCountTb
+	from zbgg m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by ggbh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+<!-- 明细列表 ，ggbh不重复的-->
+<select id="queryByListDist" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM zbgg a WHERE a.ggbh = m.ggbh) AS subCountMx
+	,(SELECT COUNT(*) FROM tbxx b WHERE b.ggbh = m.ggbh and b.je>0) AS subCountTb
+	, count(distinct ggbh) as distGgbh 
+	from zbgg m   
+	<include refid="Example_Where_Clause"/>
+	group by ggbh 
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by ggbh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+<select id="queryByListDistNoPage" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM zbgg a WHERE a.ggbh = m.ggbh) AS subCountMx
+	,(SELECT COUNT(*) FROM tbxx b WHERE b.ggbh = m.ggbh) AS subCountTb
+	, count(distinct ggbh) as distGgbh 
+	from zbgg m   
+	<include refid="Example_Where_Clause"/>
+	group by ggbh 
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by ggbh desc,row
+		</otherwise>
+	</choose>
+
+
+</select>
+
+<!-- 明细列表，不分页的 -->
+<select id="queryByListNoPage" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM zbgg a WHERE a.ggbh = m.ggbh) AS subCountMx
+	,(SELECT COUNT(*) FROM tbxx b WHERE b.ggbh = m.ggbh) AS subCountTb
+	from zbgg m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by ggbh desc,row
+		</otherwise>
+	</choose>
+
+
+</select>
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="ExtResultMap"  parameterType="Object">
+	select  <include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM zbgg a WHERE a.ggbh = m.ggbh) AS subCountMx
+	,(SELECT COUNT(*) FROM tbxx b WHERE b.ggbh = m.ggbh) AS subCountTb
+
+    from zbgg m  order by ggbh desc,row
+</select>
+
+<!-- 查询所有有效的列表 ，按照ID-->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from zbgg where deleted= 0   
+	 and id = #{zbggid} order by createTime desc
+</select>
+<!-- 查询所有有效的列表 @param jhbh-->
+<select id="queryListByGgbh" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from zbgg where deleted= 0   
+	and ggbh = #{ggbh} order by row
+</select>
+</mapper>   

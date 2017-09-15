@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.JtjhBgMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.JtjhBgBean" >
+	<result column="id" property="id"/>
+	<result column="jhid" property="jhid"/>
+	<result column="bh" property="bh"/>
+	<result column="row" property="row"/>
+	<result column="gd" property="gd"/>
+	<result column="sbmc" property="sbmc"/>
+	<result column="jhbh" property="jhbh"/>
+	<result column="jhbhrow" property="jhbhrow"/>
+	<result column="field" property="field"/>
+	<result column="oldContent" property="oldContent"/>
+	<result column="newContent" property="newContent"/>
+	<result column="createBy" property="createBy"/>
+	<result column="createTime" property="createTime"/>
+	<result column="accept" property="accept"/>
+	<result column="acceptBy" property="acceptBy"/>
+	<result column="acceptTime" property="acceptTime"/>
+
+</resultMap>
+
+
+
+
+<!-- xsdd table all fields -->
+<sql id="Base_Column_List" >
+	 id,jhid,bh,row,gd,sbmc,jhbh,jhbhrow,field,oldContent,newContent,createBy,createTime,accept,acceptBy,acceptTime
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1  
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="jhid != null" >
+	    and jhid =  #{jhid}
+	</if>
+	<if test="bh != null and bh != ''" >
+	 	and bh like CONCAT('%', #{bh}, '%')
+	</if>
+	<if test="row != null" >
+	    and row =  #{row}
+	</if>
+	<if test="sbmc != null and sbmc != ''" >
+	 	and sbmc like CONCAT('%', #{sbmc}, '%')
+	</if>	
+	<if test="gd != null and gd != ''" >
+	 	and gd like CONCAT('%', #{gd}, '%')
+	</if>		
+	<if test="jhbh != null and jhbh != ''" >
+	 	and jhbh like CONCAT('%', #{jhbh}, '%')
+	</if>
+	<if test="jhbhrow != null" >
+	    and jhbhrow =  #{jhbhrow}
+	</if>
+	 
+	<if test="field != null and field != ''" >
+	    and  field  like CONCAT('%', #{field}, '%')
+	</if>
+
+  	<if test="oldContent != null and oldContent != ''" >
+	    and oldConent like CONCAT('%',#{oldContent}, '%')
+	</if>
+	 <if test="newContent != null and newContent != ''" >
+	    and newContent like CONCAT('%',#{newContent}, '%')  
+	</if>
+  
+	<if test="createBy != null and createBy != ''" >
+	    and createBy  like CONCAT('%',#{createBy},'%')
+	</if>
+	<if test="createTime != null" >
+	    and createTime =  #{createTime}
+	</if>
+	<if test="accept != null" >
+	    and accept =  #{accept}
+	</if>
+	<if test="acceptBy != null and acceptBy != ''" >
+	    and acceptBy =  #{acceptBy}
+	</if>
+	<if test="acceptTime != null" >
+	    and acceptTime =  #{acceptTime}
+	</if>
+	<if test="(frombgrq != null and frombgrq != '') and (tobgrq != null and tobgrq != '')" >
+         and (createTime BETWEEN  #{frombgrq} and  #{tobgrq})
+    </if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into jtjh_bg(id,jhid,bh,row,gd,sbmc,jhbh,jhbhrow,field,oldContent,newContent,createBy,createTime,accept)
+ values(#{id},#{jhid},#{bh},#{row},#{gd},#{sbmc},#{jhbh},#{jhbhrow},#{field},#{oldContent},#{newContent}, #{createBy},now(),2)
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update jtjh_bg set jhid=#{jhid},bh=#{bh},row=#{row},gd=#{gd},sbmc=#{sbmc},jhbh=#{jhbh},jhbhrow=#{jhbhrow},oldContent=#{oldContent},newContent=#{newContent},accept=#{accept},acceptBy=#{acceptBy},acceptTime = now() where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update jtjh_bg set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="jhid != null  ">
+		jhid=#{jhid},
+	</if>
+	<if test="bh != null  and bh != '' ">
+		bh=#{bh},
+	</if>
+	<if test="row != null  ">
+		row=#{row},
+	</if>
+	<if test="sbmc != null  and sbmc != '' ">
+		sbmc=#{sbmc},
+	</if>
+	<if test="gd != null  and gd != '' ">
+		gd=#{gd},
+	</if>
+	<if test="jhbh != null  and jhbh != '' ">
+		jhbh=#{jhbh},
+	</if>
+	<if test="jhbhrow != null  ">
+		jhbhrow=#{jhbhrow},
+	</if>
+	<if test="field != null  and field != '' ">
+		field=#{field},
+	</if>
+
+	<if test="oldContent != null  and oldContent != '' ">
+		oldContent=#{oldContent},
+	</if>
+	<if test="newContent != null  and newContent != '' ">
+		newContent=#{newContent},
+	</if>
+
+	<if test="createBy != null  and createBy != '' ">
+		createBy=#{createBy},
+	</if>
+	<if test="createTime != null  ">
+		createTime=#{createTime},
+	</if>
+	<if test="accept != null">
+		accept=#{accept},
+	</if>
+	<if test="acceptBy != null  and acceptBy != '' ">
+		acceptBy=#{acceptBy},
+	</if>
+	<if test="acceptTime != null  ">
+		acceptTime=#{acceptTime},
+	</if>
+
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update xsdd set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from jtjh_bg where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from jtjh_bg where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from jtjh_bg 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+
+	from jtjh_bg m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by bh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select  <include refid="Base_Column_List"/>
+	from jtjh_bg where 1=1  order by bh desc,row
+</select>
+
+<!-- 根据ID，查询所有有效的变更单列表 -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from jtjh_bg where jhid = #{jhid} order by  bh,row
+</select>
+
+<!-- 查询所有有效的列表 @param bh-->
+<select id="queryListByBh" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from jtjh_bg  where bh = #{bh} order by  bh,row
+</select>
+</mapper>   

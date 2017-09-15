@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.GysdaMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.GysdaBean" >
+	<result column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="addr" property="addr"/>
+	<result column="fr" property="fr"/>
+	<result column="khh" property="khh"/>
+	<result column="zh" property="zh"/>
+	<result column="sh" property="sh"/>
+	<result column="lxr" property="lxr"/>
+	<result column="phone" property="phone"/>
+	<result column="tel" property="tel"/>
+	<result column="fax" property="fax"/>
+	<result column="email" property="email"/>
+	<result column="state" property="state"/>
+
+</resultMap>
+       
+<!-- site_type table all fields -->
+<sql id="Base_Column_List" >
+	 id,name,addr,fr,khh,zh,sh,lxr,phone,tel,fax,email,state
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	 <if test="name != null and name != ''" >
+	    and name like CONCAT('%', #{name}, '%')
+	</if>
+ 	<if test="addr != null and addr != ''" >
+	    and addr =  #{addr}
+	</if>
+ 	<if test="fr != null and fr != ''" >
+	    and fr =  #{fr}
+	</if>
+ 	<if test="khh != null and khh != ''" >
+	    and khh =  #{khh}
+	</if>
+ 	<if test="zh != null and zh != ''" >
+	    and zh =  #{zh}
+	</if>
+ 	<if test="sh != null and sh != ''" >
+	    and sh =  #{sh}
+	</if>
+ 	<if test="phone != null and phone != ''" >
+	    and phone =  #{phone}
+	</if>
+ 	<if test="tel != null and tel != ''" >
+	    and tel =  #{tel}
+	</if>
+ 	<if test="fax != null and fax != ''" >
+	    and fax =  #{fax}
+	</if>
+ 	<if test="email != null and email != ''" >
+	    and email =  #{email}
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into gysda(id,name,addr,fr,khh,zh,sh,lxr,phone,tel,fax,email,state)
+ values(#{id},#{name},#{addr},#{fr},#{khh},#{zh},#{sh},#{lxr},#{phone},#{tel},#{fax},#{email},#{state})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update gysda set name=#{name},addr=#{addr},fr=#{fr},khh=#{khh},zh=#{zh},sh=#{sh},lxr=#{lxr},phone=#{phone},tel=#{tel},fax=#{fax},email=#{email},state=#{state} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update site_type set 
+	<trim  suffixOverrides="," >
+	<if test="name != null  and name != '' ">
+		name=#{name},
+	</if>
+	<if test="addr != null  and addr != '' ">
+		addr=#{addr},
+	</if>
+	<if test="fr != null  and fr != '' ">
+		fr=#{fr},
+	</if>
+	<if test="khh != null  and khh != '' ">
+		khh=#{khh},
+	</if>
+	<if test="zh != null  and zh != '' ">
+		zh=#{zh},
+	</if>	
+	<if test="sh != null  and sh != '' ">
+		addr=#{addr},
+	</if>
+	<if test="lxr != null  and lxr != '' ">
+		lxr=#{lxr},
+	</if>
+	<if test="phone != null  and phone != '' ">
+		phone=#{phone},
+	</if>
+	<if test="tel != null  and tel != '' ">
+		tel=#{tel},
+	</if>
+	<if test="fax != null  and fax != '' ">
+		fax=#{fax},
+	</if>
+	<if test="email != null  and email != '' ">
+		email=#{email},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete  from gysda where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from gysda where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from gysda 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询分类列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from gysda 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+
+
+<!-- 查询所有有效的 -->
+<select id="queryByAll"  resultMap="BaseResultMap" parameterType="Object">
+	select id,name,addr,fr,khh,zh,sh,lxr,phone,tel,fax,email,state from gysda where state = 0
+</select>
+
+<!-- 管理采购物资分类 -->
+<insert id="addCgflRel" parameterType="Object" >
+ INSERT INTO cgfl_rel  (gysId, cgflId)
+ VALUES (#{gysId}, #{cgflId});
+</insert>
+
+<!-- 管理招标物资分类 -->
+<insert id="addZbwzRel" parameterType="Object" >
+ INSERT INTO zbwz_rel  (gysId, zbwzId)
+ VALUES (#{gysId}, #{zbwzId});
+</insert>
+
+<!-- 删除采购物资分类关联的数据 -->
+<delete id="deleteCgflRel" parameterType="Object">
+	delete 	from cgfl_rel where gysId = #{id}
+</delete>
+<!-- 删除招标物资关联的数据 -->
+<delete id="deleteZbwzRel" parameterType="Object">
+	delete 	from zbwz_rel where gysId = #{id}
+</delete>
+
+</mapper>   

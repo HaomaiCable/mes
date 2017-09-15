@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.ZbwzMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.ZbwzBean" >
+	<result column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="descr" property="descr"/>
+	<result column="state" property="state"/>
+
+</resultMap>
+       
+<!-- site_type table all fields -->
+<sql id="Base_Column_List" >
+	 id,name,descr,state
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	 <if test="name != null and name != ''" >
+	    and name like CONCAT('%', #{name}, '%')
+	</if>
+ 	<if test="descr != null and descr != ''" >
+	    and descr =  #{descr}
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zbwz(id,name,descr,state)
+ values(#{id},#{name},#{descr},#{state})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update zbwz set name=#{name},descr=#{descr},state=#{state} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update site_type set 
+	<trim  suffixOverrides="," >
+	<if test="name != null  and name != '' ">
+		name=#{name},
+	</if>
+	<if test="descr != null  and descr != '' ">
+		descr=#{descr},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete 	 from zbwz where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from zbwz where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from zbwz 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from zbwz 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+<!-- 删除类型关联的数据 -->
+<delete id="deleteGysRel" parameterType="Object">
+	delete 	from zbwz_rel where zbwzId = #{id}
+</delete>
+
+
+<!-- 查询所有的 -->
+<select id="queryByAll"  resultMap="BaseResultMap" parameterType="Object">
+	select id,name from zbwz where state = 0
+</select>
+
+<!-- 根据供应商id查询的采购物资分类 -->
+<select id="queryByGysId"  resultMap="BaseResultMap" parameterType="Object">
+	select id,name from zbwz t,zbwz_rel r where t.id = r.zbwzId AND t.state = 0 AND r.gysId = #{gysId}
+</select>
+
+</mapper>   

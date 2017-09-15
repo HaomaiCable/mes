@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.GzTaskMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.GzTaskBean" >
+	<result column="id" property="id"/>
+	<result column="state" property="state"/>
+	<result column="rq" property="rq"/>
+	<result column="tcr" property="tcr"/>
+	<result column="ly" property="ly"/>
+	<result column="cyry" property="cyry"/>
+	<result column="rwName" property="rwName"/>	
+	<result column="rwContent" property="rwContent"/>
+	<result column="rwResult" property="rwResult"/>
+	<result column="wcrq_yq" property="wcrq_yq"/>	
+	<result column="wcrq" property="wcrq"/>
+	<result column="wcResult" property="wcResult"/>
+	<result column="createBy" property="createBy"/>
+	<result column="createTime" property="createTime"/>
+	<result column="report" property="report"/>
+	<result column="reportTime" property="reportTime"/>
+	<result column="accept" property="accept"/>
+	<result column="acceptBy" property="acceptBy"/>
+	<result column="acceptTime" property="acceptTime"/>
+
+
+</resultMap>
+
+<!-- xsdd table all fields -->
+<sql id="Base_Column_List" >
+	 id,state,rq,tcr,ly,cyry,rwName,rwContent,rwResult,wcrq_yq,wcrq,wcResult,createBy,createTime,report,reportTime,accept,acceptBy,acceptTime
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1  
+    <choose>
+	    <when test="(fromrq != null and fromrq != '') and (torq != null and torq != '')" >
+             and (rq BETWEEN  #{fromrq} and  #{torq})
+        </when>
+		<otherwise>
+		      and rq>=DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		</otherwise>
+	</choose>
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+
+	<if test="rq != null" >
+	    and rq =  #{rq}
+	</if>
+	 <if test="tcr != null and tcr != ''" >
+	 	and tcr like CONCAT('%', #{tcr}, '%')
+	</if>
+	
+	<if test="cyry != null and cyry != ''" >
+	    and  cyry  like CONCAT('%', trim(#{cyry}), '%')
+	</if>
+	<if test="rwName != null and rwName != ''" >
+	    and  rwName  like CONCAT('%', trim(#{rwName}), '%')
+	</if>
+	<if test="rwContent != null and rwContent != ''" >
+	    and  rwContent  like CONCAT('%', trim(#{rwContent}), '%')
+	</if>
+	<if test="rwResult != null and rwResult != ''" >
+	    and  rwResult  like CONCAT('%', trim(#{rwResult}), '%')
+	</if>
+	<if test="wcrq_yq != null and wcrq_yq != ''" >
+	    and  wcrq_yq  = #{wcrq_yq}
+	</if>
+	<if test="wcrq != null and wcrq != ''" >
+	    and  wcrq  = #{wcrq}
+	</if>
+	<if test="wcResult != null and wcResult != ''" >
+	    and wcResult  like CONCAT('%',trim(#{wcResult}), '%')
+	</if>
+
+	<if test="createBy != null and createBy != ''" >
+	    and createBy  like CONCAT('%',#{createBy},'%')
+	</if>
+	<if test="createTime != null" >
+	    and createTime =  #{createTime}
+	</if>
+	<if test="report != null " >
+	    and report =  #{report}
+	</if>
+	<if test="reportTime != null" >
+	    and reportTime =  #{reportTime}
+	</if>
+	<if test="accept != null " >
+	    and accept =  #{accept}
+	</if>
+	<if test="acceptBy != null and acceptBy != ''" >
+	    and acceptBy  like CONCAT('%',#{acceptBy},'%')
+	</if>
+	<if test="acceptTime != null" >
+	    and acceptTime =  #{acceptTime}
+	</if>
+
+	<if test="(fromwcrq_yq != null and fromwcrq_yq != '') and (towcrq_yq != null and towcrq_yq != '')" >
+         and (wcrq_yq BETWEEN  #{fromwcrq_yq} and  #{towcrq_yq})
+    </if>
+	<if test="(fromwcrq != null and fromwcrq != '') and (towcrq != null and towcrq != '')" >
+         and (wcrq BETWEEN  #{fromwcrq} and  #{towcrq})
+    </if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into gz_task(id,state,rq,tcr,ly,cyry,rwName,rwContent,rwResult,wcrq_yq,wcrq,wcResult,createBy,createTime,report,accept)
+ values(#{id},1,#{rq},#{tcr},#{ly},#{cyry},#{rwName},#{rwContent},#{rwResult},#{wcrq_yq},#{wcrq},#{wcResult},#{createBy},now(),2,2)
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update gz_task set state=#{state},rq=#{rq},tcr=#{tcr},ly=#{ly},cyry=#{cyry},rwName=#{rwName},rwContent=#{rwContent},rwResult=#{rwResult},wcrq_yq=#{wcrq_yq},wcrq=#{wcrq},wcResult=#{wcResult},report=#{report},reportTime = #{reportTime},accept=#{accept} ,acceptBy=#{acceptBy},acceptTime=#{acceptTime} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update gz_task set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>	
+	<if test="rq != null  ">
+		rq=#{rq},
+	</if>
+	<if test="tcr != null  and tcr != '' ">
+		tcr=#{tcr},
+	</if>
+	<if test="ly != null  and ly != '' ">
+		ly=#{ly},
+	</if>
+	<if test="cyry != null  and cyry != '' ">
+		cyry=#{cyry},
+	</if>
+	<if test="rwName != null  and rwName != '' ">
+		rwName=#{rwName},
+	</if>
+	<if test="rwContent != null  and rwContent != '' ">
+		rwContent=#{rwContent},
+	</if>
+	<if test="rwResult != null  and rwResult != '' ">
+		rwResult=#{rwResult},
+	</if>
+	<if test="wcrq_yq != null  ">
+		wcrq_yq=#{wcrq_yq},
+	</if>
+	<if test="wcrq != null   ">
+		wcrq=#{wcrq},
+	</if>
+	<if test="wcResult != null  and wcResult != '' ">
+		wcResult=#{wcResult},
+	</if>
+	<if test="createBy != null  and createBy != '' ">
+		createBy=#{createBy},
+	</if>
+	<if test="createTime != null  ">
+		createTime=#{createTime},
+	</if>
+	<if test="report != null   ">
+		report=#{report},
+	</if>
+	<if test="reportTime != null  ">
+		reportTime=#{reportTime},
+	</if>
+	<if test="accept != null   ">
+		accept=#{accept},
+	</if>
+
+	<if test="acceptBy != null  and acceptBy != '' ">
+		acceptBy=#{acceptBy},
+	</if>
+	<if test="acceptTime != null  ">
+		acceptTime=#{acceptTime},
+	</if>
+
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update gz_task set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from gz_task where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from gz_task where id = #{id}
+</select>
+
+<!-- 销售计划列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from gz_task 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+
+  	
+<!-- 查询销售订单明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from gz_task m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by  rq desc,wcrq_yq
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByListNoPage" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from gz_task m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by  rq desc,wcrq_yq
+		</otherwise>
+	</choose>
+</select>
+
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+    from gz_task m  where 1=1  order by  rq desc,wcrq_yq 
+ 
+</select>
+
+<!-- 查询所有有效的列表 -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from gz_task where deleted= 0   
+	 and id = #{id} 
+</select>
+
+</mapper>   

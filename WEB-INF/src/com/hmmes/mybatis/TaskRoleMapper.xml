@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.TaskRoleMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.TaskRole" >
+	<result column="id" property="id"/>
+	<result column="userId" property="userId"/>
+	<result column="userName" property="userName"/>
+
+	<result column="state" property="state"/>
+</resultMap>
+       
+<!-- Task_Role table all fields -->
+<sql id="Base_Column_List" >
+	 id,userId,userName,state
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="userId != null" >
+	    and userId =  #{userId}
+	</if>
+	 	<if test="userName != null and userName != ''" >
+	     and userName like CONCAT('%', #{userName}, '%')
+	</if>
+
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into Task_Role(id,userId,userName,state)
+ values(#{id},#{userId},#{userName},0)  
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update Task_Role set userId=#{userId},userName=#{userName},state=#{state} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update Task_Role set 
+	<trim  suffixOverrides="," >
+	<if test="userId != null  ">
+		userId=#{userId},
+	</if>
+	<if test="userName != null  and userName != '' ">
+		userName=#{userName},
+	</if>
+
+	<if test="state != null  ">
+		state=#{state},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete 	 from Task_Role where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 系统用户 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from Task_Role where id = #{id}
+</select>
+<!-- 根据用户id查询 系统用户 -->
+<select id="queryByUserId"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from Task_Role where userId = #{userId}
+</select>
+
+<!-- 系统用户 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from Task_Role 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询系统用户列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from Task_Role 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+<!-- 查询所有有效的 -->
+<select id="queryByAll"  resultMap="BaseResultMap" parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/> 
+	from Task_Role  where state = 0
+</select>
+
+<!-- 管理计划查看权限 -->
+<insert id="addTaskRoleRel" parameterType="Object" >
+ INSERT INTO task_role_rel  (roleId, viewId)
+ VALUES (#{roleId}, #{viewId});
+</insert>
+
+
+<!-- 删除计划查看权限关联的数据 -->
+<delete id="deleteTaskRoleRel" parameterType="Object">
+	delete 	from task_role_rel where roleId = #{roleId}
+</delete>
+<!-- 根据管理者ID，关联查找task_role_rel中所管理人员 -->
+<select id="queryByGlzId"  resultMap="BaseResultMap" parameterType="Object">
+	select c.id as id ,c.nickName as nickName ,b.viewId as viewId  from task_role_rel b ,sys_user c  where  b.viewId =c.id  AND c.state = 0 and b.roleId= #{roleId}
+</select>
+
+</mapper>   

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.SiteScoreMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.SiteScore" >
+	<result column="siteId" property="siteId"/>
+	<result column="viewNum" property="viewNum"/>
+	<result column="likeNum" property="likeNum"/>
+	<result column="shareNum" property="shareNum"/>
+	<result column="clickNum" property="clickNum"/>
+	<result column="collectNum" property="collectNum"/>
+	<result column="commentNum" property="commentNum"/>
+</resultMap>
+       
+<!-- site_score table all fields -->
+<sql id="Base_Column_List" >
+	 siteId,viewNum,likeNum,shareNum,clickNum,collectNum,commentNum
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="siteId != null" >
+	    and siteId =  #{siteId}
+	</if>
+	<if test="viewNum != null" >
+	    and viewNum =  #{viewNum}
+	</if>
+	<if test="likeNum != null" >
+	    and likeNum =  #{likeNum}
+	</if>
+	<if test="shareNum != null" >
+	    and shareNum =  #{shareNum}
+	</if>
+	<if test="clickNum != null" >
+	    and clickNum =  #{clickNum}
+	</if>
+	<if test="collectNum != null" >
+	    and collectNum =  #{collectNum}
+	</if>
+	<if test="commentNum != null" >
+	    and commentNum =  #{commentNum}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  insert into site_score(siteId,viewNum,likeNum,shareNum,clickNum,collectNum,commentNum)
+ values(#{siteId},#{viewNum},#{likeNum},#{shareNum},#{clickNum},#{collectNum},#{commentNum})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update site_score set viewNum=#{viewNum},likeNum=#{likeNum},shareNum=#{shareNum},clickNum=#{clickNum},collectNum=#{collectNum},commentNum=#{commentNum} where siteId=#{siteId}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update site_score set 
+	<trim  suffixOverrides="," >
+	<if test="viewNum != null  ">
+		viewNum=#{viewNum},
+	</if>
+	<if test="likeNum != null  ">
+		likeNum=#{likeNum},
+	</if>
+	<if test="shareNum != null  ">
+		shareNum=#{shareNum},
+	</if>
+	<if test="clickNum != null  ">
+		clickNum=#{clickNum},
+	</if>
+	<if test="collectNum != null  ">
+		collectNum=#{collectNum},
+	</if>
+	<if test="commentNum != null  ">
+		commentNum=#{commentNum},
+	</if>
+	</trim> where siteId=#{siteId}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete 	 from site_score where siteId = #{siteId}
+</delete>
+ 
+<!-- 根据id查询 站点总分数 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from site_score where siteId = #{siteId}
+</select>
+
+<!-- 站点总分数 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from site_score 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询站点总分数列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from site_score 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+<!-- 保存分数+1 -->
+<update id="saveScore" parameterType="Object" >
+	update site_score set ${column} = ${column}+1   where siteId=#{siteId}
+</update>
+  	
+</mapper>   

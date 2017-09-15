@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.JtjhMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.JtjhBean" >
+	<result column="id" property="id"/>
+	<result column="row" property="row"/>
+	<result column="ddid" property="ddid"/>
+	<result column="xdrq" property="xdrq"/>
+	<result column="jhbh" property="jhbh"/>
+	<result column="state" property="state"/>
+	<result column="gd" property="gd"/>	
+	<result column="sbmc" property="sbmc"/>
+	<result column="sbmcdek" property="sbmcdek"/>
+	<result column="iszl" property="iszl"/>	
+	<result column="gxxh" property="gxxh"/>
+	<result column="gxxh_o" property="gxxh_o"/>
+	<result column="gxgg" property="gxgg"/>
+	<result column="gxgg_o" property="gxgg_o"/>
+	<result column="gxdy" property="gxdy"/>
+	<result column="gxdy_o" property="gxdy_o"/>
+	<result column="gxgy" property="gxgy"/>
+	<result column="gxdw" property="gxdw"/>
+	<result column="gxlb" property="gxlb"/>
+	<result column="gxjsyq" property="gxjsyq"/>
+	<result column="gxph" property="gxph"/>
+	<result column="jhsl" property="jhsl"/>
+	<result column="jhsl_o" property="jhsl_o"/>
+	<result column="jhsl_xs" property="jhsl_xs"/>
+	<result column="wgflag" property="wgflag"/>
+	<result column="jhrq" property="jhrq"/>
+
+	<result column="createBy" property="createBy"/>
+	<result column="createTime" property="createTime"/>
+	<result column="updateBy" property="updateBy"/>
+	<result column="updateTime" property="updateTime"/>
+	<result column="deleted" property="deleted"/>
+	<result column="dtts" property="dtts"/>
+
+</resultMap>
+
+<!-- 扩展字段 -->
+<resultMap id="ExtResultMap" extends="BaseResultMap" type="com.hmmes.bean.JtjhBean" >
+	<result column="subCountWg" property="subCountWg"/>
+	<result column="subCountBg" property="subCountBg"/>
+</resultMap>
+
+
+<!-- xsdd table all fields -->
+<sql id="Base_Column_List" >
+	 id,row,ddid,xdrq,jhbh,state,gd,sbmc,sbmcdek,iszl,gxxh,gxxh_o,gxgg,gxgg_o,gxdy,gxdy_o,gxgy,gxdw,gxjsyq,gxph,gxlb,jhsl,jhsl_o,jhsl_xs,wgflag,jhrq,createBy,createTime,updateBy,updateTime,deleted,dtts
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1  and deleted =  0 
+    <choose>
+	    <when test="(fromxdrq != null and fromxdrq != '') and (toxdrq != null and toxdrq != '')" >
+             and (xdrq BETWEEN  #{fromxdrq} and  #{toxdrq})
+        </when>
+		<otherwise>
+		      and xdrq>=DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		</otherwise>
+	</choose>
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="row != null" >
+	    and row =  #{row}
+	</if>
+	<if test="ddid != null" >
+	    and ddid =  #{ddid}
+	</if>
+	<if test="xdrq != null" >
+	    and xdrq =  #{xdrq}
+	</if>
+	 <if test="jhbh != null and jhbh != ''" >
+	 	and jhbh like CONCAT('%', #{jhbh}, '%')
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>	
+	<if test="gd != null and gd != ''" >
+	    and  gd  like CONCAT('%', trim(#{gd}), '%')
+	</if>
+	<if test="sbmc != null and sbmc != ''" >
+	    and  sbmc  = #{sbmc}
+	</if>
+	<if test="sbmcdek != null and sbmcdek != ''" >
+	    and  sbmcdek  like CONCAT('%', trim(#{sbmcdek}), '%')
+	</if>
+    <if test="iszl != null and iszl != ''" >
+	    and iszl =  #{iszl}
+	</if>
+	<if test="gxxh != null and gxxh != ''" >
+	    and gxxh  like CONCAT('%',trim(#{gxxh}), '%')
+	</if>
+	<if test="gxxh_o != null and gxxh_o != ''" >
+	    and gxxh_o  like CONCAT('%',#{gxxh_o}, '%')
+	</if>
+	 <if test="gxgg != null and gxgg != ''" >
+	    and gxgg   like CONCAT('%',trim(#{gxgg}), '%')
+	</if>
+	 <if test="gxgg_o != null and gxgg_o != ''" >
+	    and gxgg_o   like CONCAT('%',#{gxgg_o}, '%')
+	</if>
+    <if test="gxdy != null and gxdy != ''" >
+	    and gxdy   like CONCAT('%',#{gxdy}, '%')
+	</if>
+    <if test="gxdy_o != null and gxdy_o != ''" >
+	    and gxdy_o   like CONCAT('%',#{gxdy_o}, '%')
+	</if>
+	 <if test="gxgy != null and gxgy != ''" >
+	    and gxgy =  #{gxgy}
+	</if>		
+	<if test="gxdw != null and gxdw != ''" >
+	    and gxdw =  #{gxdw}
+	</if>
+    <if test="gxjsyq != null and gxjsyq != ''" >
+	    and gxjsyq   like CONCAT('%',#{gxjsyq}, '%')
+	</if>
+    <if test="gxph != null and gxph != ''" >
+	    and gxph   like CONCAT('%',#{gxph}, '%')
+	</if>
+	 <if test="gxlb != null and gxlb != ''" >
+	    and gxlb =  #{gxlb}
+	</if>
+ 
+	<if test="jhsl != null " >
+	    and jhsl =  #{jhsl}
+	</if>
+
+	<if test="jhsl_o != null " >
+	    and jhsl_o =  #{jhsl_o}
+	</if>
+	 <if test="jhsl_xs != null and jhsl_xs != ''" >
+	    and jhsl_xs =  #{jhsl_xs}
+	</if>
+	 <if test="wgflag != null and wgflag != ''" >
+	    and wgflag =  #{wgflag}
+	</if>
+	<if test="jhrq != null " >
+	    and  jhrq between #{jhrq} and #{jhrq}
+	</if>
+
+	<if test="createBy != null and createBy != ''" >
+	    and createBy  like CONCAT('%',#{createBy},'%')
+	</if>
+	<if test="createTime != null" >
+	    and createTime =  #{createTime}
+	</if>
+	<if test="updateBy != null and updateBy != ''" >
+	    and updateBy =  #{updateBy}
+	</if>
+	<if test="updateTime != null" >
+	    and updateTime =  #{updateTime}
+	</if>
+	<if test="dtts != null" >
+	    and dtts =  #{dtts}
+	</if>
+	<if test="(fromjhrq != null and fromjhrq != '') and (tojhrq != null and tojhrq != '')" >
+         and (jhrq BETWEEN  #{fromjhrq} and  #{tojhrq})
+    </if>
+	<if test="(fromcreateTime != null and fromcreateTime != '') and (tocreateTime != null and tocreateTime != '')" >
+         and (createTime BETWEEN  #{fromcreateTime} and  #{tocreateTime})
+    </if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into jtjh(id,row,ddid,xdrq,jhbh,state,gd,sbmc,sbmcdek,iszl,gxxh,gxxh_o,gxgg,gxgg_o,gxdy,gxdy_o,gxgy,gxdw,gxjsyq,gxph,gxlb,jhsl,jhsl_o,jhsl_xs,wgflag,jhrq,createBy,createTime,deleted,dtts)
+ values(#{id},#{row},#{ddid},#{xdrq},#{jhbh},#{state},#{gd},#{sbmc},#{sbmcdek},#{iszl},#{gxxh},#{gxxh_o},#{gxgg},#{gxgg_o},#{gxdy},#{gxdy_o},#{gxgy},#{gxdw},#{gxjsyq},#{gxph},#{gxlb},#{jhsl},#{jhsl_o},#{jhsl_xs},"未完工",#{jhrq},#{createBy},now(),0,#{dtts})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update jtjh set ddid=#{ddid},row=#{row},xdrq=#{xdrq},jhbh=#{jhbh},state=#{state},gd=#{gd},sbmc=#{sbmc},sbmcdek=#{sbmcdek},iszl=#{iszl},gxxh=#{gxxh},gxxh_o=#{gxxh_o},gxgg=#{gxgg},gxgg_o=#{gxgg_o},gxdy=#{gxdy},gxdy_o=#{gxdy_o},gxgy=#{gxgy},gxdw=#{gxdw},gxjsyq=#{gxjsyq},gxph=#{gxph},gxlb=#{gxlb},jhsl=#{jhsl} ,jhsl_o=#{jhsl_o} ,jhsl_xs=#{jhsl_xs} ,wgflag=#{wgflag} 
+  ,jhrq=#{jhrq},deleted=#{deleted},updateBy=#{updateBy},updateTime = now(),dtts=#{dtts} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update jtjh set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="row != null  ">
+		row=#{row},
+	</if>
+	<if test="ddid != null  ">
+		ddid=#{ddid},
+	</if>
+	<if test="xdrq != null  ">
+		xdrq=#{xdrq},
+	</if>
+	<if test="jhbh != null  and jhbh != '' ">
+		jhbh=#{jhbh},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>	
+	<if test="gd != null  and gd != '' ">
+		gd=#{gd},
+	</if>
+	<if test="sbmc != null  and sbmc != '' ">
+		sbmc=#{sbmc},
+	</if>
+	<if test="sbmcdek != null  and sbmcdek != '' ">
+		sbmcdek=#{sbmcdek},
+	</if>
+	<if test="iszl != null  and iszl != '' ">
+		iszl=#{iszl},
+	</if>
+	<if test="gxxh != null  and gxxh != '' ">
+		gxxh=#{gxxh},
+	</if>
+	<if test="gxxh_o != null  and gxxh_o != '' ">
+		gxxh_o=#{gxxh_o},
+	</if>
+	<if test="gxgg != null  and gxgg != '' ">
+		gxgg=#{gxgg},
+	</if>
+	<if test="gxgg_o != null  and gxgg_o != '' ">
+		gxgg_o=#{gxgg_o},
+	</if>
+	<if test="gxdy != null  and gxdy != '' ">
+		gxdy=#{gxdy},
+	</if>
+	<if test="gxdy_o != null  and gxdy_o != '' ">
+		gxdy_o=#{gxdy_o},
+	</if>
+	<if test="gxgy != null  and gxgy != '' ">
+		gxgy=#{gxgy},
+	</if>
+
+	<if test="gxdw != null  and gxdw != '' ">
+		gxdw=#{gxdw},
+	</if>
+	<if test="gxjsyq != null  and gxjsyq != '' ">
+		gxjsyq=#{gxjsyq},
+	</if>
+	<if test="gxph != null  and gxph != '' ">
+		gxph=#{gxph},
+	</if>
+	<if test="gxlb != null  and gxlb != '' ">
+		gxlb=#{gxlb},
+	</if>
+	<if test="jhsl != null ">
+		jhsl=#{jhsl},
+	</if>
+	<if test="jhsl_o != null ">
+		jhsl_o=#{jhsl_o},
+	</if>
+	<if test="jhsl_xs != null  and jhsl_xs != '' ">
+		jhsl_xs=#{jhsl_xs},
+	</if>
+	<if test="wgflag != null  and wgflag != '' ">
+		wgflag=#{wgflag},
+	</if>
+	<if test="jhrq != null ">
+		jhrq=#{jhrq},
+	</if>
+
+	<if test="createBy != null  and createBy != '' ">
+		createBy=#{createBy},
+	</if>
+	<if test="createTime != null  ">
+		createTime=#{createTime},
+	</if>
+	<if test="updateBy != null  and updateBy != '' ">
+		updateBy=#{updateBy},
+	</if>
+	<if test="updateTime != null  ">
+		updateTime=#{updateTime},
+	</if>
+	<if test="deleted != null  ">
+		deleted=#{deleted},
+	</if>
+	<if test="dtts != null  ">
+		dtts=#{dtts},
+	</if>
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update jtjh set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from jtjh where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from jtjh where id = #{id}
+</select>
+
+<!-- 根据jhbh row 查询 -->
+<select id="queryByJhbhAndRow"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from jtjh where jhbh = #{0} and row = #{1} 
+</select>
+
+<!-- 销售计划列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from jtjh 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+<!-- 半成品计划列表总数-->
+<select id="queryByCountBcp" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from jtjh 
+	<include refid="Example_Where_Clause"/>
+	 and jhbh like 'SC%' 
+</select>
+  	
+<!-- 查询销售订单明细列表 -->
+<select id="queryByList" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM jtjh_wghb a WHERE a.jhid = m.id) AS subCountWg
+
+	,(SELECT COUNT(*) FROM jtjh_bg c WHERE c.jhid = m.id) AS subCountBG
+	from jtjh m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by  xdrq desc , jhbh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+<!-- 按照工段查询明细列表 -->
+<select id="queryByListGd" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM jtjh_wghb a WHERE a.jhid = m.id) AS subCountWg
+
+	,(SELECT COUNT(*) FROM jtjh_bg c WHERE c.jhid = m.id) AS subCountBG
+	from jtjh m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by  jhbh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+<!-- 查询半成品计划明细列表 -->
+<select id="queryByListBcp" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM jtjh_wghb a WHERE a.jhid = m.id) AS subCountWg
+
+	,(SELECT COUNT(*) FROM jtjh_bg c WHERE c.jhid = m.id) AS subCountBG
+	from jtjh m  
+	<include refid="Example_Where_Clause"/>
+	and jhbh like 'SC%' 
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by xdrq desc , jhbh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByListNoPage" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM jtjh_wghb a WHERE a.jhid = m.id) AS subCountWg
+
+	,(SELECT COUNT(*) FROM jtjh_bg c WHERE c.jhid = m.id) AS subCountBG
+	from jtjh m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by xdrq desc , jhbh desc,row
+		</otherwise>
+	</choose>
+</select>
+
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM jtjh_wghb a WHERE a.jhid = m.id) AS subCountWg
+
+	,(SELECT COUNT(*) FROM jtjh_bg c WHERE c.jhid = m.id) AS subCountBG
+    from jtjh m  where deleted= 0 order by jhbh desc,row 
+ 
+</select>
+
+<!-- 查询所有有效的列表 -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from jtjh where deleted= 0   
+	 and id = #{id} order by row
+</select>
+<!-- 根据ddid查询 -->
+<select id="queryListByDdId" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from jtjh where deleted= 0   
+	 and ddid = #{ddid} order by row
+</select>
+
+<!-- 查询所有有效的列表 @param jhbh-->
+<select id="queryListByJhbh" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from jtjh where deleted= 0   
+	and jhbh = #{jhbh} order by row
+</select>
+<!-- 查询 @param sbmcdek-->
+<select id="queryListBySbmcdek" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from jtjh where deleted= 0   
+	and sbmcdek = #{sbmcdek} order by jhbh
+</select>
+<!-- 查询 @param sbmc-->
+<select id="queryListBySbmc" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from jtjh where deleted= 0   
+	and sbmc = #{sbmc} order by jhbh
+</select>
+</mapper>   

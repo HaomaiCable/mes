@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.XsddsMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.XsddsBean" >
+	<result column="id" property="id"/>
+	<result column="btid" property="btid"/>
+	<result column="row" property="row"/>
+	<result column="state" property="state"/>
+	<result column="jhbh" property="jhbh"/>
+	<result column="xh" property="xh"/>
+	<result column="gg" property="gg"/>
+	<result column="dy" property="dy"/>
+	<result column="gy" property="gy"/>
+	<result column="dw" property="dw"/>
+	<result column="sl" property="sl"/>
+	<result column="jhrq_kh" property="jhrq_kh"/>
+	<result column="jhrq" property="jhrq"/>
+	<result column="jsyq" property="jsyq"/>
+	<result column="ph" property="ph"/>
+	<result column="xdjt" property="xdjt"/>
+</resultMap>
+       
+<!-- xsdds table all fields -->
+<sql id="Base_Column_List" >
+	 id,btid,row,state,jhbh,xh,gg,dy,gy,dw,sl,jhrq_kh,jhrq,ph,xdjt
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="btid != null" >
+	    and btid =  #{btid}
+	</if>
+	<if test="row != null" >
+	    and row =  #{row}
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+    <if test="jhbh != null and jhbh != ''" >
+	    and jhbh =  #{jhbh}
+	</if>
+	 	<if test="xh != null and xh != ''" >
+	    and xh =  #{xh}
+	</if>
+	 <if test="gg != null and gg != ''" >
+	    and gg =  #{gg}
+	</if>
+    <if test="dy != null and dy != ''" >
+	    and dy =  #{dy}
+	</if>
+	 <if test="gy != null and gy != ''" >
+	    and gy =  #{gy}
+	</if>
+	<if test="dw != null and dw != ''" >
+	    and dw =  #{dw}
+	</if>
+	<if test="sl != null " >
+	    and sl =  #{sl}
+	</if>
+	<if test="jhrq_kh != null " >
+	    and jhrq_kh =  #{jhrq_kh}
+	</if>
+	<if test="jhrq != null " >
+	    and jhrq =  #{jhrq}
+	</if>
+	<if test="jsyq != null and jsyq != ''" >
+	    and jsyq =  #{jsyq}
+	</if>
+	 <if test="ph != null and ph != ''" >
+	    and ph =  #{ph}
+	</if>
+	<if test="xdjt != null " >
+	    and xdjt =  #{xdjt}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into xsdds(id,btid,row,state,jhbh,xh,gg,dy,gy,dw,sl,jhrq_kh,jhrq,jsyq,ph,xdjt)
+ values(#{id},#{btid},#{row},#{state},#{jhbh},#{xh},#{gg},#{dy},#{gy},#{dw},#{sl},#{jhrq_kh},#{jhrq},#{jsyq},#{ph},#{xdjt})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update xsdds set btid=#{btid},row=#{row},state=#{state},jhbh=#{jhbh},xh=#{xh},gg=#{gg},dy=#{dy},gy=#{gy},dw=#{dw},sl=#{sl},jhrq_kh=#{jhrq_kh} 
+  ,jhrq=#{jhrq},jsyq=#{jsyq},ph=#{ph},xdjt=#{xdjt}   where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update xsdds set 
+	<trim  suffixOverrides="," >
+	<if test="btid != null  ">
+		btid=#{btid},
+	</if>
+	<if test="row != null  ">
+		row=#{row},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>
+	<if test="jhbh != null  and jhbh != '' ">
+		jhbh=#{jhbh},
+	</if>
+	<if test="xh != null  and xh != '' ">
+		xh=#{xh},
+	</if>
+	<if test="gg != null  and gg != '' ">
+		gg=#{gg},
+	</if>
+	<if test="dy != null  and dy != '' ">
+		dy=#{dy},
+	</if>
+	<if test="gy != null  and gy != '' ">
+		gy=#{gy},
+	</if>
+	<if test="dw != null  and dw != '' ">
+		dw=#{dw},
+	</if>
+	<if test="sl != null ">
+		sl=#{sl},
+	</if>
+	<if test="jhrq_kh != null ">
+		jhrq_kh=#{jhrq_kh},
+	</if>
+	<if test="jhrq != null ">
+		jhrqh=#{jhrqh},
+	</if>
+	<if test="jsyq != null  and jsyq != '' ">
+		jsyq=#{jsyq},
+	</if>
+	<if test="ph != null  and ph != '' ">
+		ph=#{ph},
+	</if>
+	<if test="xdjt != null ">
+		xdjt=#{xdjt},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete  from xsdds where id = #{id}
+</delete>
+
+ 
+<!-- 根据id查询销售名单 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from xsdds where id = #{id}
+</select>
+
+<!-- 销售订单明细列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from xsdds 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询销售订单明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from xsdds 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+<!-- 查询所有销售明细列表 -->
+<select id="queryByAll"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" />  from xsdds
+</select>
+
+
+<!-- 根据销售订单表头ID，查询销售该销售订单的产品明细列表 -->
+<select id="queryByBtid"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from xsdds where btid = #{btid}
+</select>
+
+<!-- 根据销售订单表头ID，删除记录 -->
+<delete id="deleteByBtid" parameterType="Object">
+	delete  from xsdds where  btid = #{btid}
+</delete>
+
+  	
+</mapper>   

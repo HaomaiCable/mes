@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.JhbhMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.JhbhBean" >
+	<result column="id" property="id"/>
+	<result column="nian" property="nian"/>
+	<result column="yue" property="yue"/>
+	<result column="jhno" property="jhno"/>
+	<result column="flag" property="flag"/>
+</resultMap>
+       
+<!-- sys_role table all fields -->
+<sql id="Base_Column_List" >
+	 id,nian,yue,jhno,flag
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+    <if test="nian != null" >
+	    and nian=  #{nian}
+	</if>
+	<if test="yue != null" >
+	    and yue =  #{yue}
+	</if>
+	<if test="jhno!= null ">
+		and jhno = #{jhno}
+	</if>
+	<if test="flag!= null ">
+		and flag = #{flag}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into jhbh(id,nian,yue,jhno,flag)
+  values(#{id},#{nian},#{yue},#{jhno},#{flag})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update jhbh set nian=#{nian},yue=#{yue},jhno=#{jhno},flag=#{flag} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update jhbh set 
+	<trim  suffixOverrides="," >
+	<if test="nian != null">
+		nian=#{nian},
+	</if>
+	<if test="yue != null ">
+		yue=#{yue},
+	</if>
+    <if test="jhno != null  ">
+		jhno=#{jhno},
+	</if>
+    <if test="flag != null  ">
+		flag=#{flag},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete  from jhbh where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from jhbh where id = #{id}
+</select>
+
+
+<!--  列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from jhbh
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询所有的列表,按照页数 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from jhbh
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by nian desc,yue desc 
+		</otherwise>
+	</choose>
+
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+	
+<!-- 查询所有业务员列表 -->
+<select id="queryNoByYearAndMonth" resultMap="BaseResultMap"  parameterType="Object">
+	select  <include refid="Base_Column_List"/>
+	from Jhbh where nian = #{0} and  yue=#{1}  and  flag=#{2} 
+</select>
+
+
+</mapper>   

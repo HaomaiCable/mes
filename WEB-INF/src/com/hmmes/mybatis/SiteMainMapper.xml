@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.SiteMainMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.SiteMain" >
+	<result column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="domain" property="domain"/>
+	<result column="link" property="link"/>
+	<result column="state" property="state"/>
+	<result column="createTime" property="createTime"/>
+	<result column="updateTime" property="updateTime"/>
+	<result column="rank" property="rank"/>
+	<result column="pic" property="pic"/>
+	<result column="deleted" property="deleted" />
+</resultMap>
+       
+<!-- TbcClassify table all fields -->
+<sql id="Base_Column_List" >
+	id, NAME, domain, link, state, createTime, updateTime, rank, pic, deleted
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where  1=1
+<trim  suffixOverrides="," >
+	<if test="name != null and name != ''" >
+	    and name like CONCAT('%', #{name}, '%')
+	</if>
+	<if test="deleted != null" >
+	    and deleted = #{deleted}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  INSERT INTO site_main
+		(id, NAME, domain, link, state, createTime, updateTime, rank, pic, deleted)
+	VALUES
+		(#{id}, #{name},  #{domain}, #{link}, #{state}, now(),  now(), #{rank}, #{pic}, #{deleted})
+</insert>
+
+<!-- 修改记录-->  
+ <update id="update" parameterType="Object" >
+  	UPDATE site_main SET name = #{name},domain = #{domain},link = #{link},state = #{state},updateTime = now(),rank = #{rank},pic = #{pic},deleted = #{deleted} where id = #{id}
+ </update>
+ 
+ <!--修改技术，为null 这不修改 -->
+<update id="updateBySelective" parameterType="Object" >
+	
+</update>
+
+<!-- 逻辑删除，将deleted 改成 1 -->
+<update id="delete" parameterType="Object">
+	update site_main set deleted = 1 where id = #{id}
+</update>
+ 
+<!-- 分类列表 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> from site_main where id = #{id}
+</select>
+  	
+<!-- 分类 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from site_main 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 根据id查询分类 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from site_main 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    ${pager.mysqlQueryCondition}
+</select>
+
+<!-- 管理站点类型 -->
+<insert id="addTypeRel" parameterType="Object" >
+ INSERT INTO site_type_rel  (siteId, siteTypeId)
+ VALUES (#{siteId}, #{siteTypeId});
+</insert>
+
+<!-- 删除类型关联的数据 -->
+<delete id="deleteTypeRel" parameterType="Object">
+	delete 	from site_type_rel where siteId = #{id}
+</delete>
+
+
+
+
+</mapper>   

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration> 
+ <typeAliases>
+	
+ </typeAliases>
+
+ <mappers>    
+
+  <mapper resource="com/hmmes/mybatis/SiteMainMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/SiteTypeMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/SiteColumnMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/SiteScoreMapper.xml"/>
+  
+  <mapper resource="com/hmmes/mybatis/SysMenuMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/SysUserMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/SysRoleMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/SysRoleRelMapper.xml"/> 
+  <mapper resource="com/hmmes/mybatis/SysMenuBtnMapper.xml"/>
+
+  <mapper resource="com/hmmes/mybatis/ParaMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/JhbhMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/YwyMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/XsddMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/XsddsMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/XsddWghbMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/XsddRkhbMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/JtMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/YgMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/XsddBgMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/CpMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/CpgxmxMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/SbMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/JtjhMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/JtjhWghbMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/JtjhBgMapper.xml"/>  
+  <mapper resource="com/hmmes/mybatis/GsdeMapper.xml"/>  
+  <mapper resource="com/hmmes/mybatis/ClcpMapper.xml"/>  
+  <mapper resource="com/hmmes/mybatis/ClcpCljzMapper.xml"/>  
+  <mapper resource="com/hmmes/mybatis/GysdaMapper.xml"/> 
+  <mapper resource="com/hmmes/mybatis/CgflMapper.xml"/>  
+  <mapper resource="com/hmmes/mybatis/ZbwzMapper.xml"/>   
+  <mapper resource="com/hmmes/mybatis/ZbggMapper.xml"/>   
+  <mapper resource="com/hmmes/mybatis/TbxxMapper.xml"/>     
+  
+  <mapper resource="com/hmmes/mybatis/CgptMenuMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/CgptUserMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/CgptRoleMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/CgptRoleRelMapper.xml"/> 
+  <mapper resource="com/hmmes/mybatis/CgptMenuBtnMapper.xml"/>
+
+  <mapper resource="com/hmmes/mybatis/GzTaskMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/TaskRoleMapper.xml"/>
+ </mappers>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</configuration>

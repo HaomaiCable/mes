@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.CpMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.CpBean" >
+	<result column="id" property="id"/>
+	<result column="cplb" property="cplb"/>
+	<result column="cpxh" property="cpxh"/>
+	<result column="cpgg" property="cpgg"/>
+	<result column="cpdy" property="cpdy"/>
+	<result column="cpdw" property="cpdw"/>
+	<result column="xsjg" property="xsjg"/>
+	<result column="zxs" property="zxs"/>
+	<result column="zzl" property="zzl"/>
+	<result column="lxs" property="lxs"/>
+	<result column="lzl" property="lzl"/>
+	<result column="cpgs" property="cpgs"/>
+</resultMap>
+
+<!-- 扩展字段 -->
+<resultMap id="ExtResultMap" extends="BaseResultMap" type="com.hmmes.bean.CpBean" >
+	<result column="subCountGx" property="subCountGx"/>
+</resultMap>
+
+<!--  table all fields -->
+<sql id="Base_Column_List" >
+	 id,cplb,cpxh,cpgg,cpdy,cpdw,xsjg,zxs,zzl,lxs,lzl,cpgs
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1 
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+    <if test="cplb != null and cplb != ''" >
+	 	and cplb like CONCAT('%', #{cplb}, '%')
+	</if>
+
+  	<if test="cpxh != null and cpxh != ''" >
+	    and cpxh like CONCAT('%',#{cpxh}, '%')
+	</if>
+	<if test="cpgg != null and cpgg != ''" >
+	    and cpgg like CONCAT('%',#{cpgg}, '%')  
+	</if>
+    <if test="cpdy != null and cpdy != ''" >
+	    and cpdy =  #{cpdy}
+	</if>
+	<if test="cpdw != null and cpdw != ''" >
+	    and cpdw =  #{cpdw}
+	</if>
+	<if test="xsjg != null and xsjg != ''" >
+	    and xsjg like CONCAT('%',#{xsjg}, '%')  
+	</if>
+	<if test="zxs != null " >
+	    and zxs =  #{zxs}
+	</if>
+	<if test="zzl != null " >
+	    and zzl =  #{zzl}
+	</if>
+	<if test="lxs != null " >
+	    and lxs =  #{lxs}
+	</if>
+	<if test="lzl != null " >
+	    and lzl =  #{lzl}
+	</if>
+	<if test="cpgs != null " >
+	    and cpgs =  #{cpgs}
+	</if>
+
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into cp(id,cplb,cpxh,cpgg,cpdy,cpdw,xsjg,zxs,zzl,lxs,lzl,cpgs)
+ values(#{id},#{cplb},#{cpxh},#{cpgg},#{cpdy},#{cpdw},#{xsjg},#{zxs},#{zzl},#{lxs},#{lzl},#{cpgs})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update cp set cplb=#{cplb},cpxh=#{cpxh},cpgg=#{cpgg},cpdy=#{cpdy},cpdw=#{cpdw},xsjg=#{xsjg},zxs=#{zxs} 
+  ,zzl=#{zzl},lxs=#{lxs},lzl=#{lzl},cpgs=#{cpgs} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update cp set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="cplb != null  and cplb != '' ">
+		cplb=#{cplb},
+	</if>
+
+	<if test="cpxh != null  and cpxh != '' ">
+		cpxh=#{cpxh},
+	</if>
+	<if test="cpgg != null  and cpgg != '' ">
+		cpgg=#{cpgg},
+	</if>
+	<if test="cpdy != null  and cpdy != '' ">
+		cpdy=#{cpdy},
+	</if>
+
+	<if test="cpdw != null  and cpdw != '' ">
+		cpdw=#{cpdw},
+	</if>
+
+	<if test="xsjg != null  and xsjg != '' ">
+		xsjg=#{xsjg},
+	</if>
+
+	<if test="zxs != null ">
+		zxs=#{zxs},
+	</if>
+	<if test="zzl != null ">
+		zzl=#{zzl},
+	</if>
+	<if test="lxs != null ">
+		lxs=#{lxs},
+	</if>
+	<if test="lzl != null ">
+		lzl=#{lzl},
+	</if>
+	<if test="cpgs != null  ">
+		cpgs=#{cpgs},
+	</if>
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update cp set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from cp where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from cp where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from cp 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询明细列表 -->
+<select id="queryByList" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM cp_gxmx a WHERE a.cpid = m.id) AS subCountGx
+	from cp m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by cpxh,cpgg
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select  id,cplb,cpxh,cpgg,cpdy,cpdw,xsjg,zxs,zzl,lxs,lzl,cpgs  
+	from cp where 1=1  order by cpxh,cpgg
+</select>
+
+<!-- 查询所有有效的列表@para id -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from cp where id = #{id} order by cpxh,cpgg
+</select>
+
+<!-- 查询@para xh,gg -->
+<select id="queryByXhAndGg" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from cp where cpxh = #{0} and cpgg = #{1}
+</select>
+
+
+</mapper>   

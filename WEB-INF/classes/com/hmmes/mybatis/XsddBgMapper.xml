@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.XsddBgMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.XsddBgBean" >
+	<result column="id" property="id"/>
+	<result column="ddid" property="ddid"/>
+	<result column="bh" property="bh"/>
+	<result column="row" property="row"/>
+	<result column="jhbh" property="jhbh"/>
+	<result column="jhbhrow" property="jhbhrow"/>
+	<result column="field" property="field"/>
+	<result column="oldContent" property="oldContent"/>
+	<result column="newContent" property="newContent"/>
+	<result column="createBy" property="createBy"/>
+	<result column="createTime" property="createTime"/>
+	<result column="accept" property="accept"/>
+	<result column="acceptBy" property="acceptBy"/>
+	<result column="acceptTime" property="acceptTime"/>
+	<result column="checked" property="checked"/>
+	<result column="checkBy" property="checkBy"/>
+	<result column="checkTime" property="checkTime"/>
+</resultMap>
+
+
+
+
+<!-- xsdd table all fields -->
+<sql id="Base_Column_List" >
+	 id,ddid,bh,row,jhbh,jhbhrow,field,oldContent,newContent,createBy,createTime,accept,acceptBy,acceptTime,checked,checkBy,checkTime
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1  
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="ddid != null" >
+	    and ddid =  #{ddid}
+	</if>
+	<if test="bh != null and bh != ''" >
+	 	and bh like CONCAT('%', #{bh}, '%')
+	</if>
+	<if test="row != null" >
+	    and row =  #{row}
+	</if>
+	 
+	<if test="jhbh != null and jhbh != ''" >
+	 	and jhbh like CONCAT('%', #{jhbh}, '%')
+	</if>
+	<if test="jhbhrow != null" >
+	    and jhbhrow =  #{jhbhrow}
+	</if>
+	 
+	<if test="field != null and field != ''" >
+	    and  field  like CONCAT('%', #{field}, '%')
+	</if>
+
+  	<if test="oldContent != null and oldContent != ''" >
+	    and oldConent like CONCAT('%',#{oldContent}, '%')
+	</if>
+	 <if test="newContent != null and newContent != ''" >
+	    and newContent like CONCAT('%',#{newContent}, '%')  
+	</if>
+  
+	<if test="createBy != null and createBy != ''" >
+	    and createBy  like CONCAT('%',#{createBy},'%')
+	</if>
+	<if test="createTime != null" >
+	    and createTime =  #{createTime}
+	</if>
+	<if test="accept != null" >
+	    and accept =  #{accept}
+	</if>
+	<if test="acceptBy != null and acceptBy != ''" >
+	    and acceptBy =  #{acceptBy}
+	</if>
+	<if test="acceptTime != null" >
+	    and acceptTime =  #{acceptTime}
+	</if>
+	<if test="checked != null" >
+	    and checked =  #{checked}
+	</if>
+	<if test="checkBy != null and checkBy != ''" >
+	    and checkBy =  #{checkBy}
+	</if>
+	<if test="checkTime != null" >
+	    and checkTime =  #{checkTime}
+	</if>
+	<if test="(frombgrq != null and frombgrq != '') and (tobgrq != null and tobgrq != '')" >
+         and (createTime BETWEEN  #{frombgrq} and  #{tobgrq})
+    </if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into xsdd_bg(id,ddid,bh,row,jhbh,jhbhrow,field,oldContent,newContent,createBy,createTime,checked,accept)
+ values(#{id},#{ddid},#{bh},#{row},#{jhbh},#{jhbhrow},#{field},#{oldContent},#{newContent}, #{createBy},now(),2,2)
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update xsdd_bg set ddid=#{ddid},bh=#{bh},row=#{row},jhbh=#{jhbh},jhbhrow=#{jhbhrow},oldContent=#{oldContent},newContent=#{newContent},accept=#{accept},acceptBy=#{acceptBy},acceptTime=#{acceptTime},checked=#{checked},checkBy=#{checkBy},checkTime=#{checkTime} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update xsdd_bg set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="ddid != null  ">
+		ddid=#{ddid},
+	</if>
+	<if test="bh != null  and bh != '' ">
+		bh=#{bh},
+	</if>
+	<if test="row != null  ">
+		row=#{row},
+	</if>
+	<if test="jhbh != null  and jhbh != '' ">
+		jhbh=#{jhbh},
+	</if>
+	<if test="jhbhrow != null  ">
+		jhbhrow=#{jhbhrow},
+	</if>
+	<if test="field != null  and field != '' ">
+		field=#{field},
+	</if>
+
+	<if test="oldContent != null  and oldContent != '' ">
+		oldContent=#{oldContent},
+	</if>
+	<if test="newContent != null  and newContent != '' ">
+		newContent=#{newContent},
+	</if>
+
+	<if test="createBy != null  and createBy != '' ">
+		createBy=#{createBy},
+	</if>
+	<if test="createTime != null  ">
+		createTime=#{createTime},
+	</if>
+	<if test="accept != null">
+		accept=#{accept},
+	</if>
+	<if test="acceptBy != null  and acceptBy != '' ">
+		acceptBy=#{acceptBy},
+	</if>
+	<if test="acceptTime != null  ">
+		acceptTime=#{acceptTime},
+	</if>
+	<if test="checked != null">
+		checked=#{checked},
+	</if>
+	<if test="checkBy != null  and checkBy != '' ">
+		checkBy=#{checkBy},
+	</if>
+	<if test="checkTime != null  ">
+		checkTime=#{checkTime},
+	</if>
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update xsdd set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from xsdd_bg where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from xsdd_bg where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from xsdd_bg 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	<!-- ,(SELECT COUNT(*) FROM xsdds c WHERE c.btid = m.id) AS subCount-->
+	from xsdd_bg m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by bh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select  id,ddid,bh,row,jhbh,jhbhrow,field,oldContent,newContent,createBy,createTime,accept,acceptBy,acceptTime,checked,checkBy,checkTime
+	from xsdd_bg where 1=1  order by bh desc,row
+</select>
+
+<!-- 根据销售订单ID，查询所有有效的变更单列表 -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from xsdd_bg where ddid = #{ddid} order  by bh,row
+</select>
+
+<!-- 查询所有有效的列表 @param bh-->
+<select id="queryListByBh" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from xsdd_bg  where bh = #{bh} order by bh,row
+</select>
+</mapper>   

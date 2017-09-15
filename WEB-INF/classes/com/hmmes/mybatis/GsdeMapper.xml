@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.GsdeMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.GsdeBean" >
+	<result column="id" property="id"/>
+	<result column="sbmcdek" property="sbmcdek"/>
+	<result column="gxxh" property="gxxh"/>
+	<result column="gxgg" property="gxgg"/>
+	<result column="gxdy" property="gxdy"/>
+	<result column="gxlb" property="gxlb"/>
+	<result column="dgrs" property="dgrs"/>
+	<result column="fthpgs" property="fthpgs"/>
+	<result column="fxprl" property="fxprl"/>
+	<result column="gdzbgs" property="gdzbgs"/>
+	<result column="zbgs" property="zbgs"/>
+	<result column="qygs" property="qygs"/>
+	<result column="sdgs" property="sdgs"/>
+	<result column="fzgs" property="fzgs"/>
+	<result column="hsxpgs" property="hsxpgs"/>
+</resultMap>
+       
+<!-- gsde table all fields -->
+<sql id="Base_Column_List" >
+	 id,sbmcdek,gxxh,gxgg,gxdy,gxlb,dgrs,fthpgs,fxprl,gdzbgs,zbgs,qygs,sdgs,fzgs,hsxpgs
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+
+    <if test="sbmcdek != null and sbmcdek != ''" >
+	    and sbmcdek like CONCAT('%', #{sbmcdek}, '%')
+	</if>
+	<if test="gxxh != null and gxxh != ''" >
+	    and gxxh like CONCAT('%', #{gxxh}, '%')
+	</if>
+	 <if test="gxgg != null and gxgg != ''" >
+	    and gxgg like CONCAT('%',  #{gxgg},'%')
+	</if>
+    <if test="gxdy != null and gxdy != ''" >
+	    and gxdy =  #{gxdy}
+	</if>
+	 <if test="gxlb != null and gxlb != ''" >
+	    and gxlb =  #{gxlb}
+	</if>
+
+	<if test="dgrs != null " >
+	    and dgrs =  #{dgrs}
+	</if>
+	<if test="fthpgs != null " >
+	    and fthpgs =  #{fthpgs}
+	</if>
+	<if test="fxprl != null " >
+	    and fxprl =  #{fxprl}
+	</if>
+	<if test="gdzbgs != null " >
+	    and gdzbgs =  #{gdzbgs}
+	</if>
+	<if test="zbgs != null " >
+	    and zbgs =  #{zbgs}
+	</if>
+	<if test="qygs != null " >
+	    and qygs =  #{qygs}
+	</if>
+	<if test="sdgs != null " >
+	    and sdgs =  #{sdgs}
+	</if>
+	<if test="fzgs != null " >
+	    and fzgs =  #{fzgs}
+	</if>
+	<if test="hsxpgs != null " >
+	    and hsxpgs =  #{hsxpgs}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into gsde(id,sbmcdek,gxxh,gxgg,gxdy,gxlb,dgrs,fthpgs,fxprl,gdzbgs,zbgs,qygs,sdgs,fzgs,hsxpgs)
+ values(#{id}#{sbmcdek},#{gxxh},#{gxgg},#{gxdy},#{gxlb},#{dgrs},#{fthpgs},#{fxprl},#{gdzbgs},#{zbgs},#{qygs},#{sdgs},#{fzgs},#{hsxpgs})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update gsde set sbmcdek=#{sbmcdek},gxxh=#{gxxh},gxgg=#{gxgg},gxdy=#{gxdy},gxlb=#{gxlb},dgrs=#{dgrs},fthpgs=#{fthpgs},fxprl=#{fxprl},gdzbgs=#{gdzbgs}
+  ,zbgs=#{zbgs},qygs=#{qygs} ,sdgs=#{sdgs},fzgs=#{fzgs} ,hsxpgs=#{hsxpgs}      where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update gsde set 
+	<trim  suffixOverrides="," >
+	
+	<if test="sbmcdek != null  and sbmcdek != '' ">
+		sbmcdek=#{sbmcdek},
+	</if>
+	<if test="gxxh != null  and gxxh != '' ">
+		gxxh=#{gxxh},
+	</if>
+	<if test="gxgg != null  and gxgg != '' ">
+		gxgg=#{gxgg},
+	</if>
+	<if test="gxdy != null  and gxdy != '' ">
+		gxdy=#{gxdy},
+	</if>
+	<if test="gxlb != null  and gxlb != '' ">
+		gxlb=#{gxlb},
+	</if>
+
+	<if test="dgrs != null ">
+		dgrs=#{dgrs},
+	</if>
+	<if test="fthpgs != null ">
+		fthpgs=#{fthpgs},
+	</if>
+	<if test="fxprl != null ">
+		fxprl=#{fxprl},
+	</if>
+	<if test="gdzbgs != null ">
+		gdzbgs=#{gdzbgs},
+	</if>
+	<if test="zbgs != null ">
+		zbgs=#{zbgs},
+	</if>
+	<if test="qygs != null ">
+		qygs=#{qygs},
+	</if>
+	<if test="sdgs != null ">
+		sdgs=#{dsgs},
+	</if>
+	<if test="fzgs != null ">
+		fzgs=#{fzgs},
+	</if>
+	<if test="hsxpgs != null ">
+		hsxpgs=#{hsxpgs},
+	</if>
+
+
+
+
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete  from gsde where id = #{id}
+</delete>
+
+ 
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from gsde where id = #{id}
+</select>
+
+<!-- 明细列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from gsde 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from gsde 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+<!-- 查询明细列表 -->
+<select id="queryByAll"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" />  from gsde
+</select>
+
+
+<!-- 根据产品ID，查询工序明细列表 -->
+<select id="queryListByDeksbmcEtc"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from gsde where sbmcdek=#{0} and gxxh=#{1} and gxgg=#{2} and gxdy=#{3} and gxlb=#{4}
+</select>
+
+
+
+  	
+</mapper>   

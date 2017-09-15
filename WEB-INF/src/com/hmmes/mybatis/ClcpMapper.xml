@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.ClcpMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.ClcpBean" >
+	<result column="id" property="id"/>
+	<result column="cpxh" property="cpxh"/>
+	<result column="cpgg" property="cpgg"/>
+	<result column="cpdy" property="cpdy"/>
+</resultMap>
+
+<!-- 扩展字段 -->
+<resultMap id="ExtResultMap" extends="BaseResultMap" type="com.hmmes.bean.ClcpBean" >
+	<result column="subCountJz" property="subCountJz"/>
+</resultMap>
+
+<!--  table all fields -->
+<sql id="Base_Column_List" >
+	 id,cpxh,cpgg,cpdy
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1 
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+
+
+  	<if test="cpxh != null and cpxh != ''" >
+	    and cpxh like CONCAT('%',#{cpxh}, '%')
+	</if>
+	<if test="cpgg != null and cpgg != ''" >
+	    and cpgg like CONCAT('%',#{cpgg}, '%')  
+	</if>
+    <if test="cpdy != null and cpdy != ''" >
+	    and cpdy =  #{cpdy}
+	</if>
+
+
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into clcp(id,cpxh,cpgg,cpdy)
+ values(#{id},#{cpxh},#{cpgg},#{cpdy})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update clcp set cpxh=#{cpxh},cpgg=#{cpgg},cpdy=#{cpdy} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update clcp set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+
+	<if test="cpxh != null  and cpxh != '' ">
+		cpxh=#{cpxh},
+	</if>
+	<if test="cpgg != null  and cpgg != '' ">
+		cpgg=#{cpgg},
+	</if>
+	<if test="cpdy != null  and cpdy != '' ">
+		cpdy=#{cpdy},
+	</if>
+
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update cp set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from clcp where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from clcp where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from clcp 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询明细列表 -->
+<select id="queryByList" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM clcp_cljz a WHERE a.cpid = m.id) AS subCountJz
+	from clcp m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by cpxh,cpgg,cpdy
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select  id,cpxh,cpgg,cpdy  
+	from clcp where 1=1  order by cpxh,cpgg,cpdy
+</select>
+
+<!-- 查询所有有效的列表@para id -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from clcp where id = #{id} order by cpxh,cpgg,cpdy
+</select>
+
+<!-- 查询@para xh,gg,dy -->
+<select id="queryByXhAndGgAndDy" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from clcp where cpxh = #{0} and cpgg = #{1} and cpdy = #{2}
+</select>
+
+
+</mapper>   

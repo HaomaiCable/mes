@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.CpgxmxMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.CpgxmxBean" >
+	<result column="id" property="id"/>
+	<result column="cpid" property="cpid"/>
+	<result column="row" property="row"/>
+	<result column="state" property="state"/>
+	<result column="sbmc" property="sbmc"/>
+	<result column="iszl" property="iszl"/>	
+	<result column="gxxh" property="gxxh"/>
+	<result column="gxgg" property="gxgg"/>
+	<result column="gxdy" property="gxdy"/>
+	<result column="gxlb" property="gxlb"/>
+	<result column="jssl" property="jssl"/>
+	<result column="gxxs" property="gxxs"/>
+	<result column="gxgs" property="gxgs"/>
+
+</resultMap>
+       
+<!-- cp_gxmx table all fields -->
+<sql id="Base_Column_List" >
+	 id,cpid,row,state,sbmc,iszl,gxxh,gxgg,gxdy,gxlb,jssl,gxxs,gxgs
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="cpid != null" >
+	    and cpid =  #{cpid}
+	</if>
+	<if test="row != null" >
+	    and row =  #{row}
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+    <if test="sbmc != null and sbmc != ''" >
+	    and sbmc =  #{sbmc}
+	</if>
+    <if test="iszl != null and iszl != ''" >
+	    and iszl =  #{iszl}
+	</if>
+	<if test="gxxh != null and gxxh != ''" >
+	    and gxxh =  #{gxxh}
+	</if>
+	 <if test="gxgg != null and gxgg != ''" >
+	    and gxgg =  #{gxgg}
+	</if>
+    <if test="gxdy != null and gxdy != ''" >
+	    and gxdy =  #{gxdy}
+	</if>
+	 <if test="gxlb != null and gxlb != ''" >
+	    and gxlb =  #{gxlb}
+	</if>
+
+	<if test="jssl != null " >
+	    and jssl =  #{jssl}
+	</if>
+	<if test="gxxs != null " >
+	    and gxxs =  #{gxxs}
+	</if>
+	<if test="gxgs != null " >
+	    and gxgs =  #{gxgs}
+	</if>
+
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into cp_gxmx(id,cpid,row,state,sbmc,iszl,gxxh,gxgg,gxdy,gxlb,jssl,gxxs,gxgs)
+ values(#{id},#{cpid},#{row},#{state},#{sbmc},#{iszl},#{gxxh},#{gxgg},#{gxdy},#{gxlb},#{jssl},#{gxxs},#{gxgs})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update cp_gxmx set cpid=#{cpid},row=#{row},state=#{state},sbmc=#{sbmc},iszl=#{iszl},gxxh=#{gxxh},gxgg=#{gxgg},gxdy=#{gxdy},gxlb=#{gxlb},jssl=#{jssl},gxxs=#{gxxs},gxgs=#{gxgs}   where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update cp_gxmx set 
+	<trim  suffixOverrides="," >
+	<if test="cpid != null  ">
+		cpid=#{cpid},
+	</if>
+	<if test="row != null  ">
+		row=#{row},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>
+	<if test="sbmc != null  and sbmc != '' ">
+		sbmc=#{sbmc},
+	</if>
+	<if test="iszl != null  and iszl != '' ">
+		iszl=#{iszl},
+	</if>
+	<if test="gxxh != null  and gxxh != '' ">
+		gxxh=#{gxxh},
+	</if>
+	<if test="gxgg != null  and gxgg != '' ">
+		gxgg=#{gxgg},
+	</if>
+	<if test="gxdy != null  and gxdy != '' ">
+		gxdy=#{gxdy},
+	</if>
+	<if test="gxlb != null  and gxlb != '' ">
+		gxlb=#{gxlb},
+	</if>
+
+	<if test="jssl != null ">
+		jssl=#{jssl},
+	</if>
+	<if test="gxxs != null ">
+		gxxs=#{gxxs},
+	</if>
+	<if test="gxgs != null ">
+		gxgs=#{gxgs},
+	</if>
+
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete  from cp_gxmx where id = #{id}
+</delete>
+
+ 
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from cp_gxmx where id = #{id}
+</select>
+
+<!-- 明细列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from cp_gxmx 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from cp_gxmx 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+<!-- 查询明细列表 -->
+<select id="queryByAll"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" />  from cp_gxmx
+</select>
+
+
+<!-- 根据产品ID，查询工序明细列表 -->
+<select id="queryListByCpId"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from cp_gxmx where cpid = #{cpid}
+</select>
+
+<!-- 根据产品ID，删除记录 -->
+<delete id="deleteByCpId" parameterType="Object">
+	delete  from cp_gxmx where  cpid = #{cpid}
+</delete>
+
+  	
+</mapper>   

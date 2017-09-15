@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.XsddMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.XsddBean" >
+	<result column="id" property="id"/>
+	<result column="xdrq" property="xdrq"/>
+	<result column="jhbh" property="jhbh"/>
+	<result column="row" property="row"/>
+	<result column="state" property="state"/>
+	<result column="ywy" property="ywy"/>
+	<result column="xh" property="xh"/>
+	<result column="gg" property="gg"/>
+	<result column="dy" property="dy"/>
+	<result column="gy" property="gy"/>
+	<result column="dw" property="dw"/>
+	<result column="ph" property="ph"/>
+	<result column="sl" property="sl"/>
+	<result column="jhrq_kh" property="jhrq_kh"/>
+	<result column="jhrq" property="jhrq"/>
+	<result column="jsyq" property="jsyq"/>
+	<result column="ywyy" property="ywyy"/>
+	<result column="ywjt" property="ywjt"/>
+	<result column="ecjhq" property="ecjhq"/>
+	<result column="xdjt" property="xdjt"/>
+	<result column="createBy" property="createBy"/>
+	<result column="createTime" property="createTime"/>
+	<result column="updateBy" property="updateBy"/>
+	<result column="updateTime" property="updateTime"/>
+	<result column="deleted" property="deleted"/>
+	<result column="maxWgrq" property="maxWgrq"/>
+	<result column="wgzs" property="wgzs"/>
+	<result column="qbRk" property="qbRk"/>
+
+</resultMap>
+
+<!-- 扩展字段 -->
+<resultMap id="ExtResultMap" extends="BaseResultMap" type="com.hmmes.bean.XsddBean" >
+	<result column="subCountWg" property="subCountWg"/>
+	<result column="subCountRk" property="subCountRk"/>
+	<result column="subCountBg" property="subCountBg"/>
+	<result column="subCountJtjh" property="subCountJtjh"/>
+
+</resultMap>
+
+
+<!-- xsdd table all fields -->
+<sql id="Base_Column_List" >
+	 id,xdrq,jhbh,row,state,ywy,xh,gg,dy,gy,dw,ph,sl,jhrq_kh,jhrq,jsyq,ywyy,ywjt,ecjhq,xdjt,createBy,createTime,updateBy,updateTime,deleted,maxWgrq,wgzs,qbRk
+</sql>
+
+<sql id="Base_Column_List_Export" >
+	 id,xdrq,jhbh,row,state,ywy,xh,gg,dy,gy,dw,ph,sl,jhrq_kh,jhrq,jsyq,ywyy,ywjt,ecjhq,xdjt,createBy,maxWgrq,wgzs,qbRk
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1  and deleted =  0 
+    <choose>
+	    <when test="(fromxdrq != null and fromxdrq != '') and (toxdrq != null and toxdrq != '')" >
+             and (xdrq BETWEEN  #{fromxdrq} and  #{toxdrq})
+        </when>
+		<otherwise>
+		      and xdrq>=DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		</otherwise>
+	</choose>
+
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="xdrq != null" >
+	    and xdrq =  #{xdrq}
+	</if>
+	 <if test="jhbh != null and jhbh != ''" >
+	 	and jhbh like CONCAT('%', #{jhbh}, '%')
+	</if>
+	<if test="ywy != null and ywy != ''" >
+	    and  ywy  like CONCAT('%', trim(#{ywy}), '%')
+	</if>
+	<if test="row != null" >
+	    and row =  #{row}
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+  	<if test="xh != null and xh != ''" >
+	    and xh like CONCAT('%',trim(#{xh}), '%')
+	</if>
+	 <if test="gg != null and gg != ''" >
+	    and gg like CONCAT('%',trim(#{gg}), '%')  
+	</if>
+    <if test="dy != null and dy != ''" >
+	    and dy =  #{dy}
+	</if>
+	 <if test="gy != null and gy != ''" >
+	    and gy =  #{gy}
+	</if>
+	<if test="dw != null and dw != ''" >
+	    and dw =  #{dw}
+	</if>
+	<if test="sl != null " >
+	    and sl =  #{sl}
+	</if>
+	<if test="jhrq_kh != null " >
+	    and jhrq_kh =  #{jhrq_kh}
+	</if>
+	<if test="jhrq != null " >
+	    and  jhrq between #{jhrq} and #{jhrq}
+	</if>
+	<if test="jsyq != null and jsyq != ''" >
+	    and jsyq =  #{jsyq}
+	</if>
+	 <if test="ph != null and ph != ''" >
+	    and ph =  #{ph}
+	</if>
+	 <if test="ywyy != null and ywyy != ''" >
+	     and ywyy like CONCAT('%',#{ywyy}, '%')  
+	</if>
+	 <if test="ywjt != null and ywjt != ''" >
+	     and ywjt like CONCAT('%',#{ywjt}, '%')  
+	</if>
+	<if test="ecjhq != null " >
+	    and ecjhq =  #{ecjhq}
+	</if>
+	<if test="xdjt != null " >
+	    and xdjt =  #{xdjt}
+	</if>
+	<if test="createBy != null and createBy != ''" >
+	    and createBy  like CONCAT('%',trim(#{createBy}),'%')
+	</if>
+	<if test="createTime != null" >
+	    and createTime =  #{createTime}
+	</if>
+	<if test="updateBy != null and updateBy != ''" >
+	    and updateBy =  #{updateBy}
+	</if>
+	<if test="updateTime != null" >
+	    and updateTime =  #{updateTime}
+	</if>
+
+	<if test="wgzs != null and wgzs != ''" >
+	    and wgzs  like CONCAT('%',trim(#{wgzs}),'%')
+	</if>
+	<if test="wgrq != null" >
+	    and maxWgrq =   #{wgrq} 
+	</if>
+	<if test="qbRk != null" >
+	    and qbRk =   #{qbRk} 
+	</if>
+	<if test="(fromjhrq != null and fromjhrq != '') and (tojhrq != null and tojhrq != '')" >
+         and (jhrq BETWEEN  #{fromjhrq} and  #{tojhrq})
+    </if>
+	<if test="(frommaxWgrq_Search != null and frommaxWgrq_Search != '') and (tomaxWgrq_Search != null and tomaxWgrq_Search != '')" >
+         and (maxWgrq BETWEEN  #{frommaxWgrq_Search} and  #{tomaxWgrq_Search})
+    </if>
+
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into xsdd(id,xdrq,jhbh,ywy,row,state,xh,gg,dy,gy,dw,sl,jhrq_kh,jhrq,jsyq,ph,ywyy,ywjt,ecjhq,xdjt,createBy,createTime,deleted,qbRk)
+ values(#{id},#{xdrq},#{jhbh},#{ywy},#{row},#{state},#{xh},#{gg},#{dy},#{gy},#{dw},#{sl},#{jhrq_kh},#{jhrq},#{jsyq},#{ph},#{ywyy},#{ywjt}
+ ,#{ecjhq},#{xdjt},#{createBy},now(),#{deleted},2)
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update xsdd set xdrq=#{xdrq},jhbh=#{jhbh},ywy=#{ywy},row=#{row},state=#{state},xh=#{xh},gg=#{gg},dy=#{dy},gy=#{gy},dw=#{dw},sl=#{sl},jhrq_kh=#{jhrq_kh} 
+  ,jhrq=#{jhrq},jsyq=#{jsyq},ph=#{ph},ywyy=#{ywyy},ywjt=#{ywjt},ecjhq=#{ecjhq},xdjt=#{xdjt},deleted=#{deleted},updateBy=#{updateBy},updateTime = now(),maxWgrq=#{maxWgrq},wgzs=#{wgzs},qbRk=#{qbRk} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update xsdd set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="xdrq != null  ">
+		xdrq=#{xdrq},
+	</if>
+	<if test="jhbh != null  and jhbh != '' ">
+		jhbh=#{jhbh},
+	</if>
+	<if test="ywy != null  and ywy != '' ">
+		ywy=#{ywy},
+	</if>
+	<if test="row != null  ">
+		row=#{row},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>
+	<if test="xh != null  and xh != '' ">
+		xh=#{xh},
+	</if>
+	<if test="gg != null  and gg != '' ">
+		gg=#{gg},
+	</if>
+	<if test="dy != null  and dy != '' ">
+		dy=#{dy},
+	</if>
+	<if test="gy != null  and gy != '' ">
+		gy=#{gy},
+	</if>
+	<if test="dw != null  and dw != '' ">
+		dw=#{dw},
+	</if>
+	<if test="sl != null ">
+		sl=#{sl},
+	</if>
+	<if test="jhrq_kh != null ">
+		jhrq_kh=#{jhrq_kh},
+	</if>
+	<if test="jhrq != null ">
+		jhrq=#{jhrq},
+	</if>
+	<if test="jsyq != null  and jsyq != '' ">
+		jsyq=#{jsyq},
+	</if>
+	<if test="ph != null  and ph != '' ">
+		ph=#{ph},
+	</if>
+	<if test="ywyy != null  and ywyy != '' ">
+		ywyy=#{ywyy},
+	</if>
+	<if test="ywjt != null  and ywjt != '' ">
+		ywjt=#{ywjt},
+	</if>
+	<if test="ecjhq != null ">
+		ecjhq=#{ecjhq},
+	</if>
+	<if test="xdjt != null ">
+		xdjt=#{xdjt},
+	</if>
+	<if test="createBy != null  and createBy != '' ">
+		createBy=#{createBy},
+	</if>
+	<if test="createTime != null  ">
+		createTime=#{createTime},
+	</if>
+	<if test="updateBy != null  and updateBy != '' ">
+		updateBy=#{updateBy},
+	</if>
+	<if test="updateTime != null  ">
+		updateTime=#{updateTime},
+	</if>
+	<if test="deleted != null  ">
+		deleted=#{deleted},
+	</if>
+	<if test="maxWgrq != null  ">
+		maxWgrq=#{maxWgrq},
+	</if>
+	<if test="wgzs != null  and wgzs != '' ">
+		wgzs=#{wgzs},
+	</if>
+	<if test="qbRk != null  ">
+		qbRk=#{qbRk},
+	</if>
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update xsdd set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from xsdd where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from xsdd where id = #{id}
+</select>
+
+<!-- 销售计划列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from xsdd 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询销售订单明细列表 -->
+<select id="queryByList" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM xsdd_wghb a WHERE a.ddid = m.id) AS subCountWg
+	,(SELECT COUNT(*) FROM xsdd_wghb b WHERE b.ddid = m.id and b.rk=1 ) AS subCountRk
+	,(SELECT COUNT(*) FROM xsdd_bg c WHERE c.ddid = m.id) AS subCountBG
+	,(SELECT COUNT(*) FROM jtjh d WHERE d.ddid = m.id) AS subCountJtjh
+	
+	from xsdd m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by jhbh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+<!-- 查询销售订单明细列表 -->
+<select id="queryByListNoPage" resultMap="ExtResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List_Export"/>
+	,(SELECT COUNT(*) FROM xsdd_wghb a WHERE a.ddid = m.id) AS subCountWg
+	,(SELECT COUNT(*) FROM xsdd_wghb b WHERE b.ddid = m.id and b.rk=1 ) AS subCountRk
+	,(SELECT COUNT(*) FROM xsdd_bg c WHERE c.ddid = m.id) AS subCountBG
+	,(SELECT COUNT(*) FROM jtjh d WHERE d.ddid = m.id) AS subCountJtjh
+	from xsdd m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by jhbh desc,row
+		</otherwise>
+	</choose>
+
+
+</select>
+	
+<!-- 查询所有有效的销售订单列表 -->
+<select id="queryByAll" resultMap="ExtResultMap"  parameterType="Object">
+	select  <include refid="Base_Column_List"/>
+	,(SELECT COUNT(*) FROM xsdd_wghb a WHERE a.ddid = m.id) AS subCountWg
+	,(SELECT COUNT(*) FROM xsdd_wghb b WHERE b.ddid = m.id and b.rk=1 ) AS subCountRk
+	,(SELECT COUNT(*) FROM xsdd_bg c WHERE c.ddid = m.id) AS subCountBG
+	,(SELECT COUNT(*) FROM jtjh d WHERE d.ddid = m.id) AS subCountJtjh
+    from xsdd m where deleted= 0 order by jhbh desc,row
+</select>
+
+<!-- 查询所有有效的销售订单列表 -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from xsdd where deleted= 0   
+	 and id = #{xsddid} order by createTime desc
+</select>
+<!-- 查询所有有效的销售订单列表 @param jhbh-->
+<select id="queryListByJhbh" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from xsdd where deleted= 0   
+	and jhbh = #{jhbh} order by row
+</select>
+</mapper>   

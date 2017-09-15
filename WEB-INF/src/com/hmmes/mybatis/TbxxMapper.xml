@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.TbxxMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.TbxxBean" >
+	<result column="id" property="id"/>
+	<result column="row" property="row"/>
+	<result column="ggbh" property="ggbh"/>
+	<result column="gysId" property="gysId"/>
+	<result column="state" property="state"/>
+
+	<result column="wlfl" property="wlfl"/>
+	<result column="wlmc" property="wlmc"/>
+	<result column="wlgg" property="wlgg"/>
+	<result column="wldw" property="wldw"/>
+	<result column="wlsl" property="wlsl"/>
+	<result column="jsyq" property="jsyq"/>
+	<result column="jhrq_xq" property="jhrq_xq"/>
+	<result column="tbsl" property="tbsl"/>	
+	<result column="dj" property="dj"/>	
+	<result column="je" property="je"/>
+	<result column="jhrq" property="jhrq"/>
+	<result column="tbsm" property="tbsm"/>
+	<result column="zb" property="zb"/>	
+	<result column="createBy" property="createBy"/>
+	<result column="createTime" property="createTime"/>
+	<result column="updateBy" property="updateBy"/>
+	<result column="updateTime" property="updateTime"/>
+	<result column="deleted" property="deleted"/>
+
+</resultMap>
+
+<!-- tbxx table all fields -->
+<sql id="Base_Column_List" >
+	 id,row,ggbh,gysId,state,wlfl,wlmc,wlgg,wldw,wlsl,jsyq,jhrq_xq,tbsl,dj,je,jhrq,tbsm,zb,createBy,createTime,updateBy,updateTime,deleted
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+    where 1=1   
+
+
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="row != null" >
+	    and row =  #{row}
+	</if>
+
+	 <if test="ggbh != null and ggbh != ''" >
+	 	and ggbh like CONCAT('%', #{ggbh}, '%')
+	</if>
+	<if test="gysId != null" >
+	    and gysId =  #{gysId}
+	</if>
+	<if test="state != null" >
+	    and state =  #{state}
+	</if>
+
+	<if test="wlfl != null and wlfl != ''" >
+	    and  wlfl  like CONCAT('%', trim(#{wlfl}), '%')
+	</if>
+	<if test="wlmc != null and wlmc != ''" >
+	    and wlmc like CONCAT('%',trim(#{wlmc}), '%')
+	</if>
+	 <if test="wlgg != null and wlgg != ''" >
+	    and wlgg like CONCAT('%',trim(#{wlgg}), '%')  
+	</if>
+	<if test="wldw != null and wldw != ''" >
+	    and wldw =  #{wldw}
+	</if>
+	<if test="wlsl != null " >
+	    and wlsl =  #{wlsl}
+	</if>
+	<if test="jsyq != null and jsyq != ''" >
+	    and jsyq =  #{jsyq}
+	</if>
+	<if test="jhrq_xq != null " >
+	    and jhrq_xq =  #{jhrq_xq}
+	</if>
+	<if test="tbsl != null " >
+	    and tbsl =  #{tbsl}
+	</if>
+	<if test="dj != null " >
+	    and dj =  #{dj}
+	</if>
+	<if test="je != null " >
+	    and je =  #{je}
+	</if>
+	<if test="jhrq != null " >
+	    and jhrq =  #{jhrq}
+	</if>
+	<if test="tbsm != null and tbsm != ''" >
+	    and tbsm =  #{tbsm}
+	</if>
+	<if test="zb != null " >
+	    and zb =  #{zb}
+	</if>
+	<if test="createBy != null and createBy != ''" >
+	    and createBy  like CONCAT('%',trim(#{createBy}),'%')
+	</if>
+	<if test="createTime != null" >
+	    and createTime =  #{createTime}
+	</if>
+	<if test="updateBy != null and updateBy != ''" >
+	    and updateBy =  #{updateBy}
+	</if>
+	<if test="updateTime != null" >
+	    and updateTime =  #{updateTime}
+	</if>
+
+
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into tbxx(id,row,ggbh,gysId,state,wlfl,wlmc,wlgg,wldw,wlsl,jsyq,jhrq_xq,tbsl,dj,je,jhrq,tbsm,zb,createBy,createTime,deleted)
+ values(#{id},#{row},#{ggbh},#{gysId},#{state},#{wlfl},#{wlmc},#{wlgg},#{wldw},#{wlsl},#{jsyq},#{jhrq_xq},#{tbsl},#{dj},#{je},#{jhrq},#{tbsm},0,#{createBy},now(),#{deleted})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update tbxx set row=#{row},ggbh=#{ggbh},gysId=#{gysId},state=#{state},wlfl=#{wlfl},wlmc=#{wlmc},wlgg=#{wlgg},wldw=#{wldw},wlsl=#{wlsl},jsyq=#{jsyq},jhrq_xq=#{jhrq_xq},tbsl=#{tbsl},dj=#{dj},je=#{je},jhrq=#{jhrq},tbsm=#{tbsm},zb=#{zb},deleted=#{deleted},updateBy=#{updateBy},updateTime = now() where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update tbxx set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="row != null  ">
+		row=#{row},
+	</if>
+
+	<if test="ggbh != null  and ggbh != '' ">
+		ggbh=#{ggbh},
+	</if>
+	<if test="gysId != null  ">
+		gysId=#{gysId},
+	</if>
+	<if test="state != null  ">
+		state=#{state},
+	</if>
+
+	<if test="wlfl != null  and wlfl != '' ">
+		wlfl=#{wlfl},
+	</if>
+	<if test="wlmc != null  and wlmc != '' ">
+		wlmc=#{wlmc},
+	</if>
+	<if test="wlgg != null  and wlgg != '' ">
+		wlgg=#{wlgg},
+	</if>
+	<if test="wldw != null  and wldw != '' ">
+		wldw=#{wldw},
+	</if>
+	<if test="wlsl != null ">
+		wlsl=#{wlsl},
+	</if>
+	<if test="jsyq != null  and jsyq != '' ">
+		jsyq=#{jsyq},
+	</if>
+	<if test="jhrq_xq != null and  jhrq_xq != '' ">
+		jhrq_xq=#{jhrq_xq},
+	</if>
+	<if test="tbsl != null ">
+		tbsl=#{tbsl},
+	</if>
+	<if test="dj != null ">
+		dj=#{dj},
+	</if>
+	<if test="je != null ">
+		je=#{je},
+	</if>
+	<if test="jhrq != null ">
+		jhrq=#{jhrq},
+	</if>
+	<if test="tbsm != null ">
+		tbsm=#{tbsm},
+	</if>
+	<if test="zb != null ">
+		zb=#{zb},
+	</if>
+	<if test="createBy != null  and createBy != '' ">
+		createBy=#{createBy},
+	</if>
+	<if test="createTime != null  ">
+		createTime=#{createTime},
+	</if>
+	<if test="updateBy != null  and updateBy != '' ">
+		updateBy=#{updateBy},
+	</if>
+	<if test="updateTime != null  ">
+		updateTime=#{updateTime},
+	</if>
+	<if test="deleted != null  ">
+		deleted=#{deleted},
+	</if>
+
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update tbxx set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from tbxx where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from tbxx where id = #{id}
+</select>
+
+<!-- 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from tbxx 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+
+
+<!--明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from tbxx m  
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by ggbh desc,row
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+
+</select>
+
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select  <include refid="Base_Column_List"/>
+
+    from tbxx m  order by ggbh desc,row
+</select>
+
+<!-- 查询所有有效的列表 ，按照ID-->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from tbxx where id = #{tbxxid} order by createTime desc
+</select>
+
+<!-- 查询所有有效的列表 @param ggbh-->
+<select id="queryListByGgbh" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from tbxx where  ggbh = #{ggbh} and je>0  order by row,dj 
+</select>
+
+<!-- 查询所有有效的列表 @param ggbh,gysId-->
+<select id="queryListByGgbhAndGysId" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from tbxx where  ggbh = #{ggbh}  and gysId=#{gysId} order by row
+</select>
+
+</mapper>   

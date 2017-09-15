@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.XsddWghbMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.XsddWghbBean" >
+	<result column="id" property="id"/>
+	<result column="ddid" property="ddid"/>
+	<result column="wgrq" property="wgrq"/>
+	<result column="wgsl" property="wgsl"/>
+	<result column="wgslss" property="wgslss"/>
+	<result column="czg" property="czg"/>
+	<result column="xpgg" property="xpgg"/>
+	<result column="cmsl" property="cmsl"/>
+	<result column="lrBy" property="lrBy"/>
+	<result column="lrTime" property="lrTime"/>
+	<result column="rk" property="rk"/>
+	<result column="rksm" property="rksm"/>
+	<result column="rklrBy" property="rklrBy"/>
+	<result column="rklrTime" property="rklrTime"/>	
+
+</resultMap>
+
+
+
+<!-- xsdd table all fields -->
+<sql id="Base_Column_List" >
+	 id,ddid,wgrq,wgsl,wgslss,czg,xpgg,cmsl,lrBy,lrTime,rk,rksm,rklrBy,rklrTime
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1 
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="ddid != null" >
+	    and ddid =  #{ddid}
+	</if>
+	<if test="wgrq != null" >
+	    and wgrq =  #{wgrq}
+	</if>
+	<if test="wgsl != null" >
+	    and wgsl =  #{wgsl}
+	</if>
+	 <if test="wgslss != null and wgslss != ''" >
+	 	and wgslss like CONCAT('%', #{wgslss}, '%')
+	</if>
+	<if test="czg != null and czg != ''" >
+	    and czg  like CONCAT('%',#{czg}, '%')
+	</if>
+  	<if test="xpgg != null and xpgg != ''" >
+	    and xpgg like CONCAT('%',#{xpgg}, '%')
+	</if>
+	<if test="cmsl != null" >
+	    and cmsl =  #{cmsl}
+	</if>
+
+	<if test="lrBy != null and lrBy != ''" >
+	    and lrBy  like CONCAT('%',#{lrBy},'%')
+	</if>
+	<if test="lrTime != null" >
+	    and lrTime =  #{lrTime}
+	</if>
+	<if test="rk != null" >
+	    and rk =  #{rk}
+	</if>
+	 <if test="rksm != null and rksm != ''" >
+	 	and rksm like CONCAT('%', #{rksm}, '%')
+	</if>
+	<if test="rklrBy != null and rklrBy != ''" >
+	    and rklrBy  like CONCAT('%',#{rklrBy},'%')
+	</if>
+	<if test="rklrTime != null" >
+	    and rklrTime =  #{rklrTime}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into xsdd_wghb(id,ddid,wgrq,wgsl,wgslss,czg,xpgg,cmsl,lrBy,lrTime,rk)
+ values(#{id},#{ddid},#{wgrq},#{wgsl},#{wgslss},#{czg},#{xpgg},#{cmsl}, #{lrBy},now(),0)
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update xsdd_wghb set ddid=#{ddid},wgrq=#{wgrq},wgsl=#{wgsl},wgslss=#{wgslss},czg=#{czg},xpgg=#{xpgg},cmsl=#{cmsl},lrBy=#{lrBy},lrTime = #{lrTime},rk=#{rk},rksm=#{rksm},rklrBy=#{rklrBy},rklrTime = #{rklrTime} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update xsdd_wghb set 
+	<trim  suffixOverrides="," >
+	<if test="id != null  ">
+		id=#{id},
+	</if>
+	<if test="ddid != null  ">
+		ddid=#{ddid},
+	</if>
+	<if test="wgrq != null  ">
+		wgrq=#{wgrq},
+	</if>
+	<if test="wgsl != null  ">
+		wgsl=#{wgsl},
+	</if>	
+	<if test="wgslss != null  and wgslss != '' ">
+		wgslss=#{wgslss},
+	</if>
+	<if test="czg != null  and czg != '' ">
+		czg=#{czg},
+	</if>
+	<if test="xpgg != null  and xpgg != '' ">
+		xpgg=#{xpgg},
+	</if>
+
+	<if test="cmsl != null  ">
+		cmsl=#{cmsl},
+	</if>
+
+	<if test="lrBy != null  and lrBy != '' ">
+		lrBy=#{lrBy},
+	</if>
+	<if test="lrTime != null  ">
+		lrTime=#{lrTime},
+	</if>
+	<if test="rk != null  ">
+		rk=#{rk},
+	</if>
+	<if test="rksm != null  and rksm != '' ">
+		rksm=#{rksm},
+	</if>
+	<if test="rklrBy != null  and rklrBy != '' ">
+		rklrBy=#{rklrBy},
+	</if>
+	<if test="rklrTime != null  ">
+		rklrTime=#{rklrTime},
+	</if>
+</trim> where id=#{id}
+</update>
+
+
+<!-- 删除记录    设置删除标记未进行删除
+<update id="delete" parameterType="Object">
+	update xsdd set deleted = 1 where id = #{id}
+</update>
+-->
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from xsdd_wghb where id = #{id}
+</delete>
+
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from xsdd_wghb where id = #{id}
+</select>
+
+<!--列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from xsdd_wghb 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 明细列表 -->
+<select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	<!-- ,(SELECT COUNT(*) FROM xsdds c WHERE c.btid = m.id) AS subCount-->
+	from xsdd_wghb m  
+	<include refid="Example_Where_Clause"/>
+ 	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+ 
+
+</select>
+
+	
+<!-- 查询所有有效的列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select  id,ddid,wgrq,wgsl,wgslss,czg,xpgg,cmsl,lrBy,lrTime,rk,rksm,rklrBy,rklrTime from xsdd_wghb order by wgrq desc 
+</select>
+
+<!-- 通过ID查询所有有效的列表 -->
+<select id="queryListById" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+     from xsdd_wghb where ddid = #{ddid} order by wgrq  desc
+</select>
+
+
+</mapper>   
