@@ -98,8 +98,8 @@
 			singleSelect:true,
 		    rownumbers:true,
 			pagination:true,
-            pageSize:500,
-			pageList:[500, 600, 700, 800, 1000],
+            pageSize:1000,
+			pageList:[1000, 1500,2000, 2500, 3000],
             method:  'post',
             onClickRow: onClickRow,
 			ft:'#toolbar',
@@ -275,13 +275,15 @@
   
             $.post("saveHsgs.do",effectRow ,function(rsp) {  			
                if(rsp.success){  
+				   var param = $("#searchForm").serializeObject();
+			       $('#data-list').datagrid('reload',param);
 			       $.messager.alert("提示",rsp.msg);;
                 }  
 		        else{
 	               $.messager.alert("提示",rsp.msg);  	
 		         }
 		     });
-			 $('#data-list').datagrid('load');	
+			 //$('#data-list').datagrid('load');	
 			 var param = $("#searchForm").serializeObject();
 			 $('#data-list').datagrid('reload',param);
 

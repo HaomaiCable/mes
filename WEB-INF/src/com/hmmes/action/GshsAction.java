@@ -204,12 +204,12 @@ public class GshsAction extends BaseAction{
          request.setAttribute("fromdate",fromdate);
          request.setAttribute("todate",todate);
 
-		Map<String,Object>  context = getRootMap();
-	    model.setDeleted(DELETED.NO.key);
-		List<JtjhBean> dataList = jtjhService.queryByList(model);
-		//设置页面数据
-		context.put("dataList", dataList);
-		return forword("business/gshsManage_gy",context); 
+		 Map<String,Object>  context = getRootMap();
+	     model.setDeleted(DELETED.NO.key);
+		 List<JtjhBean> dataList = jtjhService.queryByList(model);
+		 //设置页面数据
+		 context.put("dataList", dataList);
+		 return forword("business/gshsManage_gy",context); 
 
 	}
 	@RequestMapping("/gshsBrow")
@@ -533,11 +533,61 @@ public class GshsAction extends BaseAction{
 				 String fdy=wgbean.getGxdy_o()==null?"":wgbean.getGxdy_o();
 				 String flb=wgbean.getGxlb()==null?"":wgbean.getGxlb();
 				 Double fwgsl=wgbean.getWgsl()==null?0.0:wgbean.getWgsl();
+				 Double fxs=0.0;
+		         List<ParaBean> paraBeanDataList = paraService.queryByFlag("计算工时类别替换");//例如，内层--N
+		         for (Object paraele : paraBeanDataList )
+			     {
+				    ParaBean  parabean = (ParaBean) paraele;
+				    if ((parabean.getPara1()).equals(flb.trim()))
+				    {
+					    flb=parabean.getPara2();
+						if (parabean.getPara3()!=null && !"".equals(parabean.getPara3()))
+						{
+							fxs=Double.valueOf(parabean.getPara3());
+						}
+					    break;
+				    }
+			     }
+	             //非标零线替换
+		         CpBean	cpbean=cpService.queryByXhAndGg(fxh,fgg);
+                 if (cpbean==null)
+                 {
 
+                    if (fgg.indexOf("+")>-1) //3*70+2*25 
+			        {
+//System.out.println("高绪山- fgg1"+fgg);	
+                        String[] strzl = fgg.split("\\+"); //[3*70,2*25]
+				        String[] strzx=strzl[0].split("×");//[3,70]
+				        String strzdt=strzx[1];//70
+				        String[] strlx=strzl[1].split("×");//[2,25]
+				        String strlxs=strlx[0];//2
+				        String strldt=strlx[1];//25
+					    String strthldt="";
+		                paraBeanDataList = paraService.queryByFlag("非标替换零线");  
+		                for (Object paraele : paraBeanDataList )
+		                {
+			                ParaBean  parabean = (ParaBean) paraele;
+			                if (strzdt.equals(parabean.getPara1()))
+			                {
+				               //thLxGg=strldt;//被替换的零线导体规格
+						       strthldt=parabean.getPara2();
+						   
+				               break;
+			                }
+		                }
+					    fgg=strzl[0]+"+"+strlxs+"×"+strthldt;
+//System.out.println("高绪山- fgg2"+fgg);	
+					}
+				 }
+//System.out.println("高绪山- fgg3"+fgg);		
                  Double[] gsde=getJtgs(fsbmcdek,fxh,fgg,fdy,flb,fwgsl/1000);//计算工时
-				 wgbean.setGs(gsde[0]);
-				 wgbean.setGs(gsde[1]);
-				 if (gsde[0]>0.0)
+				 if (gsde[0]>0.0  )
+				 {
+					 wgbean.setYhs(1);
+					 wgbean.setGs(gsde[0]*(fxs==0.0?1:fxs));
+				     wgbean.setGsbc(gsde[1]*(fxs==0.0?1:fxs));
+				 }
+				 if (fwgsl==0)
 				 {
 					 wgbean.setYhs(1);
 				 }
@@ -558,7 +608,7 @@ public class GshsAction extends BaseAction{
     //计算机台工时定额
 	private Double[] getJtgs(String fsbmc,String fxh,String fgg,String fdy,String flb,Double fsl){
 		Double[] jtgs={0.0,0.0};
-System.out.println("高绪山-sbmc="+fsbmc+",xh="+fxh+",gg="+fgg+",dy="+fdy+",lb="+flb+",sl="+fsl);
+//System.out.println("高绪山-sbmc="+fsbmc+",xh="+fxh+",gg="+fgg+",dy="+fdy+",lb="+flb+",sl="+fsl);
 		GsdeBean gsbean = gsdeService.queryListByDeksbmcEtc(fsbmc,fxh,fgg,fdy,flb);
 		if (gsbean!=null)
 		{
@@ -633,7 +683,7 @@ System.out.println("高绪山-sbmc="+fsbmc+",xh="+fxh+",gg="+fgg+",dy="+fdy+",lb="+
 			Double sjgdzbgs=hpcs*degdzbgs;
 			jtgs[1]=sjspgs+sjgdzbgs+sjzbgs+sjsdgs;
             jtgs[0]=(sjspgs+sjgdzbgs+sjzbgs+sjsdgs)*dgrs;
-System.out.println("高绪山-jtgs班产量"+jtgs[1]+",jtgs员工"+jtgs[0]);
+//System.out.println("高绪山-jtgs班产量"+jtgs[1]+",jtgs员工"+jtgs[0]);
 		}
 		return jtgs;
 	}

@@ -28,15 +28,26 @@ YiYa.jtjhWghbManage = function(){
 					},
 					formatter:function(value,row,index){
 						
-						if(value == -9999){
-							return "未到期";
-						}
-                        else if(value == 0){
-							return "按期";
-						}
-						else{
-							return "("+value+")天";
-						}
+					        if (row.state==2)
+						    {
+							    return '暂停';
+						    }
+						    else if (row.state==3)
+						    {  
+							    return '作废';
+						    }
+						    else{
+						        if(value == -9999){
+							        return '未到期';
+						        }
+                                else if(value == 0){
+							        return '按期';
+						        }
+						        else{
+							        return '('+value+')天';
+						        }
+						    }
+
 					}},
 					{field:'xdrq',title:'下达日期',width:80,sortable:true,formatter:function formatterdate(value,row,index) {
                         if (value != null) { 

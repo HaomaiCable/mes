@@ -9,13 +9,14 @@
 	<result column="xm" property="xm"/>
 	<result column="jtid" property="jtid"/>
 	<result column="jtmc" property="jtmc"/>
+	<result column="gexs" property="gexs"/>
 	<result column="state" property="state"/>
 
 </resultMap>
        
 <!-- sys_role table all fields -->
 <sql id="Base_Column_List" >
-	 id,xm,jtid,jtmc,state
+	 id,xm,jtid,jtmc,dexs,state
 </sql>
    
    
@@ -35,6 +36,9 @@ where 1=1
 	<if test="jtmc != null and jtmc != ''" >
 	    and jtmc like CONCAT('%', #{jtmc}, '%')
 	</if>
+	<if test="gexs != null ">
+		and gexs = #{gexs}
+	</if>
 	<if test="state != null ">
 		and state = #{state}
 	</if>
@@ -47,13 +51,13 @@ where 1=1
   <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 	SELECT LAST_INSERT_ID()
   </selectKey>
-  insert into yg(id,xm,jtid,jtmc,state)
-  values(#{id},#{xm},#{jtid},#{jtmc},#{state})
+  insert into yg(id,xm,jtid,jtmc,dexs,state)
+  values(#{id},#{xm},#{jtid},#{jtmc},#{dexs},#{state})
 </insert>
 
 <!-- 根据id，修改记录-->  
  <update id="update" parameterType="Object" >
-  update yg set xm=#{xm},jtid=#{jtid},jtmc=#{jtmc},state=#{state} where id=#{id}
+  update yg set xm=#{xm},jtid=#{jtid},jtmc=#{jtmc},dexs=#{dexs},state=#{state} where id=#{id}
  </update>
  
  <!-- 修改记录，只修改值不为空的字段 -->
@@ -69,7 +73,9 @@ where 1=1
     <if test="jtmc != null and jtmc != ''  ">
 		jtmc=#{jtmc},
 	</if>
-
+    <if test="dexs != null  ">
+		dexs=#{dexs},
+	</if>
     <if test="state != null  ">
 		state=#{state},
 	</if>
@@ -100,9 +106,14 @@ where 1=1
 	<include refid="Base_Column_List"/>
 	from yg 
 	<include refid="Example_Where_Clause"/>
-	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
-      ${pager.orderCondition}
-    </if>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by  jtmc,xm 
+		</otherwise>
+	</choose>
     <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
        ${pager.mysqlQueryCondition}
     </if>

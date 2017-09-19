@@ -244,7 +244,19 @@
   <!-- <script type="text/javascript" src="${msUrl}/js/commons/json.js"></script> -->
   <!--<script type="text/javascript" src="${msUrl}/js/ux/business/xsddMxManage.js"></script>  -->
  <script type="text/javascript">   
-
+    $('#data-list').datagrid({   
+       rowStyler:function(index,row){   
+           if (row.state==2){   
+               return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+            } 
+	        else if (row.state==3)
+		    {
+			   return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		    }
+        }   
+   });
  function toJtjhList(id){
 
 	 $.post("${msUrl}/jtjhManage/dataListForDdId.do?id="+id,function(rsp) {  
@@ -362,7 +374,7 @@
                 text : "重新测算完工日期",  
                 iconCls : "icon-redo",  
                 handler :function() {  
- 					//submit();
+ 					recount();
                  }    
             },'-', {  
                 text : "接受编辑",  
@@ -468,7 +480,73 @@
 		
             }  
         }
+        function recount(){    
+		    endEdit();  
+			if ($dg.datagrid('getChanges').length) {  
+                var inserted = $dg.datagrid('getChanges', "inserted");  
+                var deleted = $dg.datagrid('getChanges', "deleted");  
+                var updated = $dg.datagrid('getChanges', "updated");  
+                          
+                var effectRow = new Object();  
+                if (inserted.length) {  
+                    effectRow["inserted"] = JSON.stringify(inserted);  
+                }  
+                if (deleted.length) {  
+                    effectRow["deleted"] = JSON.stringify(deleted);  
+                }  
+                if (updated.length) {  
+                    effectRow["updated"] = JSON.stringify(updated);  
+                }  
+			
+
+	 			//var xdrq=$("#editForm input:input[name='xdrq']").val();  //计划下达时间,第4个
+	            //effectRow["xdrq"] =xdrq;
+				
+	            //effectRow["jhbh"] =jhbh;
+				//var ywy=$("#editForm input:input[name='ywy']").val();  //业务员,第6个
+	            //effectRow["ywy"] =ywy;
+				var ddid=$("#editForm input:input[name='id']").val(); 
+	            effectRow["ddid"] = ddid;
+                var xsddjhbh=$("#editForm input:input[name='xsddjhbh']").val(); 
+				var xsddrow=$("#editForm input:input[name='xsddrow']").val(); 
+				if (xsddrow<10)
+				{
+					effectRow["xsddjhbh"] = xsddjhbh+"-"+"0"+xsddrow;
+				}
+				else{
+					 effectRow["xsddjhbh"] = xsddjhbh+"-"+xsddrow;
+				}
+                //effectRow["xsddjhbh"] = xsddjhbh+"-"+xsddrow<10?("0"+xsddrow):xsddrow;				
+                $.post("${msUrl}/jtjhManage/saveRecount.do", effectRow,function(rsp) {  
 	
+                    if(rsp.success){  
+       
+					    var param = $("#searchForm").serializeObject();
+			            $('#data-list').datagrid('reload',param);
+                        $.messager.alert("提示", rsp.msg);   
+                    }  
+					else
+					{
+	                     $.messager.alert("提示",rsp.msg);  	
+					}
+
+               }, "JSON");
+
+			   $dg.datagrid('acceptChanges');  
+			   $('#edit-win').dialog('close');
+			   $("#editForm input:input[name='xdrq']").val("");
+			   $("#editForm input:input[name='jhbh']").val("");
+   			   $("#editForm input:input[name='row']").val("");
+			   $("#editForm input:input[name='jhrq']").val("");
+  
+			   //$("#dg-jtjhappend").datagrid('reload');
+			   $dg.datagrid('loadData', { total: 0, rows: [] }); 
+
+               var param = $("#searchForm").serializeObject();
+			   $('#data-list').datagrid('reload',param);
+		
+            }  
+        }	
    });
 
   function initdate(){

@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hmmes.bean.YgBean;
 import com.hmmes.model.YgModel;
 import com.hmmes.service.YgService;
+import com.hmmes.bean.JtBean;
+import com.hmmes.service.JtService;
 import com.hmmes.utils.HtmlUtil;
 //import com.hmmes.utils.json.JsonDateValueProcessor;
  
@@ -35,7 +37,9 @@ public class YgAction extends BaseAction{
 	
 	// Servrice start
 	@Autowired(required=false) 
-	private YgService<YgBean> YgService; 
+	private YgService<YgBean> ygService; 
+	@Autowired(required=false) 
+	private JtService<JtBean> jtService; 
 	
 
 	/**
@@ -48,7 +52,7 @@ public class YgAction extends BaseAction{
 	@RequestMapping("/yg")
 	public ModelAndView  list(YgModel model,HttpServletRequest request) throws Exception{
 		Map<String,Object>  context = getRootMap();
-		//List<YgBean> dataList = YgService.queryByList(model);
+		//List<YgBean> dataList = ygService.queryByList(model);
 		//设置页面数据
 		//context.put("dataList", dataList);
 		return forword("business/ygManage",context); 
@@ -64,12 +68,12 @@ public class YgAction extends BaseAction{
 	 */
 	@RequestMapping("/dataList") 
 	public void  dataList(YgModel model,HttpServletResponse response) throws Exception{
-		List<YgBean> dataList = YgService.queryByList(model);
+		List<YgBean> dataList = ygService.queryByList(model);
 		List<YgBean> result = new ArrayList<YgBean>();
-		// 封装VO集合
+
 		for (Object ele : dataList)
 		{
-			// 每个集合元素都是StockBean对象
+
 			YgBean st = (YgBean)ele;
 			result.add(st);
 		}
@@ -77,27 +81,63 @@ public class YgAction extends BaseAction{
 		String jsonStr="{\"total\":"+model.getPager().getRowCount()+",\"rows\":"+jsonArr.toString()+"}";
         response.setCharacterEncoding("UTF-8");
 		response.getWriter().print(jsonStr);
-	
-
-	
 	}
 	@RequestMapping("/getYgList")  //员工combobox 选择数据
 	public void  ygList(YgModel model,HttpServletResponse response) throws Exception{
-		List<YgBean> dataList = YgService.queryAllList();
+		List<YgBean> dataList = ygService.queryAllList();
 		List<YgBean> result = new ArrayList<YgBean>();
-		// 封装VO集合
+
 		for (Object ele : dataList)
 		{
-			// 每个集合元素都是StockBean对象
+
 			YgBean st = (YgBean)ele;
 			result.add(st);
 		}
 		JSONArray jsonArr= new JSONArray(result);
         response.setCharacterEncoding("UTF-8");
 		response.getWriter().print(jsonArr.toString());
-	
+	}
+	@RequestMapping("/getYgListForGd")  //员工combobox 选择数据 ,For Gd 
+	public void  ygListForGd(Integer gdid,HttpServletResponse response) throws Exception{
+		String gd="";
+        switch (gdid)
+        {
+            case 1:
+                gd="拔丝工段";
+                break;
+            case 2:
+                gd="橡缆工段";
+                break;
+            case 3:
+                gd="低压工段";
+                break;
+            case 4:
+                gd="高压工段";
+                break;
+		    default:
+				gd="";
+			    break;
+        }
 
-	
+		List<YgBean> dataList = ygService.queryAllList();
+		List<YgBean> result = new ArrayList<YgBean>();
+		for (YgBean ygBean: dataList)
+		{
+			JtBean jtBean = jtService.queryByJtmc(ygBean.getJtmc());
+		    String gdmc="";
+		    if (jtBean!=null)
+		    {
+			    gdmc=jtBean.getGd()==null?"":jtBean.getGd();
+		    }
+		    if (gd.equals(gdmc.trim()))   //不是参数传递的工段,不显示
+
+		    {
+			    result.add(ygBean);
+		    }
+		}
+		JSONArray jsonArr= new JSONArray(result);
+        response.setCharacterEncoding("UTF-8");
+		response.getWriter().print(jsonArr.toString());
 	}
 	
 	/**
@@ -110,9 +150,9 @@ public class YgAction extends BaseAction{
 	@RequestMapping("/save")
 	public void save(YgBean bean,HttpServletResponse response) throws Exception{
 		if(bean.getId() == null){
-			YgService.add(bean);
+			ygService.add(bean);
 		}else{
-			YgService.update(bean);
+			ygService.update(bean);
 		}
 		sendSuccessMessage(response, "保存成功~");
 	}
@@ -122,7 +162,7 @@ public class YgAction extends BaseAction{
 	public void getId(Integer id,HttpServletResponse response) throws Exception{
 		JSONObject context = new JSONObject();
 
-		YgBean bean  = YgService.queryById(id);
+		YgBean bean  = ygService.queryById(id);
 		if(bean  == null){
 			sendFailureMessage(response, "没有找到对应的记录!");
 			return;
@@ -134,7 +174,7 @@ public class YgAction extends BaseAction{
 
 	@RequestMapping("/delete")
 	public void delete(Integer[] id,HttpServletResponse response) throws Exception{
-		YgService.delete(id);
+		ygService.delete(id);
 		sendSuccessMessage(response, "删除成功");
 	}
 	

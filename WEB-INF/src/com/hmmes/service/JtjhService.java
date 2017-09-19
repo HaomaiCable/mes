@@ -63,14 +63,14 @@ public class JtjhService<T> extends BaseService<T> {
 	 * @return
 	 */
 	public List<T> queryListBySbmcdek(String sbmcdek){
-		return mapper.queryListByJhbh(sbmcdek);
+		return mapper.queryListBySbmcdek(sbmcdek);
 	}
 	/**
 	 * 根据sbmc(下达计划的设备名称)查询
 	 * @return
 	 */
 	public List<T> queryListBySbmc(String sbmc){
-		return mapper.queryListByJhbh(sbmc);
+		return mapper.queryListBySbmc(sbmc);
 	}		
 	public T queryByJhbhAndRow(String jhbh,Integer row){
 		return mapper.queryByJhbhAndRow(jhbh,row);

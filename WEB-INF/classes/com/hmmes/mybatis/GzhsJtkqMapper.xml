@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmmes.mapper.GzhsJtkqMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hmmes.bean.GzhsJtkqBean" >
+	<result column="id" property="id"/>
+	<result column="gd" property="gd"/>
+	<result column="sbmc" property="sbmc"/>
+	<result column="ygxm" property="ygxm"/>
+	<result column="dexs" property="dexs"/>
+	<result column="kqrq" property="kqrq"/>
+	<result column="bc" property="bc"/>
+	<result column="cqgs" property="cqgs"/>
+	<result column="lrBy" property="lrBy"/>
+	<result column="lrTime" property="lrTime"/>
+
+</resultMap>
+       
+<!-- sys_role table all fields -->
+<sql id="Base_Column_List" >
+	 id,gd,sbmc,ygxm,dexs,kqrq,bc,cqgs,lrBy,lrTime
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+    <choose>
+	    <when test="(fromkqrq != null and fromkqrq != '') and (tokqrq != null and tokqrq != '')" >
+             and (kqrq BETWEEN  #{fromkqrq} and  #{tokqrq})
+        </when>
+		<otherwise>
+		      and kqrq>=DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		</otherwise>
+	</choose>
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+    <if test="gd != null and gd != ''" >
+	    and gd like CONCAT('%', #{gd}, '%')
+	</if>
+    <if test="sbmc != null and sbmc != ''" >
+	    and sbmc like CONCAT('%', #{sbmc}, '%')
+	</if>
+    <if test="ygxm != null and ygxm != ''" >
+	    and ygxm like CONCAT('%', #{ygxm}, '%')
+	</if>
+	<if test="dexs != null" >
+	    and dexs =  #{dexs}
+	</if>
+	<if test="dexs != null" >
+	    and dexs =  #{dexs}
+	</if>
+	<if test="kqrq != null" >
+	    and kqrq =  #{kqrq}
+	</if>
+	<if test="bc != null ">
+		and bc = #{bc}
+	</if>
+	<if test="cqgs != null ">
+		and cqgs = #{cqgs}
+	</if>
+	<if test="lrBy != null and lrBy != ''" >
+	    and lrBy  like CONCAT('%',#{lrBy},'%')
+	</if>
+	<if test="lrTime != null" >
+	    and lrTime =  #{lrTime}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into gzhs_jtkq(id,gd,sbmc,ygxm,dexs,kqrq,bc,cqgs,lrBy,lrTime)
+  values(#{id},#{gd},#{sbmc},#{ygxm},#{dexs},#{kqrq},#{bc},#{cqgs},#{lrBy},now())
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update gzhs_jtkq set gd=#{gd},sbmc=#{sbmc},ygxm=#{ygxm},dexs=#{dexs},kqrq=#{kqrq},bc=#{bc},cqgs=#{cqgs},lrBy=#{lrBy},lrTime = #{lrTime} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改值不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update gzhs_jtkq set 
+	<trim  suffixOverrides="," >
+	<if test="gd != null  and gd != '' ">
+		gd=#{gd},
+	</if>
+	<if test="sbmc != null  and sbmc != '' ">
+		sbmc=#{sbmc},
+	</if>
+	<if test="ygxm != null  and ygxm != '' ">
+		ygxm=#{ygxm},
+	</if>
+    <if test="dexs != null  ">
+		dexs=#{dexs},
+	</if>
+    <if test="kqrq != null  ">
+		kqrq=#{kqrq},
+	</if>
+    <if test="bc != null  ">
+		bc=#{bc},
+	</if>
+    <if test="cqgs != null  ">
+		cqgs=#{cqgs},
+	</if>
+	<if test="lrBy != null  and lrBy != '' ">
+		lrBy=#{lrBy},
+	</if>
+	<if test="lrTime != null  ">
+		lrTime=#{lrTime},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete  from gzhs_jtkq where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from gzhs_jtkq where id = #{id}
+</select>
+
+
+<!--  列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from gzhs_jtkq 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询所有的列表,按照页数 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from gzhs_jtkq 
+	<include refid="Example_Where_Clause"/>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by  gd,sbmc,kqrq,bc 
+		</otherwise>
+	</choose>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+	
+<!-- 查询所有列表 -->
+<select id="queryAllList" resultMap="BaseResultMap"  parameterType="Object">
+	select  <include refid="Base_Column_List"/>
+	from gzhs_jtkq where state = 0  order by jtmc 
+</select>
+
+<!-- 根据sbmc,kqrq,bc-->
+<select id="queryBySbmcAndKqrqAndBc" resultMap="BaseResultMap"  parameterType="Object">
+	select  
+	<include refid="Base_Column_List"/>
+	from gzhs_jtkq where sbmc = #{0}  and kqrq =#{kqrq} and bc =#{bc}
+</select>
+
+</mapper>   

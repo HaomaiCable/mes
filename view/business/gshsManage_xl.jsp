@@ -27,7 +27,7 @@
                <label>机台:</label>  
 		            <input class="easyui-combobox"  name="sbmc" style="width:100px;"   
 				    data-options="
-			        url:'../sbManage/getSbListForGd.do?gdid=1',
+			        url:'../sbManage/getSbListForGd.do?gdid=2',
 					multiple:false,
 			        valueField:'sbmc',
 			        textField:'sbmc'">
@@ -98,9 +98,8 @@
 			singleSelect:true,
 		    rownumbers:true,
 			pagination:true,
-            pageSize:500,
-			pageList:[500, 600, 700, 800, 1000],
-            method:  'post',
+            pageSize:1000,
+			pageList:[1000, 1500,2000, 2500, 3000],            method:  'post',
             onClickRow: onClickRow,
 			ft:'#toolbar',
             frozenColumns:[[
@@ -267,9 +266,7 @@
 	
    });
 
-   function downExcel(fileName){
-     window.location.href ="../downLoadManage/downLoad.do?fileName="+fileName; 
-   }
+
 	function hsgs(){
             var rows = $('#data-list').datagrid('getRows');
             var effectRow = new Object();  
@@ -277,17 +274,22 @@
   
             $.post("saveHsgs.do",effectRow ,function(rsp) {  			
                if(rsp.success){  
+				   var param = $("#searchForm").serializeObject();
+			       $('#data-list').datagrid('reload',param);
 			       $.messager.alert("提示",rsp.msg);;
                 }  
 		        else{
 	               $.messager.alert("提示",rsp.msg);  	
 		         }
 		     });
-			 $('#data-list').datagrid('load');	
+			 //$('#data-list').datagrid('load');	
 			 var param = $("#searchForm").serializeObject();
 			 $('#data-list').datagrid('reload',param);
 	}
 
+   function downExcel(fileName){
+     window.location.href ="../downLoadManage/downLoad.do?fileName="+fileName; 
+   }
 	function toExcel(){
          var rows = $('#data-list').datagrid('getRows');
          var effectRow = new Object();  

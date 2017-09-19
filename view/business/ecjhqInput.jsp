@@ -66,14 +66,24 @@
 						},
 						formatter:function(value,row,index){
 							
-						    if(value == -9999){
-							    return '未到期';
+				            if (row.state==2)
+						    {
+							    return '暂停';
 						    }
-                            else if(value == 0){
-							    return '按期';
+						    else if (row.state==3)
+						    {  
+							    return '作废';
 						    }
 						    else{
-							    return '('+value+')天';
+						        if(value == -9999){
+							        return '未到期';
+						        }
+                                else if(value == 0){
+							        return '按期';
+						        }
+						        else{
+							        return '('+value+')天';
+						        }
 						    }
 						}
               ">超期天数</th>
@@ -126,6 +136,20 @@
 </div>
 
 <script type="text/javascript"> 
+    $('#data-list').datagrid({   
+       rowStyler:function(index,row){   
+           if (row.state==2){   
+               return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+            } 
+	        else if (row.state==3)
+		    {
+			   return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		    }
+        }   
+   });
+
    function refreshgrid(){ 
        var param = $("#searchForm").serializeObject();
 	  $('#data-list').datagrid('reload',param);

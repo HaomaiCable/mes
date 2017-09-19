@@ -68,6 +68,7 @@ import com.hmmes.utils.DateUtil;
 import com.hmmes.utils.StringUtil;
 import com.hmmes.utils.excelutils.ExcelHelper;
 import com.hmmes.utils.excelutils.JxlExcelHelper;
+import com.hmmes.utils.excelutils.HssfExcelHelper;
 import com.hmmes.utils.ListUtils;
  
 @Controller
@@ -125,12 +126,12 @@ public class JtjhAction extends BaseAction{
          request.setAttribute("fromdate",fromdate);
          request.setAttribute("todate",todate);
 
-		Map<String,Object>  context = getRootMap();
-	    model.setDeleted(DELETED.NO.key);
-		List<JtjhBean> dataList = jtjhService.queryByList(model);
-		//设置页面数据
-		context.put("dataList", dataList);
-		return forword("business/jtjhManage",context); 
+		 Map<String,Object>  context = getRootMap();
+	     model.setDeleted(DELETED.NO.key);
+		 List<JtjhBean> dataList = jtjhService.queryByList(model);
+		 //设置页面数据
+		 context.put("dataList", dataList);
+		 return forword("business/jtjhManage",context); 
 
 	}
 	
@@ -312,12 +313,12 @@ public class JtjhAction extends BaseAction{
          request.setAttribute("fromdate",fromdate);
          request.setAttribute("todate",todate);
 
-		Map<String,Object>  context = getRootMap();
-	    model.setDeleted(DELETED.NO.key);
-		List<JtjhBean> dataList = jtjhService.queryByList(model);
-		//设置页面数据
-		context.put("dataList", dataList);
-		return forword("business/jtjhWgReport_gy",context); 
+		 Map<String,Object>  context = getRootMap();
+	     model.setDeleted(DELETED.NO.key);
+		 List<JtjhBean> dataList = jtjhService.queryByList(model);
+		 //设置页面数据
+		 context.put("dataList", dataList);
+		 return forword("business/jtjhWgReport_gy",context); 
 
 	}	
 	
@@ -339,12 +340,12 @@ public class JtjhAction extends BaseAction{
          request.setAttribute("fromdate",fromdate);
          request.setAttribute("todate",todate);
 
-		Map<String,Object>  context = getRootMap();
-	    model.setDeleted(DELETED.NO.key);
-		List<JtjhBean> dataList = jtjhService.queryByList(model);
-		//设置页面数据
-		context.put("dataList", dataList);
-		return forword("business/jtjhWgReport_gypl",context); 
+		 Map<String,Object>  context = getRootMap();
+	     model.setDeleted(DELETED.NO.key);
+		 List<JtjhBean> dataList = jtjhService.queryByList(model);
+		 //设置页面数据
+		 context.put("dataList", dataList);
+		 return forword("business/jtjhWgReport_gypl",context); 
 
 	}	
 
@@ -372,12 +373,12 @@ public class JtjhAction extends BaseAction{
          request.setAttribute("todate",todate);
 
 		
-		Map<String,Object>  context = getRootMap();
-		model.setDeleted(DELETED.NO.key);
-		List<JtjhBean> dataList = jtjhService.queryByList(model);
-		//设置页面数据
-		context.put("dataList", dataList);
-		return forword("business/jtjhBrow",context); 
+		 Map<String,Object>  context = getRootMap();
+		 model.setDeleted(DELETED.NO.key);
+		 List<JtjhBean> dataList = jtjhService.queryByList(model);
+		 //设置页面数据
+		 context.put("dataList", dataList);
+		 return forword("business/jtjhBrow",context); 
 	}	
 
 
@@ -392,7 +393,6 @@ public class JtjhAction extends BaseAction{
 	public void  dataList(JtjhModel model,HttpServletResponse response) throws Exception{
 		List<JtjhBean> dataList = jtjhService.queryByList(model);
 		List<JtjhBean> result = new ArrayList<JtjhBean>();
-		// 封装VO集合
 		for (Object ele : dataList)
 		{
 			JtjhBean st = (JtjhBean)ele;
@@ -628,20 +628,20 @@ public class JtjhAction extends BaseAction{
 		    {
 	            JtjhBean st = (JtjhBean)ele;
 
-				Double jhsl=st.getJhsl_o()==null?0:st.getJhsl_o();
-			    DecimalFormat  df0   = new DecimalFormat("######0");
-			    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
-                Integer qbwg=0;
-		        String sdate=sdf.format(new Date());
-		        Date ud= sdf.parse(sdate);
-		        java.sql.Date sd = new java.sql.Date(ud.getTime());   
-		        long cqts=-9999;
-				Integer  jhid=st.getId();
-			    List<JtjhWghbBean> wghbList = jtjhWghbService.queryListByJhId(jhid);
+				 Double jhsl=st.getJhsl_o()==null?0:st.getJhsl_o();
+			     DecimalFormat  df0   = new DecimalFormat("######0");
+			     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+                 Integer qbwg=0;
+		         String sdate=sdf.format(new Date());
+		         Date ud= sdf.parse(sdate);
+		         java.sql.Date sd = new java.sql.Date(ud.getTime());   
+		         long cqts=-9999;
+				 Integer  jhid=st.getId();
+			     List<JtjhWghbBean> wghbList = jtjhWghbService.queryListByJhId(jhid);
 
 
-			    if (wghbList!=null && wghbList.size()>0 )
-			    {
+			     if (wghbList!=null && wghbList.size()>0 )
+			     {
 
                      if ((wghbList.get(0).getWgrq())!=null)
                      {
@@ -726,8 +726,8 @@ public class JtjhAction extends BaseAction{
 					// st.setWgflag(qbwg==1?"已完工":"未完工");
 					// jtjhService.update(st);
 
-			    }
-			    else{
+			     }
+			     else{
 				     if (st.getJhrq()!=null && !"".equals(st.getJhrq())){
 				         if ((sd.getTime()-st.getJhrq().getTime())<=0)
 				         {
@@ -889,9 +889,18 @@ public class JtjhAction extends BaseAction{
 				 bean.setDdid(Integer.valueOf(xsddid));
 				 bean.setJhbh(jhbh);
 		      	 bean.setDeleted(DELETED.NO.key);
-				 bean.setGxxh_o(bean.getGxxh());
-				 bean.setGxgg_o(bean.getGxgg());
-				 bean.setGxdy_o(bean.getGxdy());
+				 if (bean.getGxxh_o()==null || "".equals(bean.getGxxh_o()))
+				 {
+					 bean.setGxxh_o(bean.getGxxh());
+				 }
+				 if (bean.getGxgg_o()==null || "".equals(bean.getGxgg_o()))
+				 {				 
+				     bean.setGxgg_o(bean.getGxgg());
+				 }
+				 if (bean.getGxdy_o()==null || "".equals(bean.getGxdy_o()))
+				 {	
+				     bean.setGxdy_o(bean.getGxdy());
+				 }
 				 Double dsl=0.0;
 				 if ((bean.getJhsl_xs()).indexOf("+")>-1 ) //[195+3]
 				 {
@@ -1014,8 +1023,8 @@ public class JtjhAction extends BaseAction{
 		
 		String xh=(bean.getXh()).toUpperCase().trim();
 		String oldxh=xh;
-		String gg=bean.getGg().replace("X","*").replace("x","*").replace("×","*");
-		String oldgg=gg.trim().replace("*","×");
+		String gg=bean.getGg().replace("X","*").replace("x","*").replace("×","*").trim();
+		String oldgg=gg.replace("*","×");
 		String dy=bean.getDy().toUpperCase().trim();
 		String gy=bean.getGy();
 		String dw=bean.getDw();
@@ -1077,6 +1086,240 @@ public class JtjhAction extends BaseAction{
 
 		}
 		else{
+			List<JtjhBean> result=getJtjh(username, ddid, xh, oldxh, gg, oldgg
+		     , dy, gy, dw, jsyq, ph, sl, jhbh, ddate,xdrq, jhrq,response);
+		
+
+	        JSONArray jsonArr= new JSONArray(result);
+	        String jsonStr="{\"total\":"+result.size()+",\"rows\":"+jsonArr.toString()+"}";
+	        context.put("json",jsonStr);	
+	        context.put(SUCCESS, true);
+//System.out.println("高绪山-XsddAction--dataListById-context"+context.toString());
+	        HtmlUtil.writerJson(response, context);
+		    return ;
+		  
+		}
+	}
+	@RequestMapping("/saveRecount")
+	public void saveRecount(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	    request.setCharacterEncoding("UTF-8");  
+        //获取编辑数据 这里获取到的是json字符串  
+         String deleted = request.getParameter("deleted");  
+         String inserted = request.getParameter("inserted");  
+         String updated = request.getParameter("updated");  
+		 String xsddid  = request.getParameter("ddid");
+		 String jhbh  = request.getParameter("xsddjhbh");
+
+
+//System.out.println("高绪山：XsddAction--add:insert"+inserted);
+//System.out.println("高绪山：XsddAction--add:delete"+deleted);
+System.out.println("高绪山：jhbh"+jhbh);
+
+         String username = SessionUtils.getUser(request).getNickName();
+         Integer row=0;
+		 Integer sortFlag=0;//是否重新替换row
+         if(deleted != null){  
+             //把json字符串转换成对象  
+             sortFlag=1;
+             List<JtjhBean> listDeleted = new ArrayList<JtjhBean>();	
+             listDeleted = JSON.parseArray(deleted, JtjhBean.class);  
+             //TODO 下面就可以根据转换后的对象进行相应的操作了 
+			 Integer [] ids=new Integer[listDeleted.size()];
+
+             row=0;
+		     for (Object ele : listDeleted )
+		     {
+				 JtjhBean bean = (JtjhBean)ele;	  
+
+                  Integer ddid=bean.getId();
+                  ids[row]=ddid;
+				  row++;
+			 } 
+			 jtjhService.delete(ids);
+         }  
+ 
+         if(inserted != null){  
+			 sortFlag=1;
+             //把json字符串转换成对象  
+             List<JtjhBean> listInserted = new ArrayList<JtjhBean>();	
+		     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+		     String sdate;
+			 Date dxdrq=null;
+	         sdate=sdf.format(new Date());	
+			 try {
+ 			        
+       		     dxdrq = sdf.parse(sdate);
+       
+              } catch (ParseException e) {
+                 e.printStackTrace();
+              }	
+			 listInserted = JSON.parseArray(inserted, JtjhBean.class);  
+			 for (Object ele : listInserted )
+		     {
+			     JtjhBean bean = (JtjhBean)ele;	 
+				 bean.setId(null);
+				 bean.setDdid(Integer.valueOf(xsddid));
+				 bean.setJhbh(jhbh);
+		      	 bean.setDeleted(DELETED.NO.key);
+				 
+				 if (bean.getGxxh_o()==null || "".equals(bean.getGxxh_o()))
+				 {
+					 bean.setGxxh_o(bean.getGxxh());
+				 }
+				 if (bean.getGxgg_o()==null || "".equals(bean.getGxgg_o()))
+				 {				 
+				     bean.setGxgg_o(bean.getGxgg());
+				 }
+				 if (bean.getGxdy_o()==null || "".equals(bean.getGxdy_o()))
+				 {	
+				     bean.setGxdy_o(bean.getGxdy());
+				 }
+				 
+				 Double dsl=0.0;
+                 if (bean.getJhsl()==null)
+                 {
+                
+				     if ((bean.getJhsl_xs()).indexOf("+")>-1 ) //[195+3]
+				     {
+                        String[] strsl = bean.getJhsl_xs().split("\\+"); //[195,3]
+					    dsl= Double.valueOf(strsl[0])+ Double.valueOf(strsl[1]);
+				     }
+				     else if ((bean.getJhsl_xs()).indexOf("-")>-1 ) //[195-3])
+                     {
+					    String[] strsl = bean.getJhsl_xs().split("\\-"); //[195,3]
+					     dsl= Double.valueOf(strsl[0])- Double.valueOf(strsl[1]);
+				     }
+				     else{
+                         dsl =Double.valueOf(bean.getJhsl_xs());
+				     }
+
+				     bean.setJhsl(dsl);
+				     if (bean.getJhsl_o()==null || "".equals(bean.getJhsl_o()))
+				     {
+					    bean.setJhsl_o(dsl);
+				     }
+				 }
+				 bean.setState(1);
+                 bean.setXdrq(new java.sql.Date(dxdrq.getTime()));  //java.util.Date -->java.sql.Date 			    
+			     bean.setCreateBy(username);
+				 jtjhService.add(bean);
+		     }
+         }  
+
+         if(updated != null){  
+            //把json字符串转换成对象  
+			sortFlag=1;
+		    List<JtjhBean> listUpdated = new ArrayList<JtjhBean>();	
+            listUpdated = JSON.parseArray(updated, JtjhBean.class);  
+ 	        for (Object ele : listUpdated )
+		    {
+				 JtjhBean bean = (JtjhBean)ele;	
+                 bean.setUpdateBy(username);				 
+ 				 jtjhService.update(bean);
+		     }
+          }
+		  //重新计算交货期
+		  List<JtjhBean> dataListNew = jtjhService.queryListByJhbh(jhbh);
+          Double tsts=0.0;
+          Double ztzjts=0.0;
+          Integer jhqtsfs=2;
+		  for (Object ele : dataListNew )
+		  {
+		     JtjhBean jhbean=(JtjhBean)ele;
+			 SbBean sbbean = sbService.queryBySbmc(jhbean.getSbmc());
+			 if (sbbean==null  )
+		     {
+		          sendFailureMessage(response, "设备数据库--没有找到该工序设备的相关信息!");
+			      //return ;
+			 }
+			 else{
+                 String fsbmc=sbbean.getSbmc();
+                 String fsbmcdek=sbbean.getDeksbmc();
+                 jhbean.setSbmcdek(fsbmcdek);
+				 String fxh=(jhbean.getGxxh_o()).toUpperCase().trim();
+				 String fgg=jhbean.getGxgg_o().trim();
+				 String fdy=jhbean.getGxgg_o().toUpperCase().trim();
+				 String flb=jhbean.getGxlb();
+				 Double fjhsl=jhbean.getJhsl_o();
+				 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+				 String sdate;
+				 Date ddate=null;
+				 sdate=df.format(new Date());	
+				 try {
+						
+					 ddate = df.parse(sdate);
+		   
+				 } catch (ParseException e) {
+					 e.printStackTrace();
+				 }
+				 Date xdrq= jhbean.getXdrq()!=null?df.parse(df.format(jhbean.getXdrq())):ddate;		
+				 
+				 List<ParaBean> paraBeanDataList= paraService.queryByFlag("交货期推算方式");//交货期推算方式;1==从当期日期+设备负荷往后推算；2==从最后完工时间-1天往前推算
+				 for (Object paraele : paraBeanDataList )
+				 {
+					 ParaBean  parabean = (ParaBean) paraele;
+					 jhqtsfs=Integer.valueOf(parabean.getPara1());
+				 }				  
+				 paraBeanDataList= paraService.queryByFlag("正推交货期每道工序增加天数");//正推，1==从当期日期+设备负荷往后推算，每道工序额外增加的天数
+				 for (Object paraele : paraBeanDataList )
+				 {
+					  ParaBean  parabean = (ParaBean) paraele;
+					  ztzjts=Double.valueOf(parabean.getPara1());
+				 }	
+				 if (jhqtsfs==1)//1==从当期日期+设备负荷往后推算
+				 {
+					 
+	//System.out.println("高绪山-sbmc="+fsbmcdek+",xh="+fxh+",gg="+fgg+",dy="+fdy+",lb="+flb+",sl="+fjhsl);
+					  Double bpjhde=getJtgs(fsbmcdek,fxh,fgg,fdy,flb,fjhsl/1000);//本批计划负荷
+
+					  Double yyjhde=getYyfh(fsbmc);//已有负荷
+	System.out.println("高绪山-bpjhde"+bpjhde);
+	System.out.println("高绪山-yyjhde"+yyjhde);
+					   sbbean.setBpjhfh(bpjhde);
+					   sbbean.setYyfh(yyjhde);
+     					sbService.update(sbbean);
+						Double yyfh=0.0;
+						if ( sbbean.getYyfh()!=null )
+						{
+							yyfh=sbbean.getYyfh();
+						}
+						Double bpjhfh=0.0;
+						if ( sbbean.getBpjhfh()!=null )
+						{
+							bpjhfh=sbbean.getBpjhfh();
+						 }
+						 Double tzxs=0.0;
+						 if ( sbbean.getTzxs()!=null )
+						 {
+							  tzxs=sbbean.getTzxs();
+						 }
+						 Double sjfh=(yyfh+bpjhfh)*tzxs;
+						 Double sjfhts=sjfh/((sbbean.getSbsl())*(sbbean.getBc())*(sbbean.getCqgs()));
+						 tsts=tsts+sjfhts+ztzjts;  //实际负荷天数+每一道工序额外增加天数参数
+						 Integer itsts  =  (new Double(tsts)).intValue(); 
+	//System.out.println("高绪山- itsts"+itsts);
+						 Calendar rightNow = Calendar.getInstance();
+						 rightNow.setTime(xdrq);
+						 // righNow.add(Calendar.YEAR,-1);//日期减1年
+						 // rightNow.add(Calendar.MONTH,3);//日期加3个月
+						 rightNow.add(Calendar.DAY_OF_YEAR,itsts);//日期计算
+						 Date djhrq=rightNow.getTime();
+						 jhbean.setJhrq(new java.sql.Date(djhrq.getTime()));  //java.util.Date -->java.sql.Date 
+                         jtjhService.update(jhbean);
+                    }
+			     }
+             }
+	         sendSuccessMessage(response, "重新计算交货期完成，请点击链接查看计算结果~");
+		     return ;
+		  
+		}
+	
+ 
+   //下达计划
+   	private List<JtjhBean> getJtjh(String username,Integer ddid,String xh,String oldxh,String gg,String oldgg
+		,String dy,String gy,String dw,String jsyq,String ph,Double sl,String jhbh,Date ddate,Date xdrq,Date jhrq
+		,HttpServletResponse response) throws Exception{
+
 		   Integer jhqtsfs=2;//交货期推算方式
 	       List<ParaBean> paraBeanDataList;
 	       List<JtjhBean> result = new ArrayList<JtjhBean>();
@@ -1181,6 +1424,20 @@ public class JtjhAction extends BaseAction{
 
 			   }
 		   }
+	       paraBeanDataList = paraService.queryByFlag("不带G的架空线加1×");    //JKLYJ 120==1*120
+		   for (Object paraele : paraBeanDataList )
+		   {
+			   ParaBean  parabean = (ParaBean) paraele;
+			   if ( xh.startsWith(parabean.getPara1()))
+			   {
+			       if (!gg.startsWith("1*"))  //规格没有1*，加上1*
+			       { 
+					   gg="1*"+gg; 
+					   break;
+			       }
+			   }
+		   }
+		   
 System.out.println("高绪山-替换后的xh="+xh+",gg="+gg);
             DecimalFormat  df0   = new DecimalFormat("######0");
             int cpFindFlag=1;//产品数据库查询标记
@@ -1258,9 +1515,19 @@ System.out.println("高绪山-替换后的xh="+xh+",gg="+gg);
 				   String tmpSbmc="";
 				   String tmpIszl="";
 				   Integer countDtts=0;
+				   Double tsts=0.0;
+				   Double ztzjts=0.0;
+				   
+				   paraBeanDataList= paraService.queryByFlag("正推交货期每道工序增加天数");//正推，1==从当期日期+设备负荷往后推算，每道工序额外增加的天数
+                   for (Object paraele : paraBeanDataList )
+			       {
+				       ParaBean  parabean = (ParaBean) paraele;
+				       ztzjts=Double.valueOf(parabean.getPara1());
+			       }	
 		           for (Object ele : dataListCpgxmx)
 		           {
-			           CpgxmxBean gxmxbean = (CpgxmxBean)ele;
+			           
+					   CpgxmxBean gxmxbean = (CpgxmxBean)ele;
                        int noDoFlag=0; //排除标记
 					   paraBeanDataList = paraService.queryByFlag("不下达机台计划工序");//拉丝等工序
 					   for (Object paraele : paraBeanDataList )
@@ -1463,8 +1730,8 @@ System.out.println("高绪山-替换后的xh="+xh+",gg="+gg);
                                Double bpjhde=getJtgs(fsbmcdek,fxh,fgg,fdy,flb,fjhsl/1000);//本批计划负荷
 
 					           Double yyjhde=getYyfh(fsbmc);//已有负荷
-//System.out.println("高绪山-bpjhde"+bpjhde);
-//System.out.println("高绪山-yyjhde"+yyjhde);
+System.out.println("高绪山-bpjhde"+bpjhde);
+System.out.println("高绪山-yyjhde"+yyjhde);
 						       sbbean.setBpjhfh(bpjhde);
 						       sbbean.setYyfh(yyjhde);
 
@@ -1486,8 +1753,9 @@ System.out.println("高绪山-替换后的xh="+xh+",gg="+gg);
 						       }
 						       Double sjfh=(yyfh+bpjhfh)*tzxs;
 						       Double sjfhts=sjfh/((sbbean.getSbsl())*(sbbean.getBc())*(sbbean.getCqgs()));
-						       Double tsts=sjfhts+row*1;  //实际负荷天数+每一道工序增加1天
+						       tsts=tsts+sjfhts+ztzjts;  //实际负荷天数+每一道工序额外增加天数参数
 						       Integer itsts  =  (new Double(tsts)).intValue(); 
+//System.out.println("高绪山- itsts"+itsts);
 		                       Calendar rightNow = Calendar.getInstance();
                                rightNow.setTime(new Date());
                                // righNow.add(Calendar.YEAR,-1);//日期减1年
@@ -1582,7 +1850,7 @@ System.out.println("高绪山-替换后的xh="+xh+",gg="+gg);
 		              }
 			          else{
 			            sendFailureMessage(response, "请在(生产设备信息维护)中，增加设备【"+st.getSbmc()+"】的信息!");
-			            return;
+			            return null;
 			          }
 		              String gdmc="";
 		              JtBean jtbean = jtService.queryByJtmc(jtmc);
@@ -1592,7 +1860,7 @@ System.out.println("高绪山-替换后的xh="+xh+",gg="+gg);
 		              }
 			          else{
 			              sendFailureMessage(response, "请在(机台维护)中，增加设备【"+jtmc+"】与工段、车间的关联信息！");
-			              return;
+			              return null;
 			          }
 
 			          st.setGd(gdmc);  
@@ -1601,17 +1869,10 @@ System.out.println("高绪山-替换后的xh="+xh+",gg="+gg);
 				   }
 
 				}
-			}
-
-		    JSONArray jsonArr= new JSONArray(result);
-		    String jsonStr="{\"total\":"+result.size()+",\"rows\":"+jsonArr.toString()+"}";
-		    context.put("json",jsonStr);	
-		    context.put(SUCCESS, true);
-//System.out.println("高绪山-XsddAction--dataListById-context"+context.toString());
-		    HtmlUtil.writerJson(response, context);
-			return ;
-		  
-		}
+				
+		        
+	        }
+			return result ;
 	}
 
     //计算设备已有负荷
@@ -1645,25 +1906,37 @@ System.out.println("高绪山-替换后的xh="+xh+",gg="+gg);
 				     {
 					     qbwg=1;
 				     }
+			         else{
+			             if (jhsl!=0)
+			             {
+				             if ((jhsl-sumwgsl)/jhsl<=0.1)  //小于10%视为入库
+				            {
+					            qbwg=1;
+				            }
+			             }
+			         }	
 			    }
+//System.out.println("高绪山已有负荷-qbwg="+qbwg);
 				if (qbwg==0 )
 				{
 				    String fsbmcdek=st.getSbmcdek();
 					String fxh=st.getGxxh_o();
-					String fgg=st.getGxgg();
+					String fgg=st.getGxgg_o();
  				    String fdy=st.getGxdy_o();
 				    String flb=st.getGxlb();
 					Double fgsde=0.0;
 					yyfh=yyfh+getJtgs(fsbmcdek,fxh,fgg,fdy,flb,(jhsl-sumwgsl)/1000);
+//System.out.println("高绪山已有负荷-sbmc="+fsbmcdek+",xh="+fxh+",gg="+fgg+",dy="+fdy+",lb="+flb+",sl="+(jhsl-sumwgsl)/1000+",yyfh="+yyfh);
 				}
     		}
+//System.out.println("高绪山已有负荷-sbmc="+fsbmc+",yyfh="+yyfh);
 		return yyfh;
 	}
 
     //计算机台工时定额
 	private Double getJtgs(String fsbmc,String fxh,String fgg,String fdy,String flb,Double fsl){
 		Double jtgs=0.0;
-System.out.println("高绪山-sbmc="+fsbmc+",xh="+fxh+",gg="+fgg+",dy="+fdy+",lb="+flb+",sl="+fsl);
+//System.out.println("高绪山本批计划-sbmc="+fsbmc+",xh="+fxh+",gg="+fgg+",dy="+fdy+",lb="+flb+",sl="+fsl);
 		GsdeBean gsbean = gsdeService.queryListByDeksbmcEtc(fsbmc,fxh,fgg,fdy,flb);
 		if (gsbean!=null)
 		{
@@ -1736,8 +2009,9 @@ System.out.println("高绪山-sbmc="+fsbmc+",xh="+fxh+",gg="+fgg+",dy="+fdy+",lb="+
 			}
 			Double sjgdzbgs=hpcs*degdzbgs;
 			jtgs=sjspgs+sjgdzbgs+sjzbgs+sjsdgs;
-System.out.println("高绪山-jtgs"+jtgs);
+//System.out.println("高绪山本批计划-sbmc="+fsbmc+",jtgs="+jtgs);
 		}
+//System.out.println("高绪山本批计划-sbmc="+fsbmc+",jtgs="+jtgs);
 		return jtgs;
 	}
 
@@ -1820,7 +2094,15 @@ System.out.println("高绪山-jtgs"+jtgs);
 		 String gd=jhbean.getGd();
 		 String jhbh=jhbean.getJhbh();
 		 String sbmc=jhbean.getSbmc();
-		 String sbmcdek=jhbean.getSbmcdek();
+		 SbBean sbbean =sbService.queryBySbmc(sbmc);
+		 //重新查找一次sbmcdek(定额库设备名称)，以后去掉
+		 String sbmcdek="";
+	     if (sbbean!=null )
+	     {
+	         sbmcdek=sbbean.getDeksbmc()==null?"":sbbean.getDeksbmc();
+
+	     }
+		 //String sbmcdek=jhbean.getSbmcdek();
          String gxxh_o=jhbean.getGxxh_o();
 		 String gxgg_o=jhbean.getGxgg_o();
 		 String gxdy_o=jhbean.getGxdy_o();
@@ -1982,7 +2264,15 @@ System.out.println("高绪山-jtgs"+jtgs);
 				 Integer bc=jhbean.getBc()==null?1:jhbean.getBc();
 		         String jhbh=jhbean.getJhbh();
 		         String sbmc=jhbean.getSbmc();
-				 String sbmcdek=jhbean.getSbmcdek();
+		         SbBean sbbean =sbService.queryBySbmc(sbmc);
+		         //重新查找一次sbmcdek(定额库设备名称)，以后去掉
+	             String sbmcdek="";
+	             if (sbbean!=null )
+	             {
+	                 sbmcdek=sbbean.getDeksbmc()==null?"":sbbean.getDeksbmc();
+
+	             }
+				 // String sbmcdek=jhbean.getSbmcdek();
 	             String gxxh_o=jhbean.getGxxh_o();
 		         String gxgg_o=jhbean.getGxgg_o();
 		         String gxdy_o=jhbean.getGxdy_o();
@@ -2152,13 +2442,36 @@ System.out.println("高绪山-jtgs"+jtgs);
 		 {
 		     List<JtjhBean> listSelected = new ArrayList<JtjhBean>();	
              listSelected = JSON.parseArray(selected, JtjhBean.class);  
+			 List<JtjhBean> result = new ArrayList<JtjhBean>();
+			 for (int i=0;i<listSelected.size()-1 ;i++ ) //去掉按期完成率统计行
+			 {
+				 //借用sbmcdek 作为订单状态汉字说明
+				 JtjhBean jhbean =listSelected.get(i);
+				 if (jhbean.getState()==1)
+				 {
+					 jhbean.setSbmcdek("");
+				 }
+				 else if (jhbean.getState()==2)
+				 {
+					  jhbean.setSbmcdek("暂停");
+				 }
+				 else if (jhbean.getState()==3)
+				 {
+					  jhbean.setSbmcdek("作废");
+				 }
+				 else {
+					  jhbean.setSbmcdek("");
+				 }
+				 result.add(jhbean);
+			 }
+
              String [] sortNameArr = {"jhbh","row"};
-			 ListUtils.sort(listSelected, true, "jhbh","row"); 
+			 ListUtils.sort( result, true, "jhbh","row"); 
 
              String[] titles = new String[]{"下达日期", "机台", "计划号", "型号", "规格", "电压等级", "单位"
-			 , "数量", "工序", "完成日期", "技术要求", "批号", "工艺",};
+			 , "数量", "工序", "完成日期", "技术要求", "批号", "工艺","状态"};
              String[] fieldNames = new String[]{"xdrq", "sbmc", "jhbh", "gxxh", "gxgg", "gxdy", "gxdw",
-                "jhsl_xs", "gxlb", "jhrq", "gxjsyq", "gxph", "gxgy"};
+                "jhsl_xs", "gxlb", "jhrq", "gxjsyq", "gxph", "gxgy","sbmcdek"};
              try {
 				String excelname="机台计划导出打印_("+sdate+")";
 				//String  serverFilePath=session.getServletContext().getRealPath("/uploadfiles/")+excelname+".xls";
@@ -2167,9 +2480,10 @@ System.out.println("高绪山-jtgs"+jtgs);
 				String path = session.getServletContext().getRealPath("/uploadfiles/");
 //System.out.println("高绪山new："+path+File.separator+excelname+".xls");
                 File file1 = new File(path+File.separator+excelname+".xls");
-                ExcelHelper eh1 = JxlExcelHelper.getInstance(file1);
+                //ExcelHelper eh1 = JxlExcelHelper.getInstance(file1);
+				 ExcelHelper eh1 =HssfExcelHelper.getInstance(file1);
                 //eh1.writeExcel(JtjhBean.class, listSelected);
-                eh1.writeExcel(JtjhBean.class, listSelected, fieldNames, titles);
+                eh1.writeExcel(JtjhBean.class, result, fieldNames, titles);
                 //List<Employee> list1 = eh1.readExcel(Employee.class, fieldNames,
                 //    true);
                 //System.out.println("-----------------JXL2003.xls-----------------");
@@ -2225,14 +2539,76 @@ System.out.println("高绪山-jtgs"+jtgs);
 		 {
 		     List<JtjhBean> listSelected = new ArrayList<JtjhBean>();	
              listSelected = JSON.parseArray(selected, JtjhBean.class);  
-             String [] sortNameArr = {"sbmc","jhrq"};
-			 ListUtils.sort(listSelected, true, "sbmc","jhrq"); 
+//System.out.println("高绪山--listSelected："+listSelected.size());
+			 List<JtjhBean> result = new ArrayList<JtjhBean>();
+			 for (int i=0;i<listSelected.size()-1 ;i++ ) //去掉按期完成率统计行
+			 {
+				 //借用sbmcdek 作为订单状态汉字说明
+				 JtjhBean jhbean =listSelected.get(i);
+				 if (jhbean.getState()==1)
+				 {
+					 jhbean.setSbmcdek("");
+				 }
+				 else if (jhbean.getState()==2)
+				 {
+					  jhbean.setSbmcdek("暂停");
+				 }
+				 else if (jhbean.getState()==3)
+				 {
+					  jhbean.setSbmcdek("作废");
+				 }
+				 else {
+					  jhbean.setSbmcdek("");
+				 }
+				 //借用creatBy 表示全部完工
+				 if (jhbean.getQbWg()!=null && jhbean.getQbWg()==1)
+				 {
+					 jhbean.setCreateBy("全部完工");
+				 }
+				 else{
+					  jhbean.setCreateBy("");
+				 }
+				 //借用uodateBy 表示超期天数
+				 if (jhbean.getState()==2)
+				 {
+					  jhbean.setUpdateBy("暂停");
+				 }
+				 else if (jhbean.getState()==3)
+				 {
+					  jhbean.setUpdateBy("作废");
+				 }
+				 else
+				 {
+				     if (jhbean.getCqts()==-9999)
+				     {
+					     jhbean.setUpdateBy("未到期");
+				     }
+				     else if (jhbean.getCqts()<0)
+				     {
+					      jhbean.setUpdateBy("提前"+jhbean.getCqts()*(-1)+"天");
+				     }
+				     else if (jhbean.getCqts()>0)
+				     {
+					     jhbean.setUpdateBy("超期"+jhbean.getCqts()+"天");
+				     }
+				     else if (jhbean.getCqts()==0)
+				     {
+					     jhbean.setUpdateBy("按期完成");
+				     }
+				     else{
+					      jhbean.setUpdateBy("");
+				     }
+				 }
+				 result.add(jhbean);
+			 }
+             String [] sortNameArr = {"gd","sbmc","jhrq"};
+			 ListUtils.sort(result, true,"gd", "sbmc","jhrq"); 
 
-             String[] titles = new String[]{"状态","下达日期", "机台", "计划号", "型号", "规格", "电压等级", "单位"
+             String[] titles = new String[]{"状态","下达日期", "工段", "机台", "计划号", "型号", "规格", "电压等级", "单位"
 			 , "产品数量", "工序数量", "工序", "计划日期", "技术要求", "批号", "工艺", "最后完工日期", "完工数量合计", "未数量合计"
-			 , "完工段数", "全部完工", "超期天数"};
-             String[] fieldNames = new String[]{"state","xdrq", "sbmc", "jhbh", "gxxh", "gxgg", "gxdy", "gxdw",
-                "jhsl_xs", "jhsl_o", "gxlb", "jhrq", "gxjsyq", "gxph", "gxgy", "maxWgrq", "sumWgsl", "wwgsl", "sumWgslds","qbWg", "cqts"};
+			 , "完工段数", "全部完工", "超期状态", "超期天数"};
+             String[] fieldNames = new String[]{"sbmcdek","xdrq", "gd", "sbmc", "jhbh", "gxxh", "gxgg", "gxdy", "gxdw",
+                "jhsl_xs", "jhsl_o", "gxlb", "jhrq", "gxjsyq", "gxph", "gxgy", "maxWgrq", "sumWgsl", "wwgsl", "sumWgslds","createBy", "updateBy","cqts"};
 
              try {
 				String excelname="工段机台计划导出_("+sdate+")";
@@ -2242,7 +2618,7 @@ System.out.println("高绪山-jtgs"+jtgs);
                 File file1 = new File(path+File.separator+excelname+".xls");
                 ExcelHelper eh1 = JxlExcelHelper.getInstance(file1);
                 //eh1.writeExcel(JtjhBean.class, listSelected);
-                eh1.writeExcel(JtjhBean.class, listSelected, fieldNames, titles);
+                eh1.writeExcel(JtjhBean.class, result, fieldNames, titles);
 	            context.put("fileName", excelname+".xls");
 		        context.put(SUCCESS, true);	
 				HtmlUtil.writerJson(response, context);

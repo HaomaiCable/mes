@@ -121,66 +121,258 @@
 		      </div>
         </form>
     </div>
-	
- 
 </div>
-<script type="text/javascript"> 
-		
 
- function toWgList(id){
-	    $("#viewwghb-win").dialog('open');
-	   	$(function() {  
-        var $dg = $("#wghb-list");  
+<script type="text/javascript"> 
+	$(function() {  
+        var $dg = $("#data-list");  
+
         $dg.datagrid({ 
-			//title:'销售订单变更单',
-            //iconCls: 'icon-search',
-			url : "dataListWghbForJhId.do?id="+id, 
-			width:700,
-			height : 335,  
-			autoRowHeight:false,
+			title:'机台计划列表',
+            iconCls: 'icon-search',
+			url : "dataListLinkNoPage.do", 
+			height : 500,  
+			//autoRowHeight: true,
 			nowrap:true,
+			
 			striped: true,
 			collapsible:true,
 			remoteSort: false,
-			//pagination:true,
-		    //pageSize:500,
-			//pageList: [500, 1000, 1500, 2000, 2500],
+			pagination:true,
+		    pageSize:500,
+			pageList: [500, 1000, 1650, 2000, 3000],
             method:  'post',
 			rownumbers:true,
 			singleSelect:true,	
 			//ft:'#toolbar',
-		    columns:[[
-					//{field:'id',checkbox:true},
-	                {field:'wgrq',title:'完工日期',width:100,sortable:true,formatter:function formatterdate(value,row,index) {
+		    onHeaderContextMenu: function(e, field){
+			        e.preventDefault();
+			        if (!cmenu){
+			    	    createColumnMenu();
+			        }
+			        cmenu.menu('show', {
+				        left:e.pageX,
+				        top:-e.pageY
+			        });
+		    },
+            frozenColumns:[[
+					{field:'id',checkbox:true},
+				    {field:'cqts',title:'超期天数',width:60,align:'center',sortable:true,styler:function(value,row,index){
+				        if(value >0 ){
+						  return 'color:red;';  
+					    }
+					},
+					formatter:function(value,row,index){
+						
+						if (row.state==2)
+						{
+							return "暂停";
+						}
+						else if (row.state==3)
+						{
+							return "作废";
+						}
+						else{
+						    if(value == -9999){
+							    return "未到期";
+						    }
+                            else if(value == 0){
+							    return "按期";
+						    }
+						    else{
+							    return "("+value+")天";
+						    }
+						}
+					}},
+					{field:'xdrq',title:'下达日期',width:70,sortable:true,formatter:function formatterdate(value,row,index) {
                         if (value != null) { 
 						    var date = new Date(value);
                             return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
                              + date.getDate();
                          }}
-                     },
-			    	{field:'wgsl',title:'完工数量',width:80,align:'right' },
-					{field:'wgsm',title:'文字性备注说明',width:150},	
-				    {field:'wg',title:'全部完工',width:70,align:'center',sortable:true,styler:function(value,row,index){
-				         if(value != 0){
-						      return 'color:red;';  
-						    }
-					    },
-				     	formatter:function(value,row,index){
-							
-						    if(value == 1){
-							    return "已全部完工";
-						    }
-                         
-				     }},
-		
-					{field:'lrBy',title:'录入',width:80,sortable:true},
-					{field:'lrTime',title:'时间',width:150,sortable:true},
-	
-				]]
- 	      });
-      });
-   } 
+                     },			
+					{field:'jhbh',title:'计划编号',width:90,sortable:true},
+					{field:'row',title:'序号',width:30},
+			    	{field:'gd',title:'工段',width:60,sortable:true},
+			    	{field:'sbmc',title:'机台',width:60,sortable:true},
+			    	{field:'iszl',title:'主零',width:30,sortable:true},
+			    	{field:'gxxh',title:'型号',width:80,sortable:true},
+			    	{field:'gxgg',title:'规格',width:80,sortable:true},
+			    	{field:'gxdy',title:'电压',width:50,sortable:true},
+		    	    {field:'gxlb',title:'类别',width:40,sortable:true},
+			    	{field:'gxgy',title:'工艺',width:30},
+			    	{field:'gxdw',title:'单位',width:30},
+			    	{field:'jhsl_xs',title:'产品数量',width:60,align:'right' },
+			    	{field:'jhsl_o',title:'机台数量',width:60,align:'right' }
+		    ]],
+			columns:[[
 
+				    {field:'qbWg',title:'全部完工',width:70,align:'center',styler:function(value,row,index){
+							if(value != 0){
+							  return 'color:red;';  
+							}
+						},
+						formatter:function(value,row,index){
+							
+							if(value == 1){
+								return "已全部完工";
+							}
+                         
+					 }},
+					 {field:'sumWgsl',title:'合计完工数量',width:80,align:'right' },
+					 {field:'wwgsl',title:'未完工数量',width:80,align:'right' },
+			         {field:'sumWgslds',title:'完工段数明细',width:120 ,formatter:function(value,row,index){
+						if (row.subCountWg!=0)
+						{
+						
+						     var html ="<a href='#' onclick='toWgList("+row.id+")'>"+row.sumWgslds+"</a>";
+						     return html;
+						}
+					  }},	
+					  {field:'jhrq',title:'计划日期',width:80,sortable:true,formatter:function formatterdate(value,row,index) {
+                          if (value != null) {
+                          var date = new Date(value);
+                            return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
+                             + date.getDate();
+                          }}
+                     },
+                     {field:'maxWgrq',title:'最后完工日期',width:80,formatter:function formatterdate(value,row,index) {
+                         if (value != null) {
+                             var date = new Date(value);
+                             return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
+                              + date.getDate();
+                          }}
+                     },
+			    	 {field:'gxjsyq',title:'技术要求',width:120},
+			    	 {field:'gxph',title:'批号',width:120},
+					 {field:'state',title:'状态',width:40,align:'center',sortable:true,styler:function(value,row,index){
+							if(value != 1){
+							  return 'color:red;';  
+							}
+						},
+						formatter:function(value,row,index){
+							
+							if(value == 2){
+								return "暂停";
+							}
+                           if(value == 3){
+								return "作废";
+							}
+					}},
+                    {field:'bgDetails',title:'变更明细',width:80,align:'center',formatter:function(value,row,index){
+						if (row.subCountBg!=0)
+						{
+						
+						    var html ="<a href='#' onclick='toBgList("+row.id+")'>变更明细("+row.subCountBg+")</a>";
+						    return html;
+						}
+					}},
+
+				     {field:'createBy',title:'计划员',width:80,sortable:true},
+				     {field:'createTime',title:'日期',width:150,sortable:true}
+
+			]],
+            toolbar : [ {  
+                text : "机台打印导出Excel",  
+                iconCls : "icon-undo",  
+                handler : function() {  
+ 					toExcel();
+					//downExcel('( 系统管理员)_销售订单明细表_(2017-08-04 17_26_05).xls');
+                }   
+                } ,'-',{  
+                text : "汇报计划导出Excel",  
+                iconCls : "icon-undo",  
+                handler : function() {  
+ 					toExcelHb();
+					//downExcel('( 系统管理员)_销售订单明细表_(2017-08-04 17_26_05).xls');
+                }   
+            }]  
+
+	 	});
+        $('#data-list').datagrid({   
+             rowStyler:function(index,row){   
+                 if (row.state==2){   
+                     return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+                 } 
+			     else if (row.state==3)
+			    {
+				     return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+					   
+			    }
+            }   
+       });
+
+    });
+   function toWgList(id){
+      $("#viewwghb-win").dialog('open');
+	  $(function(){  
+          var $dg = $("#wghb-list");  
+          $dg.datagrid({ 
+		      //title:'销售订单变更单',
+			  //iconCls: 'icon-search',
+			  url: "dataListWghbForJhId.do?id="+id, 
+			  width:700,
+		  	  height : 335,  
+			  autoRowHeight:false,
+			  nowrap:true,
+			  striped: true,
+		   	  collapsible:true,
+			  remoteSort: false,
+			  //pagination:true,
+			  //pageSize:500,
+			  //pageList: [500, 1000, 1500, 2000, 2500],
+			  method:  'post',
+			  rownumbers:true,
+			  singleSelect:true,	
+			  //ft:'#toolbar',
+		  	  columns:[[
+					//{field:'id',checkbox:true},
+					{field:'wgrq',title:'完工日期',width:100,sortable:true,
+						formatter:function formatterdate(value,row,index) {
+						    if (value != null) { 
+							    var date = new Date(value);
+							    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
+							     + date.getDate();
+						    }
+						}
+					},
+					{field:'bc',title:'班次',width:40,align:'center',sortable:true,
+						styler:function(value,row,index){
+						     if(value != 1){
+							    return 'color:red;';  
+							  }
+						},
+						formatter:function(value,row,index){
+							
+							if(value == 2){
+								return "夜班";
+							}
+						 
+					    }
+					},
+					{field:'wgsl',title:'完工数量',width:80,align:'right' },
+					{field:'wgsm',title:'文字性备注说明',width:150},	
+					{field:'wg',title:'全部完工',width:70,align:'center',sortable:true,
+						styler:function(value,row,index){
+						    if(value != 0){
+							  return 'color:red;';  
+							}
+						},
+						formatter:function(value,row,index){
+							
+							if(value == 1){
+								return "已全部完工";
+							}
+					    }
+					},
+					{field:'lrBy',title:'录入',width:80,sortable:true},
+					{field:'lrTime',title:'时间',width:150,sortable:true}
+			  ]]
+ 	        });
+        });
+
+   } 
    function closeWgList(){
 	   $("#viewwghb-win").dialog('close');
    } 
@@ -188,26 +380,26 @@
    function toBgList(id){
 	    $("#viewjhbg-win").dialog('open');
 	   	$(function() {  
-        var $dg = $("#jhbg-list");  
-        $dg.datagrid({ 
-			//title:'销售订单变更单',
-            //iconCls: 'icon-search',
-			url : "../jtjhChangeManage/dataListChangeForDdId.do?id="+id, 
-			width:700,
-			height : 335,  
-			autoRowHeight:false,
-			nowrap:true,
-			striped: true,
-			collapsible:true,
-			remoteSort: false,
-			//pagination:true,
-		    // pageSize:10,
-			//pageList: [10, 20, 30, 40, 50],
-            method:  'post',
-			rownumbers:true,
-			singleSelect:true,	
-			//ft:'#toolbar',
-		    columns:[[
+            var $dg = $("#jhbg-list");  
+            $dg.datagrid({ 
+		  	    //title:'销售订单变更单',
+                //iconCls: 'icon-search',
+			    url : "../jtjhChangeManage/dataListChangeForDdId.do?id="+id, 
+			    width:700,
+			    height : 335,  
+			    autoRowHeight:false,
+			    nowrap:true,
+			    striped: true,
+			    collapsible:true,
+			    remoteSort: false,
+			    //pagination:true,
+		        // pageSize:10,
+			    //pageList: [10, 20, 30, 40, 50],
+                method:  'post',
+			    rownumbers:true,
+			    singleSelect:true,	
+			    //ft:'#toolbar',
+		        columns:[[
 					//{field:'id',checkbox:true},
 					{field:'bh',title:'变更单编号',width:80,sortable:true},	
 					{field:'row',title:'行号',width:40},
@@ -284,165 +476,11 @@
 	   $("#viewjhbg-win").dialog('close');
    } 
    function refreshgrid(){ 
-       var param = $("#searchForm").serializeObject();
-	  $('#data-list').datagrid('reload',param);
+        var param = $("#searchForm").serializeObject();
+	    $('#data-list').datagrid('reload',param);
     }
 
-	$(function() {  
-        var $dg = $("#data-list");  
-        $dg.datagrid({ 
-			title:'机台计划列表',
-            iconCls: 'icon-search',
-			url : "dataListLinkNoPage.do", 
-			height : 500,  
-			//autoRowHeight: true,
-			nowrap:true,
-			
-			striped: true,
-			collapsible:true,
-			remoteSort: false,
-			pagination:true,
-		    pageSize:500,
-			pageList: [500, 1000, 1500, 2000, 2500],
-            method:  'post',
-			rownumbers:true,
-			singleSelect:true,	
-			//ft:'#toolbar',
-		    onHeaderContextMenu: function(e, field){
-			        e.preventDefault();
-			        if (!cmenu){
-			    	    createColumnMenu();
-			        }
-			        cmenu.menu('show', {
-				        left:e.pageX,
-				        top:-e.pageY
-			        });
-		      },
-            frozenColumns:[[
-					{field:'id',checkbox:true},
-				    {field:'cqts',title:'超期天数',width:60,align:'center',sortable:true,styler:function(value,row,index){
-				        if(value >0 ){
-						  return 'color:red;';  
-					    }
-					},
-					formatter:function(value,row,index){
-						
-						if(value == -9999){
-							return "未到期";
-						}
-                        else if(value == 0){
-							return "按期";
-						}
-						else{
-							return "("+value+")天";
-						}
-					}},
-					{field:'xdrq',title:'下达日期',width:70,sortable:true,formatter:function formatterdate(value,row,index) {
-                        if (value != null) { 
-						    var date = new Date(value);
-                            return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
-                             + date.getDate();
-                         }}
-                     },			
-					{field:'jhbh',title:'计划编号',width:90,sortable:true},
-					{field:'row',title:'序号',width:30},
-			    	{field:'gd',title:'工段',width:60,sortable:true},
-			    	{field:'sbmc',title:'机台',width:60,sortable:true},
-			    	{field:'iszl',title:'主零',width:30,sortable:true},
-			    	{field:'gxxh',title:'型号',width:80,sortable:true},
-			    	{field:'gxgg',title:'规格',width:80,sortable:true},
-			    	{field:'gxdy',title:'电压',width:50,sortable:true},
-		    	    {field:'gxlb',title:'类别',width:40,sortable:true},
-			    	{field:'gxgy',title:'工艺',width:30},
-			    	{field:'gxdw',title:'单位',width:30},
-			    	{field:'jhsl_xs',title:'产品数量',width:60,align:'right' },
-			    	{field:'jhsl_o',title:'机台数量',width:60,align:'right' }
-		    ]],
-			  columns:[[
 
-				    {field:'qbWg',title:'全部完工',width:70,align:'center',styler:function(value,row,index){
-							if(value != 0){
-							  return 'color:red;';  
-							}
-						},
-						formatter:function(value,row,index){
-							
-							if(value == 1){
-								return "已全部完工";
-							}
-                         
-					 }},
-					 {field:'sumWgsl',title:'合计完工数量',width:80,align:'right' },
-					 {field:'wwgsl',title:'未完工数量',width:80,align:'right' },
-			         {field:'sumWgslds',title:'完工段数明细',width:120 ,formatter:function(value,row,index){
-						if (row.subCountWg!=0)
-						{
-						
-						     var html ="<a href='#' onclick='toWgList("+row.id+")'>"+row.sumWgslds+"</a>";
-						     return html;
-						}
-					  }},	
-					  {field:'jhrq',title:'计划日期',width:80,sortable:true,formatter:function formatterdate(value,row,index) {
-                          if (value != null) {
-                          var date = new Date(value);
-                            return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
-                             + date.getDate();
-                          }}
-                     },
-                     {field:'maxWgrq',title:'最后完工日期',width:80,formatter:function formatterdate(value,row,index) {
-                         if (value != null) {
-                             var date = new Date(value);
-                             return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
-                              + date.getDate();
-                          }}
-                     },
-			    	 {field:'gxjsyq',title:'技术要求',width:120},
-			    	 {field:'gxph',title:'批号',width:120},
-					 {field:'state',title:'状态',width:40,align:'center',sortable:true,styler:function(value,row,index){
-							if(value != 1){
-							  return 'color:red;';  
-							}
-						},
-						formatter:function(value,row,index){
-							
-							if(value == 2){
-								return "暂停";
-							}
-                           if(value == 3){
-								return "作废";
-							}
-					}},
-                    {field:'bgDetails',title:'变更明细',width:80,align:'center',formatter:function(value,row,index){
-						if (row.subCountBg!=0)
-						{
-						
-						    var html ="<a href='#' onclick='toBgList("+row.id+")'>变更明细("+row.subCountBg+")</a>";
-						    return html;
-						}
-					}},
-
-				     {field:'createBy',title:'计划员',width:80,sortable:true},
-				     {field:'createTime',title:'日期',width:150,sortable:true}
-
-				]],
-            toolbar : [ {  
-                text : "机台打印导出Excel",  
-                iconCls : "icon-undo",  
-                handler : function() {  
- 					toExcel();
-					//downExcel('( 系统管理员)_销售订单明细表_(2017-08-04 17_26_05).xls');
-                }   
-                } ,'-',{  
-                text : "汇报计划导出Excel",  
-                iconCls : "icon-undo",  
-                handler : function() {  
- 					toExcelHb();
-					//downExcel('( 系统管理员)_销售订单明细表_(2017-08-04 17_26_05).xls');
-                }   
-             }]  
-
-	 	});
-    });
    function downExcel(fileName){
      window.location.href ="../downLoadManage/downLoad.do?fileName="+fileName; 
    }
@@ -459,7 +497,7 @@
             }  
 		    else{
 	           $.messager.alert("提示",rsp.msg);  	
-		 }
+		    }
 		 });
 	}
 	function toExcelHb(){
@@ -473,8 +511,8 @@
             }  
 		    else{
 	           $.messager.alert("提示",rsp.msg);  	
-		 }
-		 });
+		    }
+		});
 	}
 
     var cmenu = null;
@@ -488,7 +526,8 @@
 						target: item.target,
 						iconCls: 'icon-empty'
 					});
-				 } else {
+				 } 
+				 else {
 					 $('#data-list').datagrid('showColumn', item.name);
 					 cmenu.menu('setIcon', {
 						target: item.target,
@@ -508,19 +547,51 @@
 			});
 		}
 	}
-
    function initdate(){
      $("#searchForm input:input[name='fromxdrq']").val("${requestScope.fromdate}");
      $("#searchForm input:input[name='toxdrq']").val("${requestScope.todate}");
+	 //var param =$('#searchForm').serializeObject();
+     //$('#data-list').datagrid('reload',param);
 	 //$('#fromcreateTime').datetimebox({showSeconds:false});
      //$('#tocreateTime').datetimebox({showSeconds:false});
 	 //datetimebox({showSeconds:$(this).is(':checked')});
- 
- 
   }
-  document.body.onload=initdate();
- </script>  
-
-
+  document.body.onload=initdate();		
+  //处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外  
+  function banBackSpace(e)
+  {   
+	   var ev = e || window.event;
+       //获取event对象   
+       var obj = ev.target || ev.srcElement;
+       //获取事件源   
+       var t = obj.type || obj.getAttribute('type');//获取事件源类型   
+       //获取作为判断条件的事件类型   
+       var vReadOnly = obj.getAttribute('readonly');   
+       var vEnabled = obj.getAttribute('enabled');   
+       //处理null值情况   
+       vReadOnly = (vReadOnly == null) ? false : vReadOnly; 
+       vEnabled = (vEnabled == null) ? true : vEnabled;  
+       //当敲Backspace键时，事件源类型为密码或单行、多行文本的，  
+       //并且readonly属性为true或enabled属性为false的，则退格键失效   
+       var flag1=(ev.keyCode == 8 && (t=="password" || t=="text" || t=="textarea") && (vReadOnly==true || vEnabled!=true))?true:false;   
+       //当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效   
+       var flag2=(ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea")   ?true:false;  
+       //判断   
+       if(flag2)
+	   {  
+		   return false;   
+	   }  
+       if(flag1)
+       {   
+		   return false;  
+	    }   
+  }   
+  //禁止后退键 作用于Firefox、Opera   
+  document.onkeypress=banBackSpace;   
+  //禁止后退键 作用于IE、Chrome   
+  document.onkeydown=banBackSpace;   
+  var param =$('#searchForm').serializeObject();
+  $('#data-list').datagrid('reload',param);
+</script>  
 </body>
 </html>

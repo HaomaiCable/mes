@@ -32,6 +32,10 @@
 	                <label>员工姓名:</label>  
 	                <input class="easyui-validatebox" type="text" name="xm" data-options="required:true,validType:'length[1,10]'">
 	             </div>
+				 <div class="fitem">  	
+                     <label>分配定额系数:</label>  
+	                     <input class="easyui-validatebox" type="numberbox" name="dexs" data-options="required:true,options:{precision:2}">	
+	             </div>  
 				 <div class="fitem">  
 				     <label>所属机台:</label>  
                      <input class="easyui-combobox"  name="jtmc"  

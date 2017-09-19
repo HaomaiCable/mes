@@ -54,22 +54,19 @@
 			        textField:'text'">
 				<label class="ui-label">完工日期: </label><input name="fromjhrq" class="easyui-datebox" style="width:100px;">
 				<label class="ui-label">至: </label><input name="tojhrq" class="easyui-datebox" style="width:100px;">	 
-    
             </p>
             <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
         </form>  
      </div> 
      <!--  Search panel end -->
      <!-- DataList  -->
-     <form id="listForm" method="post" >
+     <form id="listForm" method="post">
          <table id="data-list" 	 
 	     data-options="url:'dataListLinkForGd.do?gdid=4'" >	
 		 </table>
  	 </form>	
 	  <!-- Edit Win&From -->
-
 	 <div id="edit-win-dlgbuttons" class="dialog-button" >
-       
 	     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" 
 		   onclick=" cancelquit();">放弃修改</a>
      </div>
@@ -84,91 +81,84 @@
     	      <div class="easyui-panel" border='false' style="height:450;">  
 	              <div class="easyui-layout" data-options="fit:true">  
 	                  <div data-options="region:'north',split:true" style="height:100px;padding:2px">  
-	                     <div class="ftitle">信息</div>    
-		                 <div class="fitem">  
-						    <input class="hidden" name="jhid" >
-		                    <label>计划单号:</label>  
-                            <input  type="text" name="jhbh" style="width:100;" readonly="readonly">					        
-		                    <label>行号:</label>  
-                            <input type="text" name="row" style="width:20;" readonly="readonly">		
-							<label>交货期:</label>  
-					        <input class="text"  name="jhrq"   style="width:80;"  readonly="readonly">
-						    <label>技术要求:</label>  
-					        <input type="datebox"  name="gxjsyq"   style="width:150;"  readonly="readonly">
-                            <label>状态:</label>   
-                            <input  class="easyui-combobox" id="state" name="state"   style="width:60px;"    
+	                      <div class="ftitle">信息</div>    
+		                  <div class="fitem">  
+						      <input class="hidden" name="jhid" >
+		                      <label>计划单号:</label>  
+                              <input  type="text" name="jhbh" style="width:100;" readonly="readonly">					        
+		                      <label>行号:</label>  
+                              <input type="text" name="row" style="width:20;" readonly="readonly">		
+							  <label>交货期:</label>  
+					          <input class="text"  name="jhrq"   style="width:80;"  readonly="readonly">
+						      <label>技术要求:</label>  
+					          <input type="datebox"  name="gxjsyq"   style="width:150;"  readonly="readonly">
+                              <label>状态:</label>   
+                              <input  class="easyui-combobox" id="state" name="state"   style="width:60px;"    
                                   data-options="
 			                      method:'get',
 	                              valueField:'id',
 						          textField:'text',
 								  disabled:true,
 								  url:'${msUrl}/selectdata/state.json' ">
-
-					    </div>
-						<div class="fitem">  
-			                <label>型号:</label>  
-                            <input  type="text" name="gxxh" style="width:120px;" readonly="readonly">	
-			                <label>规格:</label>  
-                            <input  type="text" name="gxgg" style="width:120px;" readonly="readonly">	
-			                <label>电压:</label>  
-                            <input  type="text" name="gxdy" style="width:60px;" readonly="readonly">	
-			                <label>工艺:</label>  
-                            <input  type="text" name="gxgy" style="width:30px;" readonly="readonly">	
-			                <label>计划数量:</label>  
-                            <input  type="numberbox" name="jhsl" style="width:60px;" readonly="readonly">	
-						
-		                </div> 
-	                </div>
-	          
-                    <div data-options="region:'center'">  
-                         <table id="dg-jtjhwghb" >
-                            <thead>
-                            <tr>
-   	                        <input class="hidden" name="id">
-	                        <th data-options="field:'wgrq', width:120,editor:'datebox', required:true
-								  
-							">完工日期</th>
-		                    <th data-options="field:'bc',width:50,
+					      </div>
+						  <div class="fitem">  
+			                  <label>型号:</label>  
+                              <input  type="text" name="gxxh" style="width:120px;" readonly="readonly">	
+			                  <label>规格:</label>  
+                              <input  type="text" name="gxgg" style="width:120px;" readonly="readonly">	
+			                  <label>电压:</label>  
+                              <input  type="text" name="gxdy" style="width:60px;" readonly="readonly">	
+			                  <label>工艺:</label>  
+                              <input  type="text" name="gxgy" style="width:30px;" readonly="readonly">	
+			                  <label>计划数量:</label>  
+                              <input  type="numberbox" name="jhsl" style="width:60px;" readonly="readonly">	
+		                  </div> 
+	                  </div>
+                      <div data-options="region:'center'">  
+                          <table id="dg-jtjhwghb" >
+                              <thead>
+                              <tr>
+   	                           <input class="hidden" name="id">
+	                            <th data-options="field:'wgrq', width:120,editor:'datebox', required:true
+							    ">完工日期</th>
+		                        <th data-options="field:'bc',width:50,
 						       editor:{
 							      type:'combobox',
 							      options:{
 								     valueField:'id',
 								     textField:'text',
 								     url:'${msUrl}/selectdata/bc.json'
-	                              }
-								 }
-						     ">班次</th> 
-	                         <th field="wgsl" width="100" align="right" 
-							      data-options="editor:{type:'numberbox',options:{precision:2}}, required:true"
-							 >完工数量</th>
+	                                }
+								}
+						        ">班次</th> 
+	                            <th field="wgsl" width="100" align="right" 
+							        data-options="editor:{type:'numberbox',options:{precision:2}}, required:true"
+							     >完工数量</th>
   
-   	                        <th field="wgsm" width="180" editor="text">文字备注信息</th>
-		                    <th data-options="field:'wg',width:80,
-						       editor:{
-							      type:'combobox',
-							      options:{
-								     valueField:'id',
-								     textField:'text',
-								     url:'${msUrl}/selectdata/rk.json'
-	                              }
-							  }
-						     ">全部完工</th>   			
-  		                    <th field="lrBy" width="80" >录入</th>
-	                        <th field="lrTime" width="150" >时间</th>
-	                        </tr>
-	                        </thead> 
-                        </table>	
-                    </div>
-               </div>
-		   </div>
-       </form>
-   </div>
- 
+   	                            <th field="wgsm" width="180" editor="text">文字备注信息</th>
+		                        <th data-options="field:'wg',width:80,
+						           editor:{
+							          type:'combobox',
+							          options:{
+								         valueField:'id',
+								         textField:'text',
+								         url:'${msUrl}/selectdata/rk.json'
+	                                    }
+							       }
+						         ">全部完工</th>   			
+  		                         <th field="lrBy" width="80" >录入</th>
+	                             <th field="lrTime" width="150" >时间</th>
+	                             </tr>
+	                             </thead> 
+                             </table>	
+                          </div>
+                      </div>
+		          </div>
+          </form>
+      </div>
 </div>
-
-  <script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
-  <script type="text/javascript" src="${msUrl}/js/ux/business/jtjhWgReport.js"></script> 
- 
+<script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
+<script type="text/javascript" src="${msUrl}/js/ux/business/jtjhWgReport.js"></script> 
 <script type="text/javascript"> 
       function cancelquit(){ 
        $.messager.confirm('提示','你确认要放弃以上修改吗',function(r){  
@@ -207,6 +197,19 @@
 			    });
 		    }
  	    });
+      $('#data-list').datagrid({   
+           rowStyler:function(index,row){   
+               if (row.state==2){   
+                   return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+                } 
+	            else if (row.state==3)
+		        {
+			       return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		        }
+            }   
+       });
     });
     var cmenu = null;
     function createColumnMenu(){
@@ -412,6 +415,8 @@
     document.onkeypress=banBackSpace;   
     //禁止后退键 作用于IE、Chrome   
     document.onkeydown=banBackSpace;   
+    var param =$('#searchForm').serializeObject();
+    $('#data-list').datagrid('reload',param);
 </script>  
 
 

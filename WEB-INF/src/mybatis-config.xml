@@ -52,6 +52,9 @@
 
   <mapper resource="com/hmmes/mybatis/GzTaskMapper.xml"/>
   <mapper resource="com/hmmes/mybatis/TaskRoleMapper.xml"/>
+
+  <mapper resource="com/hmmes/mybatis/GzhsGslMapper.xml"/>
+  <mapper resource="com/hmmes/mybatis/GzhsJtkqMapper.xml"/>
  </mappers>
 
 

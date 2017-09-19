@@ -5,19 +5,18 @@
        <%@include file="/view/resource.jsp" %>
   </head>
 <body>
-<div class="warp easyui-panel"  data-options="border:false">
+ <div class="warp easyui-panel"  data-options="border:false">
   	 <!-- Search panel start -->
  	 <div class="easyui-panel ui-search-panel" title="查询窗口" data-options="striped: true,collapsible:true,iconCls:'icon-search'">   
  	     <form id="searchForm">
- 	 	    <input class="hidden" id='search_parentId' name="parentId">
- 	 	    <p class="ui-fields">
+ 	 	       <input class="hidden" id='search_parentId' name="parentId">
+ 	 	       <p class="ui-fields">
+				  <label class="ui-label">下达日期: </label><input name="fromxdrq" class="easyui-datebox" style="width:100px;">
+				  <label class="ui-label">至: </label><input name="toxdrq" class="easyui-datebox" style="width:100px;">	 	
+                  <label class="ui-label">计划号:</label> 
 
-				<label class="ui-label">下达日期: </label><input name="fromxdrq" class="easyui-datebox" style="width:100px;">
-				<label class="ui-label">至: </label><input name="toxdrq" class="easyui-datebox" style="width:100px;">	 	
-                 <label class="ui-label">计划号:</label> 
-
-                <input name="jhbh" class="easyui-box ui-text" >
-                <label>工段:</label>  
+                  <input name="jhbh" class="easyui-box ui-text" >
+                  <label>工段:</label>  
 		            <input class="easyui-combobox"  name="gd" style="width:80px;"    
                     data-options="
 			        method:'get',
@@ -25,7 +24,7 @@
 		            textField:'text',
 				    url:'${msUrl}/selectdata/gd.json' ">  				
 
-                <label>机台:</label>  
+                  <label>机台:</label>  
 		            <input class="easyui-combobox"  name="sbmc"    
 				    data-options="
 			        url:'../sbManage/getSbList.do',
@@ -33,7 +32,7 @@
 			        valueField:'sbmc',
 			        textField:'sbmc'">
   	 	       
-                <label>型号:</label>  
+                  <label>型号:</label>  
 		            <input class="easyui-combobox"  name="gxxh"  
 				    data-options="
 	                url:'getUniXh.do',
@@ -43,7 +42,7 @@
 			        valueField:'text',
 			        textField:'text'">
 
-                <label>规格:</label>  
+                  <label>规格:</label>  
 		            <input  class="easyui-combobox"  name="gxgg"  
 				    data-options="
 	                url:'getUniGg.do',
@@ -52,9 +51,9 @@
 			        multiple:false,
 			        valueField:'text',
 			        textField:'text'">
-            </p>
-            <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
-        </form>  
+               </p>
+               <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+         </form>  
      </div> 
      <!--  Search panel end -->
      <!-- DataList  -->
@@ -64,7 +63,6 @@
  	 </form>	
 	  <!-- jhbg View Win&From -->
 	 <div id="viewjhbg-win-dlgbuttons" class="dialog-button" >
-       
 	     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" 
 		   onclick="closeBgList();">返回</a>
      </div>
@@ -84,20 +82,19 @@
                        </div>
                    </div>
 		      </div>
-        </form>
-    </div>
+         </form>
+      </div>
 	  <!-- Edit Win&From -->
      <div id="edit-win-dlgbuttons" class="dialog-button" >
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" 
+         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" 
 		   onclick="savechange();">保存</a>      
-	    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" 
+	     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" 
 		   onclick="cancelquit();">放弃</a>
      </div>
      <div id="edit-win" class="easyui-dialog"   buttons="#edit-win-dlgbuttons"  
 	     title="机台计划变更" 
 	     data-options="closed:true,iconCls:'icon-edit',modal:true"  
 		 style="width:760px;height:620px;">  
-
      	 <form id="editForm" class="ui-form" method="post"> 
      	      <!-- 隐藏文本框 -->
      	      <input class="hidden" name="id">
@@ -113,7 +110,6 @@
                                 <input type="text" name="jhbh" style="width:100px;" readonly="readonly">
 	                            <label>序号:</label>  
                                 <input  type="text" name="row" style="width:40px;" readonly="readonly">	
-
 		                    </div> 
 					   </div>
 					   <div data-options="region:'center'"> 
@@ -151,7 +147,6 @@
 	                                      valueField:'id',
 								          textField:'text',
 								          url:'${msUrl}/selectdata/dy.json'">
-		
 							 </div>
 					         <div class="fitem">  
 					             <label>工艺类型:</label>  
@@ -174,14 +169,12 @@
 	                                      valueField:'id',
 								          textField:'text',
 								          url:'${msUrl}/selectdata/dwnocheck.json'">
-
 							 </div> 
 					         <div class="fitem">  
 					             <label>类    别:</label>  
 					             <input  type="text" name="gxlb"   style="width:160px;" readonly="readonly">
                                  <label>---->:</label>  
                                  <input  type="text" name="gxlbnew"   style="width:160px;" >
-
 							 </div> 							 
 					         <div class="fitem">  
 					             <label>产品数量:</label>  
@@ -210,7 +203,7 @@
 	                             <textarea id="gxjsyqnew" name="gxjsyqnew" cols="28"
 	                                 rows="7"></textarea>
 							 </div>   
-				            <div class="fitem">  
+				             <div class="fitem">  
 					             <label>批    号:</label>  
 					             <input  type="text" name="gxph"   style="width:160px;" readonly="readonly">
 					             <label>---->:</label>  
@@ -233,54 +226,69 @@
 	                                      valueField:'id',
 								          textField:'text',
 								          url:'${msUrl}/selectdata/state.json' ">
-							 </div>  							 
-                         </div>
-                     </div>
-                 </div>
-             </form>
-         </div>
-</div>
+						  </div>  							 
+                       </div>
+                   </div>
+               </div>
+          </form>
+      </div>
+ </div>
 
   <script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
   <script type="text/javascript" src="${msUrl}/js/ux/business/jtjhChange.js"></script> 
 
  <script type="text/javascript">   
+   $('#data-list').datagrid({   
+       rowStyler:function(index,row){   
+           if (row.state==2){   
+               return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+            } 
+	        else if (row.state==3)
+		    {
+			   return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		    }
+			else{}
+        }   
+   });
+
  	    //$('#state').combobox('disable');
 	   // $("#state").combobox({disabled:true})
- function toBgList(id){
+ function toBgList(id) {
 	    $("#viewjhbg-win").dialog('open');
 	   	$(function() {  
-        var $dg = $("#jhbg-list");  
-        $dg.datagrid({ 
-			title:'机台计划变更单',
-            iconCls: 'icon-search',
-			url : "dataListChangeForDdId.do?id="+id, 
-			width:700,
-			height : 335,  
-			autoRowHeight:false,
-			nowrap:true,
-			striped: true,
-			collapsible:true,
-			remoteSort: false,
-			//pagination:true,
-		    // pageSize:10,
-			//pageList: [10, 20, 30, 40, 50],
-            method:  'post',
-			rownumbers:true,
-			singleSelect:true,	
-			//ft:'#toolbar',
-		    columns:[[
-					//{field:'id',checkbox:true},
-					{field:'bh',title:'变更单编号',width:80,sortable:true},	
-					{field:'row',title:'行号',width:40},
-					{field:'jhbh',title:'机台计划编号',width:100,sortable:true},	
-					{field:'jhbhrow',title:'行号',width:40},
+            var $dg = $("#jhbg-list");  
+            $dg.datagrid({ 
+				title:'机台计划变更单',
+				iconCls: 'icon-search',
+				url : "dataListChangeForDdId.do?id="+id, 
+				width:700,
+				height : 335,  
+				autoRowHeight:false,
+				nowrap:true,
+				striped: true,
+				collapsible:true,
+				remoteSort: false,
+				//pagination:true,
+				// pageSize:10,
+				//pageList: [10, 20, 30, 40, 50],
+				method: 'post',
+				rownumbers:true,
+				singleSelect:true,	
+				//ft:'#toolbar',
+				columns:[[
+					 //{field:'id',checkbox:true},
+					 {field:'bh',title:'变更单编号',width:80,sortable:true},	
+					 {field:'row',title:'行号',width:40},
+					 {field:'jhbh',title:'机台计划编号',width:100,sortable:true},	
+					 {field:'jhbhrow',title:'行号',width:40},
 
-			    	{field:'field',title:'变更项目',width:80,sortable:true},
-			    	{field:'oldContent',title:'变更前内容',width:180,
+			    	 {field:'field',title:'变更项目',width:80,sortable:true},
+			    	 {field:'oldContent',title:'变更前内容',width:180,
 	                     formatter:function(value,row,index){
-	                         if (row.field=='状态')
-	                         {
+	                          if (row.field=='状态')
+	                          {
 							      if(value == 1){
 								      return '正常';
 							       } 
@@ -292,16 +300,16 @@
 								   {
 									   return '作废';
 								   }
-							}
-   	                        else{
+							    }
+   	                         else{
 								return value;
-							}
-   
-					}},
-					{field:'newContent',title:'变更后内容',width:160,
-                        formatter:function(value,row,index){
-	                         if (row.field=='状态')
-	                         {
+							 }
+					       }
+					  },
+					 {field:'newContent',title:'变更后内容',width:160,
+                         formatter:function(value,row,index){
+	                           if (row.field=='状态')
+	                           {
 							      if(value == 1){
 								      return '正常';
 							       } 
@@ -313,47 +321,46 @@
 								   {
 									   return '作废';
 								   }
-							}
-	                        else{
-								return value;
-							}
-   
-   
-					}},		            		            {field:'accept',title:'变更确认',width:60,align:'center',sortable:true,styler:function(value,row,index){
-							if(value == 1){
-							  return 'color:red;';  
-							}
-						},
-						formatter:function(value,row,index){
+							    }
+	                            else{   
+								    return value;
+							    }
+					        }
+					  },		            		            
+					 {field:'accept',title:'变更确认',width:60,align:'center',sortable:true,
+						   styler:function(value,row,index){
+							  if(value == 1){
+							      return 'color:red;';  
+							   }
+						    },
+						    formatter:function(value,row,index){
+							    if(value == 1){
+								    return "已确认";
+							    }
+					        }
+					    },									    
+					 {field:'createBy',title:'订单员',width:80,sortable:true},
+					 {field:'createTime',title:'变更时间',width:150,sortable:true},
 	
-							if(value == 1){
-								return "已确认";
-							}
-   
-					}},									    
-					{field:'createBy',title:'订单员',width:80,sortable:true},
-					{field:'createTime',title:'变更时间',width:150,sortable:true},
-	
-				    {field:'acceptBy',title:'确认人',width:80,sortable:true},
-					{field:'acceptTime',title:'确认时间',width:150,sortable:true}
-				]]
- 	    });
-    });
+				     {field:'acceptBy',title:'确认人',width:80,sortable:true},
+					 {field:'acceptTime',title:'确认时间',width:150,sortable:true}
+			   ]]
+ 	       });
+       });
    } 
-   function closeBgList(){
+  function closeBgList(){
 	   $("#viewjhbg-win").dialog('close');
    } 
-    function cancelquit(){ 
+  function cancelquit(){ 
         $.messager.confirm('提示','你确认要放弃以上修改吗',function(r){  
-	         if (r){  
+	        if (r){  
 	
                 $('#edit-win').dialog('close');
 		        $('#edit-win').resetForm();
-	
-           }
+            }
 	   })
     }
-	function savechange(){
+    function savechange(){
 		var effectRow = new Object();  
 	    var id=$("#editForm input:input[name='id']").val(); 
 	    effectRow["id"] =id;
@@ -459,7 +466,8 @@
   //$('#data-list').datagrid('reload',param);
     //处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外  
     function banBackSpace(e)
-	{   var ev = e || window.event;
+	{  
+		var ev = e || window.event;
        //获取event对象   
        var obj = ev.target || ev.srcElement;
        //获取事件源   
@@ -485,6 +493,8 @@
     document.onkeypress=banBackSpace;   
     //禁止后退键 作用于IE、Chrome   
     document.onkeydown=banBackSpace;   
+    var param =$('#searchForm').serializeObject();
+    $('#data-list').datagrid('reload',param);
 
 </script>  	
 </body>

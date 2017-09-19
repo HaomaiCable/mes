@@ -12,6 +12,7 @@ YiYa.ygManage = function(){
 	   			columns:[[
 						{field:'id',checkbox:true},
 						{field:'xm',title:'姓名',width:100,sortable:true},
+			    	    {field:'dexs',title:'分配定额系数',width:100,align:'right' },
 						{field:'jtmc',title:'所属机台',width:180,sortable:true},
 
 						{field:'state',title:'可用状态',width:100,align:'center',sortable:true,styler:function(value,row,index){

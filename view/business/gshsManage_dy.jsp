@@ -9,57 +9,57 @@
   	 <!-- Search panel start -->
  	 <div class="easyui-panel ui-search-panel" title="查询窗口" data-options="striped: true,collapsible:true,iconCls:'icon-search'">   
  	     <form id="searchForm">
- 	 	    <input class="hidden" id='search_parentId' name="parentId">
-     <p class="ui-fields">
-				<label class="ui-label">完工日期: </label><input name="fromwgrq" class="easyui-datebox" style="width:100px;">
-				<label class="ui-label">至: </label><input name="towgrq" class="easyui-datebox" style="width:100px;">	 
-                <label class="ui-label">计划号:</label> 
+ 	 	     <input class="hidden" id='search_parentId' name="parentId">
+             <p class="ui-fields">
+				 <label class="ui-label">完工日期: </label><input name="fromwgrq" class="easyui-datebox" style="width:100px;">
+				 <label class="ui-label">至: </label><input name="towgrq" class="easyui-datebox" style="width:100px;">	 
+				 <label class="ui-label">计划号:</label> 
 
-                <input name="jhbh" class="easyui-box ui-text" style="width:100px;">
-                <label>核算:</label>  
-		            <input class="easyui-combobox"  name="yhs" style="width:60px;"    
-                    data-options="
-			        method:'get',
-	                valueField:'id',
-		            textField:'text',
-				    url:'${msUrl}/selectdata/yhs.json' ">    
- 
-               <label>机台:</label>  
-		            <input class="easyui-combobox"  name="sbmc" style="width:100px;"   
-				    data-options="
-			        url:'../sbManage/getSbListForGd.do?gdid=1',
+				 <input name="jhbh" class="easyui-box ui-text" style="width:100px;">
+				 <label>核算:</label>  
+					<input class="easyui-combobox"  name="yhs" style="width:60px;"    
+					data-options="
+					method:'get',
+					valueField:'id',
+					textField:'text',
+					url:'${msUrl}/selectdata/yhs.json' ">    
+
+				 <label>机台:</label>  
+					<input class="easyui-combobox"  name="sbmc" style="width:100px;"   
+					data-options="
+					url:'../sbManage/getSbListForGd.do?gdid=4',
 					multiple:false,
-			        valueField:'sbmc',
-			        textField:'sbmc'">
-             <label>班次:</label>  
-		            <input class="easyui-combobox"  name="bc" style="width:60px;"    
-                    data-options="
-			        method:'get',
-	                valueField:'text',
-		            textField:'text',
-				    url:'${msUrl}/selectdata/bc.json' ">  	 	         	 	       
-                <!--<label>型号:</label>  
-		            <input class="easyui-combobox"  name="gxxh_o" style="width:100px;" 
-				    data-options="
-	                url:'getUniXh.do',
-				    method:'get',
+					valueField:'sbmc',
+					textField:'sbmc'">
+				 <label>班次:</label>  
+					<input class="easyui-combobox"  name="bc" style="width:60px;"    
+					data-options="
+					method:'get',
+					valueField:'text',
+					textField:'text',
+					url:'${msUrl}/selectdata/bc.json' ">  	 	         	 	       
+				 <!--<label>型号:</label>  
+					<input class="easyui-combobox"  name="gxxh_o" style="width:100px;" 
+					data-options="
+					url:'getUniXh.do',
+					method:'get',
 					
-			        multiple:false,
-			        valueField:'text',
-			        textField:'text'">
+					multiple:false,
+					valueField:'text',
+					textField:'text'">
 
-                <label>规格:</label>  
-		            <input  class="easyui-combobox"  name="gxgg_o"  style="width:100px;"
-				    data-options="
-	                url:'getUniGg.do',
-			        method:'get',
-				    
-			        multiple:false,
-			        valueField:'text',
-			        textField:'text'">-->
+				 <label>规格:</label>  
+					<input  class="easyui-combobox"  name="gxgg_o"  style="width:100px;"
+					data-options="
+					url:'getUniGg.do',
+					method:'get',
+					
+					multiple:false,
+					valueField:'text',
+					textField:'text'">-->
     
-            </p>
-            <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search"  onclick="refreshgrid();")>查询</a>
+              </p>
+              <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search"  onclick="refreshgrid();")>查询</a>
         </form>  
      </div> 
      <!--  Search panel end -->
@@ -70,21 +70,20 @@
 		 </table>
  	 </form>	
 </div>
-
 <script type="text/javascript"> 
    function refreshgrid(){ 
        var param = $("#searchForm").serializeObject();
 	  $('#data-list').datagrid('reload',param);
     }
  
-	$(function() {  
+   $(function() {  
 
 		//alert json;
         var $dg = $("#data-list");  
 		//$dg.datagrid('reload');
         $dg.datagrid({ 
 			title:'拔丝工段工时核算',
-            url : 'dataListLinkForGd.do?gdid=3',  //1=='低压工段'
+            url : 'dataListLinkForGd.do?gdid=3',  //'低压工段'
 
 			//url : 'dataListLinkNoPage.do',  
             // width : 700,  
@@ -98,93 +97,93 @@
 			singleSelect:true,
 		    rownumbers:true,
 			pagination:true,
-            pageSize:500,
-			pageList:[500, 600, 700, 800, 1000],
+             pageSize:1000,
+			pageList:[1000, 1500,2000, 2500, 3000],
             method:  'post',
             onClickRow: onClickRow,
 			ft:'#toolbar',
             frozenColumns:[[
-					{field:'id',checkbox:true},
-				    {field:'state',title:'状态',width:40,align:'center',sortable:true,styler:function(value,row,index){
-							if(value != 1){
-							  return 'color:red;';  
-							}
-						},
-						formatter:function(value,row,index){
-							
-							if(value == 2){
-								return "暂停";
-							}
-                           if(value == 3){
-								return "作废";
-							}
-					}},
-			    	{field:'wgrq',title:'完工日期',width:70,sortable:true },
-				    {field:'bc',title:'班次',width:40,align:'center',sortable:true,styler:function(value,row,index){
-							if(value != 1){
-							  return 'color:red;';  
-							}
-						},
-						formatter:function(value,row,index){
-							
-							if(value == 2){
-								return "夜班";
-							}
-       
-					}},
-					{field:'jhbh',title:'计划编号',width:95,sortable:true},
-					//{field:'row',title:'序号',width:30},
-			    	//{field:'gd',title:'工段',width:60,sortable:true},
-			    	{field:'sbmc',title:'机台',width:60,sortable:true},
-			    	{field:'sbmcdek',title:'定额库设备',width:80,sortable:true,editor:'text'},
-			    	{field:'iszl',title:'主零',width:30,sortable:true},
-			    	{field:'gxxh',title:'型号',width:70,sortable:true},
-			    	{field:'gxxh_o',title:'型号',width:80,sortable:true,editor:'text'},
-			    	{field:'gxgg',title:'规格',width:70,sortable:true},
-			    	{field:'gxgg_o',title:'规格',width:80,sortable:true,editor:'text'},
-			    	{field:'gxdy',title:'电压',width:40,sortable:true},
-			    	{field:'gxdy_o',title:'电压',width:50,sortable:true,editor:'text'},
-		    	    {field:'gxlb',title:'类别',width:40,sortable:true,editor:'text'},
-			    	{field:'gxgy',title:'工艺',width:30},
-			    	//{field:'gxph',title:'批号',width:120},
-			    	{field:'gxdw',title:'单位',width:30},
-			    	//{field:'jhsl_o',title:'计划数量',width:60,align:'right' }
-			    	{field:'wgsl',title:'完工数量',width:60,align:'right' } //,editor:{type:'numberbox',options:{precision:2}}
+				{field:'id',checkbox:true},
+				{field:'state',title:'状态',width:40,align:'center',sortable:true,styler:function(value,row,index){
+						if(value != 1){
+						  return 'color:red;';  
+						}
+					},
+					formatter:function(value,row,index){
+						
+						if(value == 2){
+							return "暂停";
+						}
+					   if(value == 3){
+							return "作废";
+						}
+				}},
+				{field:'wgrq',title:'完工日期',width:70,sortable:true },
+				{field:'bc',title:'班次',width:40,align:'center',sortable:true,styler:function(value,row,index){
+						if(value != 1){
+						  return 'color:red;';  
+						}
+					},
+					formatter:function(value,row,index){
+						
+						if(value == 2){
+							return "夜班";
+						}
+   
+				}},
+				{field:'jhbh',title:'计划编号',width:95,sortable:true},
+				//{field:'row',title:'序号',width:30},
+				//{field:'gd',title:'工段',width:60,sortable:true},
+				{field:'sbmc',title:'机台',width:60,sortable:true},
+				{field:'sbmcdek',title:'定额库设备',width:80,sortable:true,editor:'text'},
+				{field:'iszl',title:'主零',width:30,sortable:true},
+				{field:'gxxh',title:'型号',width:70,sortable:true},
+				{field:'gxxh_o',title:'型号',width:80,sortable:true,editor:'text'},
+				{field:'gxgg',title:'规格',width:70,sortable:true},
+				{field:'gxgg_o',title:'规格',width:80,sortable:true,editor:'text'},
+				{field:'gxdy',title:'电压',width:40,sortable:true},
+				{field:'gxdy_o',title:'电压',width:50,sortable:true,editor:'text'},
+				{field:'gxlb',title:'类别',width:40,sortable:true,editor:'text'},
+				{field:'gxgy',title:'工艺',width:30},
+				//{field:'gxph',title:'批号',width:120},
+				{field:'gxdw',title:'单位',width:30},
+				//{field:'jhsl_o',title:'计划数量',width:60,align:'right' }
+				{field:'wgsl',title:'完工数量',width:60,align:'right' } //,editor:{type:'numberbox',options:{precision:2}}
 
 		    ]],
 
   			columns:[[
 
-			    	{field:'wgsm',title:'完工说明',width:80 },
-                    {field:'gs',title:'工时',width:60,align:'right' },
-					{field:'gsl',title:'工时率',width:60,align:'right' },
-					{field:'gsgz',title:'工时工资',width:60,align:'right' },
-			        {field:'yhs',title:'核算',width:40,align:'center',sortable:true,styler:function(value,row,index){
-							if(value == 1){
-							  return 'color:red;';  
-							}
-						},
-						formatter:function(value,row,index){
-							
-							if(value == 1){
-								return "已核算";
-							}
-             
-					}},
-			        {field:'yfp',title:'分配',width:40,align:'center',sortable:true,styler:function(value,row,index){
-							if(value == 1){
-							  return 'color:red;';  
-							}
-						},
-						formatter:function(value,row,index){
-							
-							if(value == 1){
-								return "已分配";
-							}
-             
-					}},
-				    {field:'hsBy',title:'统计员',width:60,sortable:true},
-				    {field:'hsTime',title:'日期',width:150,sortable:true}
+				{field:'wgsm',title:'完工说明',width:80 },
+				{field:'gs',title:'工时',width:60,align:'right' },
+				{field:'gsl',title:'工时率',width:60,align:'right' },
+				{field:'gsgz',title:'工时工资',width:60,align:'right' },
+				{field:'yhs',title:'核算',width:40,align:'center',sortable:true,styler:function(value,row,index){
+						if(value == 1){
+						  return 'color:red;';  
+						}
+					},
+					formatter:function(value,row,index){
+						
+						if(value == 1){
+							return "已核算";
+						}
+		 
+				}},
+				{field:'yfp',title:'分配',width:40,align:'center',sortable:true,styler:function(value,row,index){
+						if(value == 1){
+						  return 'color:red;';  
+						}
+					},
+					formatter:function(value,row,index){
+						
+						if(value == 1){
+							return "已分配";
+						}
+		 
+				}},
+				{field:'hsBy',title:'统计员',width:60,sortable:true},
+				{field:'hsTime',title:'日期',width:150,sortable:true}
 
 			]],  
             toolbar : [   {  
@@ -266,10 +265,6 @@
 
 	
    });
-
-   function downExcel(fileName){
-     window.location.href ="../downLoadManage/downLoad.do?fileName="+fileName; 
-   }
 	function hsgs(){
             var rows = $('#data-list').datagrid('getRows');
             var effectRow = new Object();  
@@ -277,15 +272,24 @@
   
             $.post("saveHsgs.do",effectRow ,function(rsp) {  			
                if(rsp.success){  
+				   var param = $("#searchForm").serializeObject();
+			       $('#data-list').datagrid('reload',param);
 			       $.messager.alert("提示",rsp.msg);;
                 }  
 		        else{
 	               $.messager.alert("提示",rsp.msg);  	
 		         }
 		     });
-	}
+			 //$('#data-list').datagrid('load');	
+			 var param = $("#searchForm").serializeObject();
+			 $('#data-list').datagrid('reload',param);
 
-	function toExcel(){
+
+	}
+   function downExcel(fileName){
+     window.location.href ="../downLoadManage/downLoad.do?fileName="+fileName; 
+   }
+   function toExcel(){
          var rows = $('#data-list').datagrid('getRows');
          var effectRow = new Object();  
          effectRow["selected"] =JSON.stringify(rows);  
@@ -333,8 +337,6 @@
     document.onkeypress=banBackSpace;   
     //禁止后退键 作用于IE、Chrome   
     document.onkeydown=banBackSpace;     
- </script>  
-
-
+</script>  
 </body>
 </html>

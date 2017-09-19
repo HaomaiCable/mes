@@ -109,14 +109,24 @@
 					},
 					formatter:function(value,row,index){
 						
-						if(value == -9999){
-							return "未到期";
+						if (row.state==2)
+						{
+							return "暂停";
 						}
-                        else if(value == 0){
-							return "按期";
+						else if (row.state==3)
+						{
+							return "作废";
 						}
 						else{
-							return "("+value+")天";
+						    if(value == -9999){
+							    return "未到期";
+						    }
+                            else if(value == 0){
+							    return "按期";
+						    }
+						    else{
+							    return "("+value+")天";
+						    }
 						}
 					}},
 					{field:'xdrq',title:'下达日期',width:70,sortable:true,formatter:function formatterdate(value,row,index) {
@@ -235,6 +245,19 @@
                 }   
              }]  
         });  
+       $('#data-list').datagrid({   
+               rowStyler:function(index,row){   
+                   if (row.state==2){   
+                       return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+                    } 
+	                else if (row.state==3)
+		           {
+			           return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		            }
+                }   
+        });
         function endEdit(){  
             var rows = $dg.datagrid('getRows');  
             for ( var i = 0; i < rows.length; i++) {  
@@ -313,15 +336,12 @@
 	
             }  
         }
-	
    });
 
    function downExcel(fileName){
      window.location.href ="../downLoadManage/downLoad.do?fileName="+fileName; 
    }
-
-
-	function toExcel(){
+   function toExcel(){
          var rows = $('#data-list').datagrid('getRows');
          var effectRow = new Object();  
          effectRow["selected"] =JSON.stringify(rows);  
@@ -340,8 +360,8 @@
      $("#searchForm input:input[name='toxdrq']").val("${requestScope.todate}");
  
   }
-  document.body.onload=initdate();
-   //处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外  
+ document.body.onload=initdate();
+ //处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外  
     function banBackSpace(e)
 	{   var ev = e || window.event;
        //获取event对象   
@@ -368,8 +388,10 @@
     //禁止后退键 作用于Firefox、Opera   
     document.onkeypress=banBackSpace;   
     //禁止后退键 作用于IE、Chrome   
-    document.onkeydown=banBackSpace;     
- </script>  
+    document.onkeydown=banBackSpace;  
+    var param =$('#searchForm').serializeObject();
+    $('#data-list').datagrid('reload',param);	
+</script>  
 
 
 </body>

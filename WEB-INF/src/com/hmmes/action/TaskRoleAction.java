@@ -35,7 +35,7 @@ public class TaskRoleAction extends BaseAction{
 	private final static Logger log= Logger.getLogger(TaskRoleAction.class);
 	
 	// Servrice start
-	@Autowired(required=false) //ï¿½Ô¶ï¿½×¢ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½setï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½required=falseï¿½ï¿½Ê¾Ã»ï¿½ï¿½Êµï¿½ï¿½ï¿½à£¬Ò²ï¿½ï¿½ï¿½á±¨ï¿½ï¿½
+	@Autowired(required=false) //×Ô¶¯×¢Èë£¬²»ÐèÒªÉú³Éset·½·¨ÁË£¬required=false±íÊ¾Ã»ÓÐÊµÏÖÀà£¬Ò²²»»á±¨´í¡£
 	private TaskRoleService<TaskRole> taskRoleService; 
 
 	@Autowired
@@ -43,7 +43,7 @@ public class TaskRoleAction extends BaseAction{
 
 
 	/**
-	 * ilook ï¿½ï¿½Ò³
+	 * ilook Ê×Ò³
 	 * @param url
 	 * @param classifyId
 	 * @return
@@ -57,7 +57,7 @@ public class TaskRoleAction extends BaseAction{
 	
 	
 	/**
-	 * json ï¿½Ð±ï¿½Ò³ï¿½ï¿½
+	 * json ÁÐ±íÒ³Ãæ
 	 * @param url
 	 * @param classifyId
 	 * @return
@@ -71,7 +71,7 @@ public class TaskRoleAction extends BaseAction{
 			bean.setRoleStrs(roleStrs);
 		}
 
-		//ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//ÉèÖÃÒ³ÃæÊý¾Ý
 		//Map<String,Object> jsonMap = new HashMap<String,Object>();
 		JSONObject jsonMap = new JSONObject();	
 		jsonMap.put("total",model.getPager().getRowCount());
@@ -81,7 +81,7 @@ public class TaskRoleAction extends BaseAction{
 	
 	
 	/**
-	 * ï¿½ï¿½Ó»ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * Ìí¼Ó»òÐÞ¸ÄÊý¾Ý
 	 * @param url
 	 * @param classifyId
 	 * @return
@@ -101,17 +101,17 @@ public class TaskRoleAction extends BaseAction{
 		bean.setUserName(userbean.getNickName());
 		taskRoleService.update(bean);
         taskRoleService.addTaskRoleRel(roleIds, bean.getId());
-		sendSuccessMessage(response, "ï¿½ï¿½ï¿½ï¿½É¹ï¿½~");
+		sendSuccessMessage(response, "±£´æ³É¹¦~");
 	}
 	 
 	@RequestMapping("/getId")
 	public void getId(Integer id,HttpServletResponse response) throws Exception{
 		//Map<String,Object>  context = new HashMap();
-System.out.println("ï¿½ï¿½ï¿½ï¿½É½-id"+id);
+System.out.println("¸ßÐ÷É½-id"+id);
 		JSONObject context = new JSONObject();
 		TaskRole bean  = taskRoleService.queryById(id);
 		if(bean  == null){
-			sendFailureMessage(response, "Ã»ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Ó¦ï¿½Ä¼ï¿½Â¼!");
+			sendFailureMessage(response, "Ã»ÓÐÕÒµ½¶ÔÓ¦µÄ¼ÇÂ¼!");
 			return;
 		}
 		List<TaskRole> users= taskRoleService.queryByGlzId(id);
@@ -119,7 +119,7 @@ System.out.println("ï¿½ï¿½ï¿½ï¿½É½-id"+id);
 			int[] roleIds = new int[users.size()];
 			for(int i=0;i< users.size() ;i++){
 				roleIds[i] =users.get(i)==null?0:users.get(i).getId();
-System.out.println("ï¿½ï¿½ï¿½ï¿½É½-roleIds[i]"+roleIds[i]);
+System.out.println("¸ßÐ÷É½-roleIds[i]"+roleIds[i]);
 			}
 			bean.setRoleIds(roleIds);
 		}
@@ -133,7 +133,7 @@ System.out.println("ï¿½ï¿½ï¿½ï¿½É½-roleIds[i]"+roleIds[i]);
 	@RequestMapping("/delete")
 	public void delete(Integer[] id,HttpServletResponse response) throws Exception{
 		taskRoleService.delete(id);
-		sendSuccessMessage(response, "É¾ï¿½ï¿½ï¿½É¹ï¿½");
+		sendSuccessMessage(response, "É¾³ý³É¹¦");
 	}
 
 	private String getRoleStrs(Integer roleId) throws Exception{
@@ -150,7 +150,7 @@ System.out.println("ï¿½ï¿½ï¿½ï¿½É½-roleIds[i]"+roleIds[i]);
 			}
 			i++;
 		}
-//System.out.println("ï¿½ï¿½ï¿½ï¿½É½-SysUser"+str.toString());
+//System.out.println("¸ßÐ÷É½-SysUser"+str.toString());
         return str.toString();
 
    }

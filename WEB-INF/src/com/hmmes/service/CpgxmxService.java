@@ -24,6 +24,7 @@ public class CpgxmxService<T> extends BaseService<T> {
 	public List<T> queryListByCpId(Integer cpid){
 		return getMapper().queryListByCpId(cpid);
 	}
+
 	public void deleteByCpId(Integer cpid){
 		getMapper().deleteByCpId(cpid);
 	}	

@@ -44,6 +44,7 @@ public class XsddBean extends BaseBean {
 	//关联质量部完工汇报xsdd_wghb
 
     private Double sumWgsl;//合计完工数量,与数据库字段无关
+	private String sumWgslss;//   完工数量--实数，字符型，与数据库字段无关
     private String sumWgslds;//分段的完工数量,字符型，与数据库字段无关
     private String sumXpgg;//所使用的线盘汇总,字符型，与数据库字段无关
     private Double sumCmsl;//合计长米割去数量,与数据库字段无关
@@ -61,6 +62,10 @@ public class XsddBean extends BaseBean {
 	private String czg;//   完工机台主手，与数据库字段无关
 	private String xpgg;//   线盘规格，与数据库字段无关
 	private Double cmsl;//   长米割去数量，与数据库字段无关
+
+    private String cstate;//   字符型订单状态，导出用，与数据库字段无关
+    private String cqbrk;//   字符型入库状态，导出用，与数据库字段无关
+    private String ccqts;//   字符型超期天数，导出用，与数据库字段无关	、
 	
 	//质量部完工汇报
 	private List<XsddWghbBean> wghbs;
@@ -69,7 +74,25 @@ public class XsddBean extends BaseBean {
 	//订单变更
 	private List<XsddBgBean> bgs;
 
-
+    //导出用
+	public String getCstate() {
+		return this.cstate;
+	}
+	public void setCstate(String cstate) {
+		this.cstate = cstate;
+	}
+	public String getCqbrk() {
+		return this.cqbrk;
+	}
+	public void setCqbrk(String cqbrk) {
+		this.cqbrk = cqbrk;
+	}
+	public String getCcqts() {
+		return this.ccqts;
+	}
+	public void setCcqts(String ccqts) {
+		this.ccqts = ccqts;
+	}
 	//质量部	
 	public java.sql.Date getMaxWgrq() {
 		return this.maxWgrq;
@@ -95,6 +118,13 @@ public class XsddBean extends BaseBean {
 	public void setSumWgslds(String sumWgslds) {
 		this.sumWgslds = sumWgslds;
 	}
+	public String getSumWgslss() {
+		return this.sumWgslss;
+	}
+	public void setSumWgslss(String sumWgslss) {
+		this.sumWgslss = sumWgslss;
+	}
+
 	public void setSumXpgg(String sumXpgg) {
 		this.sumXpgg = sumXpgg;
 	}

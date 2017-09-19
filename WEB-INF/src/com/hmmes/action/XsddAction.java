@@ -580,12 +580,14 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 				 
 
 				 StringBuffer sumwgslds = new StringBuffer();
+				 StringBuffer sumwgslss = new StringBuffer();
 				 StringBuffer sumxpgg = new StringBuffer();
 				 StringBuffer sumrkslds = new StringBuffer();
 		      	 for(int i=0;i<wghbList.size();i++){
 			         XsddWghbBean wghb = wghbList.get(i);
 			         sumwgslds.append(wghb.getWgsl()!=null?df0.format(wghb.getWgsl())+"":"");
 			         sumxpgg.append(wghb.getXpgg()+"");
+					 sumwgslss.append(wghb.getWgslss()+"");
 					 sumwgsl=sumwgsl+(wghb.getWgsl()==null?0.0:wghb.getWgsl());
                      sumcmsl=sumcmsl+(wghb.getCmsl()==null?0.0:wghb.getCmsl());
 					 if (wghb.getRk()!=null && wghb.getRk()==1)
@@ -595,6 +597,7 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 					 }
 			         if((i+1) < wghbList.size()){
 				         sumwgslds.append("、");
+						 sumwgslss.append("、");
 						 sumxpgg.append("、");
 						 if (wghb.getRk()!=null && wghb.getRk()==1 ){
 						     sumrkslds.append("、");
@@ -645,6 +648,7 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 				 st.setSumWgsl(sumwgsl);
 				 st.setSumCmsl(sumcmsl);
 				 st.setSumWgslds("【"+sumwgslds.toString()+"】");
+				 st.setSumWgslss("【"+sumwgslss.toString()+"】");
 				 st.setSumXpgg("【"+sumxpgg.toString()+"】");
 				 st.setSumRksl(sumrksl);
 				 st.setQbRk(qbrk);
@@ -778,12 +782,14 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 				 Integer qbrk=0;
 
 				 StringBuffer sumwgslds = new StringBuffer();
+				 StringBuffer sumwgslss = new StringBuffer();
 				 StringBuffer sumxpgg = new StringBuffer();
 				 StringBuffer sumrkslds = new StringBuffer();
 		      	 for(int i=0;i<wghbList.size();i++){
 			         XsddWghbBean wghb = wghbList.get(i);
 			         sumwgslds.append(wghb.getWgsl()!=null?df0.format(wghb.getWgsl())+"":"");
 			         sumxpgg.append(wghb.getXpgg()+"");
+					 sumwgslss.append(wghb.getWgslss()+"");
 					 sumwgsl=sumwgsl+(wghb.getWgsl()==null?0.0:wghb.getWgsl());
                      sumcmsl=sumcmsl+(wghb.getCmsl()==null?0.0:wghb.getCmsl());
 					 if (wghb.getRk()!=null && wghb.getRk()==1)
@@ -793,6 +799,7 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 					 }
 			         if((i+1) < wghbList.size()){
 				         sumwgslds.append("、");
+						 sumwgslss.append("、");
 						 sumxpgg.append("、");
 						 if (wghb.getRk()!=null && wghb.getRk()==1 ){
 						     sumrkslds.append("、");
@@ -806,6 +813,7 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 				 st.setSumWgsl(sumwgsl);
 				 st.setSumCmsl(sumcmsl);
 				 st.setSumWgslds("【"+sumwgslds.toString()+"】");
+				 st.setSumWgslss("【"+sumwgslss.toString()+"】");
 				 st.setSumXpgg("【"+sumxpgg.toString()+"】");
 				 st.setSumRksl(sumrksl);
 				 st.setQbRk(qbrk);
@@ -1658,13 +1666,71 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 		 {
 		     List<XsddBean> listSelected = new ArrayList<XsddBean>();	
              listSelected = JSON.parseArray(selected, XsddBean.class);  
+			 List<XsddBean> result = new ArrayList<XsddBean>();
+			 for ( XsddBean ddbean :listSelected) 
+			 {
+				 //订单状态汉字说明
+				 //XsddBean ddbean =listSelected.get(i);
+				 if (ddbean.getState()!=null)
+				 {
+					 if (ddbean.getState()==1)
+				     {
+					     ddbean.setCstate("");
+				     }
+				     else if (ddbean.getState()==2)
+				     {
+					      ddbean.setCstate("暂停");
+				     }
+				     else if (ddbean.getState()==3)
+				     {
+					      ddbean.setCstate("作废");
+				     }
+				     else {
+					      ddbean.setCstate("");
+				     }
+				 }
+				 else{
+					 ddbean.setCstate("");
+				 }
+	 		    //借用uodateBy 表示超期天数
+                if (ddbean.getState()!=null && ddbean.getState()==2)
+			    {
+				     ddbean.setCcqts("暂停");
+			    }
+			    else if (ddbean.getState()!=null && ddbean.getState()==3)
+			    {
+			         ddbean.setCcqts("作废");
+			    }
+			    else{
+				     if (ddbean.getCqts()==-9999)
+				     {
+					     ddbean.setCcqts("未到期");
+				     }
+				     else if (ddbean.getCqts()<0)
+				     {
+					      ddbean.setCcqts("提前"+ddbean.getCqts()*(-1)+"天");
+				     }
+				     else if (ddbean.getCqts()>0)
+				     {
+					     ddbean.setCcqts("超期"+ddbean.getCqts()+"天");
+				     }
+				     else if (ddbean.getCqts()==0)
+				     {
+					     ddbean.setCcqts("按期完成");
+				     }
+				     else{
+					      ddbean.setCcqts("");
+				     }
+			    }
+				result.add(ddbean);
+			 }
              String [] sortNameArr = {"jhbh","row"};
-			 ListUtils.sort(listSelected, true, "jhbh","row"); 
+			 ListUtils.sort(result, true, "jhbh","row"); 
 
-             String[] titles = new String[]{"超期天数", "下达日期", "计划编号",  "行号", "型号", "规格", "电压等级", "工艺"
+             String[] titles = new String[]{"超期状态","超期天数", "下达日期", "计划编号",  "行号", "型号", "规格", "电压等级", "工艺"
 			 , "单位", "数量", "技术要求", "状态", "交货日期", "二次交货期", "延误原因", "延误机台"};
-             String[] fieldNames = new String[]{"cqts", "xdrq", "jhbh", "row", "xh", "gg", "dy", "gy", "dw",
-                "sl", "jsyq", "state", "jhrq", "ecjhq", "ywyy", "ywjt"};
+             String[] fieldNames = new String[]{"ccqts","cqts", "xdrq", "jhbh", "row", "xh", "gg", "dy", "gy", "dw",
+                "sl", "jsyq", "cstate", "jhrq", "ecjhq", "ywyy", "ywjt"};
              try {
 				String excelname="二次交货期确认导出_("+sdate+")";
 
@@ -1672,7 +1738,7 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 
                 File file1 = new File(path+File.separator+excelname+".xls");
                 ExcelHelper eh1 = JxlExcelHelper.getInstance(file1);
-                eh1.writeExcel(XsddBean.class, listSelected, fieldNames, titles);
+                eh1.writeExcel(XsddBean.class, result, fieldNames, titles);
 
 	            context.put("fileName", excelname+".xls");
 		        context.put(SUCCESS, true);	
@@ -1693,6 +1759,136 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 	@RequestMapping("/exportExcel")
 	public void  exportExcel(HttpServletRequest request,HttpServletResponse response,HttpSession session)  
 		throws Exception{
+	   	JSONObject context = new JSONObject();
+        //获取编辑数据 这里获取到的是json字符串  
+
+         String selected = request.getParameter("selected"); 
+         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH_mm_ss");
+	     String sdate=sdf.format(new Date());	
+		 if ( selected!=null )
+		 {
+		     List<XsddBean> listSelected = new ArrayList<XsddBean>();	
+             listSelected = JSON.parseArray(selected, XsddBean.class);  
+			 List<XsddBean> result = new ArrayList<XsddBean>();
+			 for ( XsddBean ddbean :listSelected) 
+			 {
+				 //订单状态汉字说明
+				 //XsddBean ddbean =listSelected.get(i);
+				 if (ddbean.getState()!=null)
+				 {
+					 if (ddbean.getState()==1)
+				     {
+					     ddbean.setCstate("");
+				     }
+				     else if (ddbean.getState()==2)
+				     {
+					      ddbean.setCstate("暂停");
+				     }
+				     else if (ddbean.getState()==3)
+				     {
+					      ddbean.setCstate("作废");
+				     }
+				     else {
+					      ddbean.setCstate("");
+				     }
+				 }
+				 else{
+					 ddbean.setCstate("");
+				 }
+				 //全部完工
+				 if (ddbean.getQbRk()!=null)
+				 {
+				
+				     if (ddbean.getQbRk()==1)
+				     {
+					     ddbean.setCqbrk("全部完工");
+				     }
+				     else{
+					      ddbean.setCqbrk("");
+				     }
+				 }
+                else {
+					ddbean.setCqbrk("");
+				}
+				 //借用uodateBy 表示超期天数
+                if (ddbean.getState()!=null && ddbean.getState()==2)
+			    {
+				     ddbean.setCcqts("暂停");
+			    }
+			    else if (ddbean.getState()!=null && ddbean.getState()==3)
+			    {
+			         ddbean.setCcqts("作废");
+			    }
+			    else{
+				     if (ddbean.getCqts()==-9999)
+				     {
+					     ddbean.setCcqts("未到期");
+				     }
+				     else if (ddbean.getCqts()<0)
+				     {
+					      ddbean.setCcqts("提前"+ddbean.getCqts()*(-1)+"天");
+				     }
+				     else if (ddbean.getCqts()>0)
+				     {
+					     ddbean.setCcqts("超期"+ddbean.getCqts()+"天");
+				     }
+				     else if (ddbean.getCqts()==0)
+				     {
+					     ddbean.setCcqts("按期完成");
+				     }
+				     else{
+					      ddbean.setCcqts("");
+				     }
+			    }
+				result.add(ddbean);
+			 }
+
+             String [] sortNameArr = {"jhbh","row"};
+			 ListUtils.sort(result, true, "jhbh","row"); 
+             /**
+			 // 按userId升序、username降序、birthDate升序排序  
+             String [] sortNameArr = {"userId","username","birthDate"};  
+             boolean [] isAscArr = {true,false,true};  
+             ListUtils.sort(list,sortNameArr,isAscArr);  
+             System.out.println("\n--------按userId升序、username降序、birthDate升序排序（如果userId相同，则按照username降序,如果username相同，则按照birthDate升序）------------------");  
+             testObj.printfUserInfoList(list);  
+          
+             // 按userId、username、birthDate都升序排序  
+             ListUtils.sort(list, true, "userId", "username","birthDate");  
+             System.out.println("\n--------按userId、username、birthDate排序（如果userId相同，则按照username升序,如果username相同，则按照birthDate升序）------------------");  
+             testObj.printfUserInfoList(list);  
+             */
+             String[] titles = new String[]{"状态","下达日期","业务员", "计划编号", "行号", "产品型号","产品规格","电压等级","工艺"
+			 ,"单位","计划数量","客户要求交货期","计划交货期","技术要求","批号","订单员","延误原因","延误机台","二次交货期","完工日期","完工主手"
+			 ,"合计完工数量","完工段数明细","实数段数明细","使用木轮明细","合计长米数量","合计入库数量" ,"入库段数明细", "全部完工", "超期状态", "超期天数"};
+             String[] fieldNames = new String[]{"cstate","xdrq", "ywy", "jhbh", "row", "xh", "gg", "dy", "gy", "dw",
+                "sl", "jhrq_kh", "jhrq", "jsyq", "ph","createBy", "ywyy", "ywjt", "ecjhq", "maxWgrq", "wgzs"
+			 ,"sumWgsl", "sumWgslds", "sumWgslss","sumXpgg","sumCmsl", "sumRksl", "sumRkslds", "cqbrk","ccqts","cqts"};
+
+             try {
+				String excelname="销售订单明细表_"+sdate+")";
+
+				String path = session.getServletContext().getRealPath("/uploadfiles/");
+
+                File file1 = new File(path+File.separator+excelname+".xls");
+                ExcelHelper eh1 = JxlExcelHelper.getInstance(file1);
+                //eh1.writeExcel(JtjhBean.class, listSelected);
+                eh1.writeExcel(XsddBean.class, result, fieldNames, titles);
+	            context.put("fileName", excelname+".xls");
+		        context.put(SUCCESS, true);	
+				HtmlUtil.writerJson(response, context);
+  
+             } catch (Exception e) {
+				    sendFailureMessage(response,"导出失败！");
+                    e.printStackTrace();
+
+             } 
+		     return;
+         }
+		 sendFailureMessage(response, "导出失败，请重试！");
+	}
+	
+/**
 	    //request.setCharacterEncoding("UTF-8");  
 	   	JSONObject context = new JSONObject();
         //获取编辑数据 这里获取到的是json字符串  
@@ -1707,19 +1903,7 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
 		     List<XsddBean> listSelected = new ArrayList<XsddBean>();	
 		     List<Object> result=new ArrayList();		     
              listSelected = JSON.parseArray(selected, XsddBean.class);  
-            /**
-			 // 按userId升序、username降序、birthDate升序排序  
-             String [] sortNameArr = {"userId","username","birthDate"};  
-             boolean [] isAscArr = {true,false,true};  
-             ListUtils.sort(list,sortNameArr,isAscArr);  
-             System.out.println("\n--------按userId升序、username降序、birthDate升序排序（如果userId相同，则按照username降序,如果username相同，则按照birthDate升序）------------------");  
-             testObj.printfUserInfoList(list);  
-          
-             // 按userId、username、birthDate都升序排序  
-             ListUtils.sort(list, true, "userId", "username","birthDate");  
-             System.out.println("\n--------按userId、username、birthDate排序（如果userId相同，则按照username升序,如果username相同，则按照birthDate升序）------------------");  
-             testObj.printfUserInfoList(list);  
-             */
+  
              String [] sortNameArr = {"jhbh","row"};
 			 ListUtils.sort(listSelected, true, "jhbh","row"); 
 
@@ -1732,11 +1916,7 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
             }
 
 			 ExportExcel excel=new ExportExcel();  
-             String[] Title={"ID","下达日期","计划编号","业务员","行号","订单状态","产品型号","产品规格","电压等级","工艺"
-			 ,"单位","计划数量","客户要求交货期","计划交货期","技术要求","批号","延误原因","延误机台","二次交货期"
-			 ,"是否下达机台","订单员","","","","","完工日期","完工主手","","Wg"
-			 ,"Rk","Bg","Jtjh","合计完工数量","完工段数明细","使用木轮明细","合计长米数量","","合计入库数量"
-			 ,"入库段数明细","全部入库","超期天数(-9999为未到期)"};  
+
 
 		     String excelname="销售订单明细表_("+sdate+")";
              String rfp=excel.exportExcel(session,excelname+".xls",excelname,Title, result,41);   		 
@@ -1756,6 +1936,7 @@ System.out.println("高绪山：Xsdd--out "+strtmp);
          }
 		 sendFailureMessage(response, "导出失败，请重试！");
 	}
+	*/
 
     @RequestMapping("/proUpload")
     public void proUpload (HttpServletRequest request ,

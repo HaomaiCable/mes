@@ -10,16 +10,16 @@
   	 <!-- Search panel start -->
  	 <div class="easyui-panel ui-search-panel" title="查询窗口" data-options="striped: true,collapsible:true,iconCls:'icon-search'">   
  	     <form id="searchForm">
- 	 	    <input class="hidden" id='search_parentId' name="parentId">
- 	 	    <p class="ui-fields">
-				<tr>
-				<label class="ui-label">下达日期: </label><input name="fromxdrq" class="easyui-datebox" style="width:100px;">
-				<label class="ui-label">至: </label><input name="toxdrq" class="easyui-datebox" style="width:100px;">	 	
-                <label class="ui-label">计划号:</label> 
-				</tr>
-                <input name="jhbh" class="easyui-box ui-text" style="width:80px;">
+ 	 	      <input class="hidden" id='search_parentId' name="parentId">
+ 	 	      <p class="ui-fields">
+				  <tr>
+				  <label class="ui-label">下达日期: </label><input name="fromxdrq" class="easyui-datebox" style="width:100px;">
+				  <label class="ui-label">至: </label><input name="toxdrq" class="easyui-datebox" style="width:100px;">	 	
+                  <label class="ui-label">计划号:</label> 
+				  </tr>
+                  <input name="jhbh" class="easyui-box ui-text" style="width:80px;">
       
-                <label>业务员:</label>  
+                  <label>业务员:</label>  
 		            <input class="easyui-combobox"  name="ywy"  style="width:60px;"
 				    data-options="
 			        url:'../ywyManage/getYwyList.do',
@@ -27,7 +27,7 @@
 					multiple:false,
 			        valueField:'name',
 			        textField:'name'">
-               <label>订单员:</label>  
+                  <label>订单员:</label>  
 		            <input class="easyui-combobox"  name="createBy" style="width:60px;"   
 				    data-options="
 			        url:'getUniDdy.do',
@@ -35,7 +35,7 @@
 			        valueField:'text',
 			        textField:'text'">
   	 	       
-                <label>产品型号:</label>  
+                  <label>产品型号:</label>  
 		            <input class="easyui-combobox"  name="xh"  
 				    data-options="
 	                url:'getUniXh.do',
@@ -45,7 +45,7 @@
 			        valueField:'text',
 			        textField:'text'">
 
-                <label>产品规格:</label>  
+                  <label>产品规格:</label>  
 		            <input  class="easyui-combobox"  name="gg"  
 				    data-options="
 	                url:'getUniGg.do',
@@ -54,7 +54,7 @@
 			        multiple:false,
 			        valueField:'text',
 			        textField:'text'">
-                <!--<label class="ui-label">交货日期: </label><input name="jhrq" class="easyui-datebox" style="width:100px;"
+                  <!--<label class="ui-label">交货日期: </label><input name="jhrq" class="easyui-datebox" style="width:100px;"
 				    data-options="formatter:function(value,row,index) {
                         if (value != null) {
                            var date = new Date(value);
@@ -62,9 +62,9 @@
                            + date.getDate();
                         }
 				 }">-->
-            </p>
-            <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
-        </form>  
+              </p>
+              <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+         </form>  
      </div> 
      <!--  Search panel end -->
      <!-- DataList  -->
@@ -75,10 +75,8 @@
 		
 		 </table>
  	 </form>	
-	  <!-- Edit Win&From -->
-
+	 <!-- Edit Win&From -->
 	 <div id="edit-win-dlgbuttons" class="dialog-button" >
-       
 	     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" 
 		   onclick=" cancelquit();">放弃修改</a>
      </div>
@@ -93,33 +91,31 @@
     	      <div class="easyui-panel" border='false' style="height:450;">  
 	              <div class="easyui-layout" data-options="fit:true">  
 	                  <div data-options="region:'north',split:true" style="height:90px;padding:10px">  
-	                     <div class="ftitle">信息</div>    
-		                 <div class="fitem">  
-					        <label>下达时间:</label>  
-					        <input class="easyui-datebox"  name="xdrq"   style="width:100%;">
-		                    <label>计划单号:</label>  
-                            <input class="easyui-validatebox" type="text" name="jhbh" readonly="readonly" style="width:100px;" >
-		                    <label>业务员:</label>  
-		                    <input class="easyui-combobox"  name="ywy"  
+	                       <div class="ftitle">信息</div>    
+		                   <div class="fitem">  
+					          <label>下达时间:</label>  
+					          <input class="easyui-datebox"  name="xdrq"   style="width:100%;">
+		                      <label>计划单号:</label>  
+                              <input class="easyui-validatebox" type="text" name="jhbh" readonly="readonly" style="width:100px;" >
+		                      <label>业务员:</label>  
+		                      <input class="easyui-combobox"  name="ywy"  
 							    data-options="
 				    	            url:'../ywyManage/getYwyList.do',
 					                method:'get',
 					                valueField:'name',
 					                textField:'name'">
-					        <label>客户要求交货期:</label>  
-				            <input class="easyui-datebox" name="jhrq_kh"  style="width:100%;" >
-												   
-		                </div> 
-	                </div>
-	          
-                    <div data-options="region:'center'">  
+					          <label>客户要求交货期:</label>  
+				              <input class="easyui-datebox" name="jhrq_kh"  style="width:100%;" >
+		                   </div> 
+	                  </div>
+                      <div data-options="region:'center'">  
                          <table id="dg-xsddappend" >
-                            <thead>
-                            <tr>
-   	                        <input class="hidden" name="id">
-  	                        <th field="jhbh" width="80" >计划编号</th>
-	                        <th field="row" width="30" >行号</th>
-  						    <th data-options="field:'ywy',width:80,
+                             <thead>
+                             <tr>
+   	                         <input class="hidden" name="id">
+  	                         <th field="jhbh" width="80" >计划编号</th>
+	                         <th field="row" width="30" >行号</th>
+  						     <th data-options="field:'ywy',width:80,
 						       editor:{
 							      type:'combobox',
 							      options:{
@@ -129,10 +125,10 @@
 								     url:'../ywyManage/getYwyList.do'
 							       }
 								}
-						    ">业务员</th>   
-   	                        <th field="xh" width="150" editor="validatebox">产品型号</th>
-	                        <th field="gg" width="120" editor="validatebox">产品规格</th>					
-  						    <th data-options="field:'dy',width:80,
+						     ">业务员</th>   
+   	                         <th field="xh" width="150" editor="validatebox">产品型号</th>
+	                         <th field="gg" width="120" editor="validatebox">产品规格</th>					
+  						     <th data-options="field:'dy',width:80,
 						       editor:{
 							      type:'combobox',
 							      options:{
@@ -141,8 +137,8 @@
 								     url:'${msUrl}/selectdata/dy.json'
 							       }
 								}
-						    ">电压等级</th>   
-  						    <th data-options="field:'gy',width:50,
+						     ">电压等级</th>   
+  						     <th data-options="field:'gy',width:50,
 						       editor:{
 							      type:'combobox',
 							      options:{
@@ -173,14 +169,15 @@
 	                         <th data-options="field:'jsyq', width:500,editor:'text',nowrap: false">技术要求</th>
 	                         </tr>
 	                         </thead> 
-                        </table>	
-                    </div>
-               </div>
-		   </div>
-       </form>
-   </div>
-    <!-- import Excel  Form -->
-   <div id="import-excel-win"  class="easyui-dialog" buttons="#chooseFilebtn" title="选择导入的Excel文件" data-options="closed:true,iconCls:'icon-search',modal:true" style="width:438px;height:190px;"> 
+                         </table>	
+                      </div>
+                 </div>
+			  </div>
+		  </form>
+      </div>
+
+     <!-- import Excel  Form -->
+     <div id="import-excel-win"  class="easyui-dialog" buttons="#chooseFilebtn" title="选择导入的Excel文件" data-options="closed:true,iconCls:'icon-search',modal:true" style="width:438px;height:190px;"> 
        <form id="importFileForm"  method="post"  action="proUpload.do"  class="ui-form" enctype="multipart/form-data"   target="hideframe">
            <table width="400" border="0" cellspacing="1" cellpadding="10">
                <tr>
@@ -199,54 +196,63 @@
                </tr> 
            </table>
        </form>
-   </div>
-   <iframe name="hideframe" style="display:none"></iframe>
-
-  <!-- Edit 销售订单编号 Form -->
+     </div>
+     <iframe name="hideframe" style="display:none"></iframe>
+     <!-- Edit 销售订单编号 Form -->
      <div id="edit-bh-win" class="easyui-dialog" buttons="#editBhbtn" title="修改销售订单编号" data-options="closed:true,iconCls:'icon-save',modal:true" style="width:400px;height:200px;">
-     	<form id="bhForm" class="ui-form" method="post">  
+     	 <form id="bhForm" class="ui-form" method="post">  
      		 <input class="hidden" name="id">
      		 <div class="ui-edit">
-	     	   <div class="ftitle">订单编号信息</div>    
-	           <div class="fitem">  
-	               <label>原订单编号:</label>  
-	               <input class="easyui-validatebox" type="text" readonly="readonly" name="jhbh"  data-options="required:true">
-	           </div>  
-	        
-	            <div class="fitem">  
-	               <label>新订单编号:</label>  
-	               <input id="newJhbh" name="newJhbh" type="text" class="easyui-validatebox" data-options="required:true" />
-	           </div> 
-	           <!--<div class="fitem">  
+	     	      <div class="ftitle">订单编号信息</div>    
+	              <div class="fitem">  
+	                  <label>原订单编号:</label>  
+	                  <input class="easyui-validatebox" type="text" readonly="readonly" name="jhbh"  data-options="required:true">
+	              </div>  
+	              <div class="fitem">  
+	                  <label>新订单编号:</label>  
+	                  <input id="newJhbh" name="newJhbh" type="text" class="easyui-validatebox" data-options="required:true" />
+	              </div> 
+	              <!--<div class="fitem">  
 	               <label>Re PassWord:</label>  
 	              <input id="rpwd" name="rpwd" type="password" class="easyui-validatebox"   required="required" validType="equals['#newPwd']" /> 
-	           </div> -->
-	         </div>
-     	</form>
+	             </div> -->
+	          </div>
+     	 </form>
      	 <div id="editBhbtn" class="dialog-button">  
-            <a href="javascript:void(0)" class="easyui-linkbutton" id="btn-bh-submit">提交</a>  
-            <a href="javascript:void(0)" class="easyui-linkbutton" id="btn-bh-close">放弃</a>  
-        </div>
+              <a href="javascript:void(0)" class="easyui-linkbutton" id="btn-bh-submit">提交</a>  
+              <a href="javascript:void(0)" class="easyui-linkbutton" id="btn-bh-close">放弃</a>  
+         </div>
   	 </div>    
-   <!--<div id="chooseFilebtn" class="dialog-button">  
+         <!--<div id="chooseFilebtn" class="dialog-button">  
          <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'"  id="btn-importfile-submit">导入</a>  
          <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"  id="btn-importfile-close">放弃</a>  
-   </div> -->
-
+          </div> -->
 </div>
-
-  <script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
-  <script type="text/javascript" src="${msUrl}/js/ux/business/xsddManage.js"></script> 
-  <!-- <script type="text/javascript" src="${msUrl}/js/commons/json.js"></script> -->
-  <!--<script type="text/javascript" src="${msUrl}/js/ux/business/xsddMxManage.js"></script>  -->
- <script type="text/javascript">   
+<script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
+<script type="text/javascript" src="${msUrl}/js/ux/business/xsddManage.js"></script>
+<!-- <script type="text/javascript" src="${msUrl}/js/commons/json.js"></script> -->
+<!--<script type="text/javascript" src="${msUrl}/js/ux/business/xsddMxManage.js"></script>  -->
+<script type="text/javascript">   
+    $('#data-list').datagrid({   
+       rowStyler:function(index,row){   
+           if (row.state==2){   
+               return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+            } 
+	        else if (row.state==3)
+		    {
+			   return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		    }
+        }   
+   });
 
    function initdate(){
      $("#searchForm input:input[name='fromxdrq']").val("${requestScope.fromdate}");
      $("#searchForm input:input[name='toxdrq']").val("${requestScope.todate}");
-    // $("#searchForm").find("#btn-search").click();
+     // $("#searchForm").find("#btn-search").click();
      //var param =$('#searchForm').serializeObject();
-    // $('#data-list').datagrid('reload',param);
+     // $('#data-list').datagrid('reload',param);
 	 //$('#data-list').datagrid('load')
   }
 
@@ -439,7 +445,7 @@
 	
    });
 
-  document.body.onload=initdate();
+   document.body.onload=initdate();
 
     //处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外  
     function banBackSpace(e)

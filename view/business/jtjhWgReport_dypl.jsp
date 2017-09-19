@@ -5,27 +5,27 @@
        <%@include file="/view/resource.jsp" %>
   </head>
 <body>
-<div class="warp easyui-panel"  data-options="border:false">
-  	 <!-- Search panel start -->
- 	 <div class="easyui-panel ui-search-panel" title="查询窗口" data-options="striped: true,collapsible:true,iconCls:'icon-search'">   
- 	     <form id="searchForm">
- 	 	    <input class="hidden" id='search_parentId' name="parentId">
-     <p class="ui-fields">
-				<label class="ui-label">下达日期: </label><input name="fromxdrq" class="easyui-datebox" style="width:100px;">
-				<label class="ui-label">至: </label><input name="toxdrq" class="easyui-datebox" style="width:100px;">	 	
-                <label class="ui-label">计划号:</label> 
+  <div class="warp easyui-panel"  data-options="border:false">
+  	    <!-- Search panel start -->
+ 	  <div class="easyui-panel ui-search-panel" title="查询窗口" data-options="striped:  true,collapsible:true,iconCls:'icon-search'">   
+ 	      <form id="searchForm">
+ 	 	        <input class="hidden" id='search_parentId' name="parentId">
+                <p class="ui-fields">
+				   <label class="ui-label">下达日期: </label><input name="fromxdrq" class="easyui-datebox" style="width:100px;">
+				   <label class="ui-label">至: </label><input name="toxdrq" class="easyui-datebox" style="width:100px;">	 	
+                   <label class="ui-label">计划号:</label> 
 
-                <input name="jhbh" class="easyui-box ui-text" style="width:100px;">
+                   <input name="jhbh" class="easyui-box ui-text" style="width:100px;">
       
  
-               <label>机台:</label>  
+                  <label>机台:</label>  
 		            <input class="easyui-combobox"  name="sbmc" style="width:100px;"   
 				    data-options="
 			        url:'../sbManage/getSbListForGd.do?gdid=3',
 					multiple:false,
 			        valueField:'sbmc',
 			        textField:'sbmc'">
-              <label>完工状态:</label>  
+                  <label>完工状态:</label>  
 		            <input class="easyui-combobox"  name="wgflag" style="width:60px;"    
                     data-options="
 			        method:'get',
@@ -33,7 +33,7 @@
 		            textField:'text',
 				    url:'${msUrl}/selectdata/wgflag.json' ">
   	 	       
-                <label>型号:</label>  
+                   <label>型号:</label>  
 		            <input class="easyui-combobox"  name="gxxh" style="width:100px;" 
 				    data-options="
 	                url:'getUniXh.do',
@@ -43,7 +43,7 @@
 			        valueField:'text',
 			        textField:'text'">
 
-                <label>规格:</label>  
+                   <label>规格:</label>  
 		            <input  class="easyui-combobox"  name="gxgg"  style="width:100px;"
 				    data-options="
 	                url:'getUniGg.do',
@@ -52,13 +52,12 @@
 			        multiple:false,
 			        valueField:'text',
 			        textField:'text'">
-				<label class="ui-label">完工日期: </label><input name="fromjhrq" class="easyui-datebox" style="width:100px;">
-				<label class="ui-label">至: </label><input name="tojhrq" class="easyui-datebox" style="width:100px;">	 
-    
-            </p>
-            <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search"  onclick="refreshgrid();")>查询</a>
-        </form>  
-     </div> 
+				   <label class="ui-label">完工日期: </label><input name="fromjhrq" class="easyui-datebox" style="width:100px;">
+				   <label class="ui-label">至: </label><input name="tojhrq" class="easyui-datebox" style="width:100px;">	 
+                </p>
+               <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search"  onclick="refreshgrid();")>查询</a>
+          </form>  
+      </div> 
      <!--  Search panel end -->
      <!-- DataList  -->
      <form id="listForm" method="post" >
@@ -66,7 +65,7 @@
 	    
 		 </table>
  	 </form>	
-</div>
+  </div>
 
 <script type="text/javascript"> 
    function refreshgrid(){ 
@@ -106,14 +105,24 @@
 					},
 					formatter:function(value,row,index){
 						
-						if(value == -9999){
-							return "未到期";
+						if (row.state==2)
+						{
+							return "暂停";
 						}
-                        else if(value == 0){
-							return "按期";
+						else if (row.state==3)
+						{
+							return "作废";
 						}
 						else{
-							return "("+value+")天";
+						    if(value == -9999){
+							    return "未到期";
+						    }
+                            else if(value == 0){
+							    return "按期";
+						    }
+						    else{
+							    return "("+value+")天";
+						    }
 						}
 					}},
 					{field:'xdrq',title:'下达日期',width:70,sortable:true,formatter:function formatterdate(value,row,index) {
@@ -233,6 +242,19 @@
                 }   
             }]  
         });  
+        $('#data-list').datagrid({   
+               rowStyler:function(index,row){   
+                   if (row.state==2){   
+                       return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+                    } 
+	                else if (row.state==3)
+		           {
+			           return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		            }
+                }   
+        });
         function endEdit(){  
             var rows = $dg.datagrid('getRows');  
             for ( var i = 0; i < rows.length; i++) {  
@@ -367,8 +389,8 @@
     document.onkeypress=banBackSpace;   
     //禁止后退键 作用于IE、Chrome   
     document.onkeydown=banBackSpace;   
+    var param =$('#searchForm').serializeObject();
+    $('#data-list').datagrid('reload',param);
  </script>  
-
-
 </body>
 </html>

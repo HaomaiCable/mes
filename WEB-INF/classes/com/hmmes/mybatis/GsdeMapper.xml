@@ -177,9 +177,15 @@ where 1=1
 	<include refid="Base_Column_List"/>
 	from gsde 
 	<include refid="Example_Where_Clause"/>
-	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
-      ${pager.orderCondition}
-    </if>
+    <choose>
+	    <when test="pager.orderCondition != null and pager.orderCondition != ''" >
+              ${pager.orderCondition}
+        </when>
+		<otherwise>
+		      order by  sbmcdek,gxxh,gxgg,gxdy,gxlb
+		</otherwise>
+	</choose>
+
     <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
        ${pager.mysqlQueryCondition}
     </if>

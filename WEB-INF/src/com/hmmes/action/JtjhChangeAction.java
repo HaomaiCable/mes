@@ -1311,8 +1311,8 @@ public class JtjhChangeAction extends BaseAction{
 
 	    String username = SessionUtils.getUser(request).getNickName();
 		String lrr=bean.getCreateBy();
-		if (username.equals(lrr))
-		{
+		//if (username.equals(lrr))
+		//{
            	//Map<String,Object>  datanew = new HashMap<String,Object> ();
 			JSONObject datanew= new JSONObject();
 			datanew.put("sbmcnew","");
@@ -1345,12 +1345,12 @@ public class JtjhChangeAction extends BaseAction{
 //System.out.println("高绪山-xsdd-Getddbg"+context.toString());
 	        HtmlUtil.writerJson(response, context);
 			return ;
-		}
-		else 
-		{
-		    sendFailureMessage(response, "该机台计划单为("+bean.getCreateBy()+")创建，不能进行变更!");
-		    return;
-		}
+		//}
+		//else 
+		//{
+		//    sendFailureMessage(response, "该机台计划单为("+bean.getCreateBy()+")创建，不能进行变更!");
+		//    return;
+		//}
 	}
 
    //机台计划变更确认
@@ -1632,19 +1632,15 @@ public class JtjhChangeAction extends BaseAction{
 	public List<String> removeDuplicate(List<String> list)
 	{
        for ( int i = 0 ; i < list.size() - 1 ; i ++ ) 
-		   {
-               for ( int j = list.size() - 1 ; j > i; j -- )
-				   {
-                         if (list.get(j).equals(list.get(i))) 
-
-						  { 
-						  
-						      list.remove(j);
-                           }
-                    }
-           }
-
-		   return list;
+	   {
+            for ( int j = list.size() - 1 ; j > i; j -- )
+			{
+                if (list.get(j).equals(list.get(i))) 
+				{ 
+				    list.remove(j);
+                 }
+            }
+       }
+	   return list;
     }	
-
 }

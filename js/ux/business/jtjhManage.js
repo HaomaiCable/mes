@@ -21,7 +21,7 @@ YiYa.jtjhManage = function(){
   			    pageSize:8,
 			    pageList: [8, 20, 30, 40, 50],
 				singleSelect:true,	
-	   			columns:[[
+   	   			columns:[[
 					{field:'id',checkbox:true},
 				    {field:'xdjt',title:'下达机台',width:60,align:'center',sortable:true,styler:function(value,row,index){
 							if(value == 1){
@@ -90,6 +90,7 @@ YiYa.jtjhManage = function(){
 					{id:'btnedit',text:'下达机台',btnType:'edit'}
 				
 				]
+
 			}
 		},
 		init:function(){

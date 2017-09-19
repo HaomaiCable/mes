@@ -54,7 +54,6 @@
 		 </table>
  	 </form>	
 </div>
-
 <script type="text/javascript"> 
    function refreshgrid(){ 
        var param = $("#searchForm").serializeObject();
@@ -179,7 +178,20 @@
  					   submit();
                     }  
                 } ]  
-        });  
+        }); 
+        $('#data-list').datagrid({   
+           rowStyler:function(index,row){   
+               if (row.state==2){   
+                   return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+                } 
+	            else if (row.state==3)
+		        {
+			       return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		        }
+            }   
+       });				
         function endEdit(){  
             var rows = $dg.datagrid('getRows');  
             for ( var i = 0; i < rows.length; i++) {  
@@ -266,8 +278,8 @@
  
   }
   document.body.onload=initdate();
- </script>  
-
-
+  var param =$('#searchForm').serializeObject();
+  $('#data-list').datagrid('reload',param);	
+</script>  
 </body>
 </html>

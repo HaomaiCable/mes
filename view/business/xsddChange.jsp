@@ -67,7 +67,6 @@
      <!-- DataList  -->
      <form id="listForm" method="post" >
          <table id="data-list"></table>
-		 
  	 </form>	
 	  <!-- Edit Win&From -->
      <div id="edit-win-dlgbuttons" class="dialog-button" >
@@ -235,11 +234,23 @@
         </form>
     </div>
 </div>
+<script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
+<script type="text/javascript" src="${msUrl}/js/ux/business/xsddChange.js"></script> 
+<script type="text/javascript">   
+    $('#data-list').datagrid({   
+       rowStyler:function(index,row){   
+           if (row.state==2){   
+               return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+            } 
+	        else if (row.state==3)
+		    {
+			   return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		    }
+        }   
+   });
 
-  <script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
-  <script type="text/javascript" src="${msUrl}/js/ux/business/xsddChange.js"></script> 
-
- <script type="text/javascript">   
  	    //$('#state').combobox('disable');
 	   // $("#state").combobox({disabled:true})
     function cancelquit(){ 
@@ -476,6 +487,9 @@
     document.onkeypress=banBackSpace;   
     //禁止后退键 作用于IE、Chrome   
     document.onkeydown=banBackSpace;   
+    var param =$('#searchForm').serializeObject();
+    $('#data-list').datagrid('reload',param);
+
 
 </script>  	
 </body>

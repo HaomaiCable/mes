@@ -44,14 +44,7 @@
 <!-- 查询条件 -->
 <sql id="Example_Where_Clause">
 where 1=1 
-    <choose>
-	    <when test="(fromwgrq != null and fromwgrq != '') and (towgrq != null and towgrq != '')" >
-             and (wgrq BETWEEN  #{fromwgrq} and  #{towgrq})
-        </when>
-		<otherwise>
-		      and wgrq>=DATE_SUB(NOW(),INTERVAL 1 MONTH)
-		</otherwise>
-	</choose>
+
 <trim  suffixOverrides="," >
 	<if test="id != null" >
 	    and id =  #{id}

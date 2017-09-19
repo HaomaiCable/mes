@@ -163,11 +163,9 @@
 		   </div>
        </form>
    </div>
- 
 </div>
-
-  <script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
-  <script type="text/javascript" src="${msUrl}/js/ux/business/jtjhWgReport.js"></script> 
+<script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
+<script type="text/javascript" src="${msUrl}/js/ux/business/jtjhWgReport.js"></script> 
  
 <script type="text/javascript"> 
       function cancelquit(){ 
@@ -207,6 +205,19 @@
 			    });
 		    }
  	    });
+      $('#data-list').datagrid({   
+           rowStyler:function(index,row){   
+               if (row.state==2){   
+                   return  'background-color:pink;color:blue;font-weight:bold;'; //'color:blue;';
+					   
+                } 
+	            else if (row.state==3)
+		        {
+			       return 'background-color:yellow;color:red;font-weight:bold;'; //'color:red;'
+				   
+		        }
+            }   
+       });
     });
     var cmenu = null;
     function createColumnMenu(){
@@ -413,6 +424,8 @@
     document.onkeypress=banBackSpace;   
     //禁止后退键 作用于IE、Chrome   
     document.onkeydown=banBackSpace; 
+    var param =$('#searchForm').serializeObject();
+    $('#data-list').datagrid('reload',param);
 </script>  
 
 

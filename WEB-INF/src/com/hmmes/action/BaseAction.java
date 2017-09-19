@@ -87,7 +87,7 @@ public class BaseAction{
 	public Map<String,Object> getRootMap(){
 		Map<String,Object> rootMap = new HashMap<String, Object>();
 		//添加url到 Map中
-//
+//System.out.println("高绪山getRootMap=("+URLUtils.getUrlMap()+")");
 		rootMap.putAll(URLUtils.getUrlMap());
 		return rootMap;
 	}
