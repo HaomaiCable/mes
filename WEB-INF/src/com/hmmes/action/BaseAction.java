@@ -126,6 +126,7 @@ public class BaseAction{
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put(SUCCESS, false);
 		result.put(MSG, message);
+//System.out.println("¸ßÐ÷É½sendFailureMessage:"+result.toString());
 		HtmlUtil.writerJson(response, result);
 	}
 }
